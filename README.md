@@ -9,5 +9,6 @@ I am using Computer related thigns so that it will easy for me to make this.
 I am using `uv` here to manage the python and its packages and all things.
 `uv init . --python 3.14.0`
 `uv add library_name`
+`uv add library_name==0.0.1`
 `uv run main.py`
 
