@@ -8,3 +8,7 @@ wheels/
 
 # Virtual environments
 .venv
+
+# some test data i made there, this value need to see in the utils>config.py
+test_data/
+test_data/*
