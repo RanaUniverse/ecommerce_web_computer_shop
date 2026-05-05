@@ -8,6 +8,9 @@ from sqlalchemy import pool
 
 from sqlmodel import SQLModel
 
+# This below will import all the models my db has
+# so it will need for alembic to check and work
+from services.database.models import *
 from services.database.core import DATABASE_URL
 
 # this is the Alembic Config object, which provides
