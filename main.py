@@ -21,7 +21,11 @@ from blueprints import (
     general_bp,
 )
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder="templates",
+    static_folder="static",
+)
 
 
 app.register_blueprint(blueprint=auth_bp)
