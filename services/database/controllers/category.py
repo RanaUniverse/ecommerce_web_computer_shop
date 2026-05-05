@@ -28,7 +28,7 @@ def add_one_category_row(category_obj: CategoryModel) -> CategoryModel | None:
             return None
 
 
-def get_one_category_row_by_id(category_id: int):
+def get_one_category_row_by_id(category_id: str):
     with Session(engine) as session:
         category_obj = session.get(CategoryModel, category_id)
         return category_obj

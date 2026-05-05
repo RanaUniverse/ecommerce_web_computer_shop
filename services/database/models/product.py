@@ -49,5 +49,5 @@ class ProductModel(SQLModel, table=True):
     purchase_price: float | None
     sell_price: float | None
 
-    category_id: int | None = Field(default=None, foreign_key="category_data.id_")
+    category_id: str | None = Field(default=None, foreign_key="category_data.id_")
     category: Optional["CategoryModel"] = Relationship(back_populates="products")
