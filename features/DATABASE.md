@@ -92,3 +92,24 @@ This is for storing user informations here for now i will make one table
 - last_name
 - phone_no
 - email_id
+
+
+# My Database's Functions i will make:
+
+CREATE:
+- add one row
+- add many row
+
+READ:
+- read one row by id_ ie primary_key
+- read one row by a value of any column
+- read range of row with offset and limit
+- read all the row
+
+UPDATE:
+- update one row by finding its primary key
+
+
+DELETE:
+- delete one row
+- delete some row
