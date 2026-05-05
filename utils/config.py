@@ -41,3 +41,11 @@ if IS_USING_POSTGRES:
     DATABASE_URL = POSTGRES_DATABASE_URL
 else:
     DATABASE_URL = SQLITE_DATABASE_URL
+
+
+# Below i will write the values that will need for the
+# flask run from main.py some values
+
+HOST_ADDRESS = "0.0.0.0"
+PORT_INT = 9999
+DEBUG_BOOL: bool = True
