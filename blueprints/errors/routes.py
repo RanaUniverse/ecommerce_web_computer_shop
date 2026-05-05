@@ -17,6 +17,14 @@ error_bp = Blueprint(
 )
 
 
+# This is for 404 when user visit the wrong /endpiont it will run
+@error_bp.app_errorhandler(404)
+def handle_404(error: HTTPException):
+    return render_template(
+        template_name_or_list="error/404.html",
+    )
+
+
 # Here the error.description has a default value
 # from the flask it will shows if i will not shows
 @error_bp.app_errorhandler(400)
