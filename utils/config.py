@@ -34,7 +34,7 @@ DB_PORT = "5432"
 DB_NAME = "r"
 
 POSTGRES_DATABASE_URL = (
-    f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    f"postgresql+psycopg2://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
 if IS_USING_POSTGRES:

@@ -32,7 +32,7 @@ Type "help" for help.
 
 postgres=# 
 postgres=# 
-postgres=# create database rana_shop owner rana;
+postgres=# create database rana_database owner rana;
 CREATE DATABASE
 postgres=# 
 ```

@@ -13,7 +13,10 @@ from sqlmodel import (
     Relationship,
 )
 
-from utils.general_utils import current_posix_time
+from utils.general_utils import (
+    current_posix_time,
+    generate_hex_uuid4,
+)
 
 if TYPE_CHECKING:
     from .product import ProductModel
@@ -27,8 +30,10 @@ class CategoryModel(SQLModel, table=True):
 
     __tablename__ = "category_data"  # type: ignore
 
-    id_: int | None = Field(default=None, primary_key=True)
-
+    id_: str | None = Field(
+        default_factory=generate_hex_uuid4,
+        primary_key=True,
+    )
     name: str = Field(index=True)
     description: str | None = Field(default=None)
 
