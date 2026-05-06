@@ -53,3 +53,7 @@ DEBUG_BOOL: bool = True
 
 # Below are for the websit's content like brand and so on
 BRAND_NAME = "Rana Universe"
+
+
+# Below is need for flask's app config
+SECRET_KEY = "This is secret value."

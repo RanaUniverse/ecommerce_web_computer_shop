@@ -14,7 +14,12 @@ sys.dont_write_bytecode = True
 from flask import Flask
 
 
-from utils.config import HOST_ADDRESS, PORT_INT, DEBUG_BOOL
+from utils.config import (
+    HOST_ADDRESS,
+    PORT_INT,
+    DEBUG_BOOL,
+    SECRET_KEY,
+)
 from blueprints import (
     auth_bp,
     error_bp,
@@ -27,6 +32,7 @@ app = Flask(
     static_folder="static",
 )
 
+app.config["SECRET_KEY"] = SECRET_KEY
 
 app.register_blueprint(blueprint=auth_bp)
 app.register_blueprint(blueprint=error_bp)
