@@ -20,7 +20,9 @@ general_bp = Blueprint(
 
 @general_bp.app_context_processor
 def inject_brand():
-    return {"BRAND_NAME": BRAND_NAME}
+    return {
+        "BRAND_NAME": BRAND_NAME,
+    }
 
 
 @general_bp.route(rule="/")

@@ -34,7 +34,8 @@ app.register_blueprint(blueprint=general_bp)
 
 
 if __name__ == "__main__":
-    print(app.url_map)
+    # print(app.url_map)
+    # Before run this make sure to run the 'alembic upgrade head'
     app.run(
         host=HOST_ADDRESS,
         port=PORT_INT,
