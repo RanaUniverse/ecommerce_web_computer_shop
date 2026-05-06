@@ -29,3 +29,5 @@ class UserModel(SQLModel, table=True):
     phone_no: str
     email_id: str | None
     username: str | None
+
+    password_hashed: str
