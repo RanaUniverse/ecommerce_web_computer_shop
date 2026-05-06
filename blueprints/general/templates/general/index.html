@@ -1,1 +1,18 @@
-This is index main home page.
+{#
+blueprints/general/templates/general/index.html
+Here i will make this to shows the home page of my webpage
+#}
+
+{% extends 'base_layout.html' %}
+
+{% block my_title %}
+Let's Shop With {{ BRAND_NAME }}
+{% endblock %}
+
+
+
+{% block my_content %}
+
+<h1>Here Will shows The information about my website</h1>
+<h2> {{BRAND_NAME}} </h2>
+{% endblock %}

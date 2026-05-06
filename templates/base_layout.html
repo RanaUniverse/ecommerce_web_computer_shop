@@ -1,7 +1,13 @@
 {#
 templates/base_layout.html
 Here i will make the structer of my front page
-i will use this to extends in others file
+i will use this to extends in others file.
+Variables:
+
+- my_title
+- my_content
+- my_js
+
 #}
 
 <!DOCTYPE html>
@@ -15,9 +21,52 @@ i will use this to extends in others file
         Rana Universe 🍌🍌🍌
         {% endblock %}
     </title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'bootstrap/css/bootstrap.min.css' ) }}">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icons/favicon.ico' ) }}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='icons/bs_icons/bootstrap-icons.min.css' ) }}">
+
+
 </head>
 
 <body>
+
+    <header>
+        {% include 'partials/_navbar.html' %}
+    </header>
+
+
+    {% block my_content %}
+    {#
+    Here i will write the main page to shows the user what is going on as interface
+    #}
+    {% endblock %}
+
+
+
+    {#
+    Below here i will pass the footer content
+    #}
+    {% include 'partials/_footer.html' %}
+
+
+    {#
+    From below i will write down the js content
+    the js code which will run in the browser and for bs will below
+    #}
+
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js' ) }}"></script>
+
+
+    {% block my_js %}
+    {#
+    Here i will make any java script for any page specefic
+    i will insert the js script in this place.
+    #}
+    {% endblock %}
+
 
 </body>
 

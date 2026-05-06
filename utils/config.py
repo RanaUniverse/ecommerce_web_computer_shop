@@ -49,3 +49,7 @@ else:
 HOST_ADDRESS = "0.0.0.0"
 PORT_INT = 9999
 DEBUG_BOOL: bool = True
+
+
+# Below are for the websit's content like brand and so on
+BRAND_NAME = "Rana Universe"
