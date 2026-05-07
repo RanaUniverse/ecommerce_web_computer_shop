@@ -56,15 +56,27 @@ Login To get Offers
                 </div>
 
 
+                {#
+                Below i will make a row where i will insert 3 thigns
+                #}
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="form-check mb-3">
+
+
+                    <a href="/register" class="btn btn-sm btn-outline-info">
+                        Register For New Account
+                    </a>
+
+
+                    <div class="form-check">
                         {{ form.remember(class="form-check-input") }}
                         {{ form.remember.label(class="form-check-label") }}
                     </div>
 
+
                     <a href="" class="btn btn-sm btn-outline-secondary">
                         Login As A Guest User
                     </a>
+
 
                 </div>
 

@@ -1,1 +1,127 @@
-Register Page
+{#
+blueprints/auth/templates/auth/register.html
+Here i will shows the login page of user want to register for new account
+#}
+
+{% extends 'base_layout.html' %}
+
+{% block my_title %}
+Let's Make New Account
+{% endblock %}
+
+
+
+
+
+{% block my_content %}
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-8 border border-3 border-primary rounded">
+
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p class="text-success text-center fw-semibold">
+                    Register With Us For More Discounts
+                </p>
+
+
+                <div class="mb-3 form-floating">
+                    {{form.first_name(class="form-control")}}
+                    {{form.first_name.label()}}
+                </div>
+
+                <div class="mb-3 form-floating">
+                    {{form.middle_name(class="form-control")}}
+                    {{form.middle_name.label()}}
+                </div>
+
+                <div class="mb-3 form-floating">
+                    {{form.last_name(class="form-control")}}
+                    {{form.last_name.label()}}
+                </div>
+
+                <div class="form-floating mb-3">
+                    {{ form.phone_no(class="form-control") }}
+                    {{ form.phone_no.label() }}
+                </div>
+
+                <div class="form-floating mb-3">
+                    {{ form.email_id(class="form-control") }}
+                    {{ form.email_id.label() }}
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        {{ form.password(class="form-control") }}
+                        {{ form.password.label() }}
+                    </div>
+                    <button type="button" class="input-group-text btn border btn-outline-warning"
+                        onclick="PassShowHideFun()">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        {{ form.confirm_password(class="form-control") }}
+                        {{ form.confirm_password.label() }}
+                    </div>
+                    <button type="button" class="input-group-text btn border btn-outline-warning"
+                        onclick="PassShowHideFun()">
+                        <i id="eyeIcon" class="bi bi-eye"></i>
+                    </button>
+                </div>
+
+
+                {# This below part is checking the values from forms.py #}
+                {% for error in form.confirm_password.errors %}
+                <div class="text-danger small mb-3">
+                    {{ error }}
+                </div>
+                {% endfor %}
+
+
+
+                {#
+                Below i will make a row where i will insert 3 thigns
+                #}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+
+                    <a href="/login" class="btn btn-sm btn-outline-info">
+                        Login Existing Account
+                    </a>
+
+                    <div class="form-check">
+                        {{ form.remember(class="form-check-input") }}
+                        {{ form.remember.label(class="form-check-label") }}
+                    </div>
+
+
+                    <a href="" class="btn btn-sm btn-outline-secondary">
+                        Login As A Guest User
+                    </a>
+
+                </div>
+                {{form.submit(class="btn btn-primary w-100 py-2 mb-3")}}
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    {% endblock %}
+
+
+    {% block my_js %}
+    <script src="{{ url_for('static' , filename='js/password_show_hide.js') }}"></script>
+
+    {% endblock %}

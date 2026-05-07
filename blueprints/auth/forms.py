@@ -15,7 +15,10 @@ from wtforms import (
 
 from wtforms.validators import (
     DataRequired,
+    Email,
+    EqualTo,
     Length,
+    Optional,
 )
 
 
@@ -46,3 +49,92 @@ class LoginForm(FlaskForm):
     remember = BooleanField(label="Remember Me", default=True)
 
     submit = SubmitField(label="Login Now")
+
+
+class RegisterForm(FlaskForm):
+    """
+    This is for allow to make new user account
+    """
+
+    first_name = StringField(
+        label="First Name",
+        validators=[
+            DataRequired(),
+            Length(
+                min=1,
+                max=50,
+            ),
+        ],
+        render_kw={
+            "placeholder": "First Name?",
+        },
+    )
+
+    middle_name = StringField(
+        label="Middle Name",
+        validators=[
+            Optional(),
+            Length(max=50),
+        ],
+        render_kw={
+            "placeholder": "Middle Name (Optional)",
+        },
+    )
+    last_name = StringField(
+        label="Last Name",
+        validators=[
+            Optional(),
+            Length(max=50),
+        ],
+        render_kw={
+            "placeholder": "Last Name (Optional)",
+        },
+    )
+    phone_no = StringField(
+        label="Phone No",
+        validators=[
+            Optional(),
+            Length(min=10, max=15),
+        ],
+        render_kw={
+            "placeholder": "Phone / Telephone No",
+        },
+    )
+    email_id = StringField(
+        label="Email Id",
+        validators=[
+            Optional(),
+            Email(),
+        ],
+        render_kw={"placeholder": "Email Address?"},
+    )
+    username = StringField(
+        label="Username",
+        validators=[
+            Optional(),
+            Length(max=50),
+        ],
+        render_kw={"placeholder": "Choose a Unique Username"},
+    )
+    password = PasswordField(
+        label="Password",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Enter Your Password"},
+    )
+    confirm_password = PasswordField(
+        label="Confirm Password",
+        validators=[
+            DataRequired(),
+            EqualTo(
+                fieldname="password",
+                message="Please enter the same password",
+            ),
+        ],
+        render_kw={
+            "placeholder": "Enter Password Again",
+        },
+    )
+    # for now remember is no use i just keep
+    remember = BooleanField(label="Remember Me", default=True)
+
+    submit = SubmitField(label="Create New Account")
