@@ -25,25 +25,46 @@ from blueprints import (
     error_bp,
     general_bp,
 )
-
-app = Flask(
-    __name__,
-    template_folder="templates",
-    static_folder="static",
+from services.extensions import (
+    bcrypt,
+    login_manager,
 )
 
-app.config["SECRET_KEY"] = SECRET_KEY
 
-app.register_blueprint(blueprint=auth_bp)
-app.register_blueprint(blueprint=error_bp)
-app.register_blueprint(blueprint=general_bp)
+def create_app():
+    """
+    This is for the app instance to return
+    this is factory way to do this
+    """
+    app = Flask(
+        __name__,
+    )
+
+    app.config["SECRET_KEY"] = SECRET_KEY
+
+    app.register_blueprint(blueprint=auth_bp)
+    app.register_blueprint(blueprint=error_bp)
+    app.register_blueprint(blueprint=general_bp)
+
+    bcrypt.init_app(  # type: ignore
+        app=app,
+    )
+    login_manager.init_app(  # type: ignore
+        app=app,
+    )
+
+    return app
 
 
-if __name__ == "__main__":
-    # print(app.url_map)
-    # Before run this make sure to run the 'alembic upgrade head'
+def main():
+    app = create_app()
     app.run(
         host=HOST_ADDRESS,
         port=PORT_INT,
         debug=DEBUG_BOOL,
     )
+
+
+if __name__ == "__main__":
+    # Before run this make sure to run the 'alembic upgrade head'
+    main()
