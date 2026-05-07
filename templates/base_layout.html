@@ -51,8 +51,21 @@ Variables:
     {% if messages %}
     <div class="container mt-3">
         {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show border rounded border-1 border-{{category}}"
-            role="alert">
+        <div class="alert alert-{{ category }} 
+        alert-dismissible fade show shadow
+        border rounded 
+        border-1 border-{{category}} 
+        fw-bold" role="alert">
+
+
+            {% if category == 'success' %}
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {% elif category == 'danger' %}
+            <i class="bi bi-x-circle-fill me-2"></i>
+            {% elif category == 'primary' %}
+            <i class="bi bi-info-circle-fill me-2"></i>
+            {% endif %}
+
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
