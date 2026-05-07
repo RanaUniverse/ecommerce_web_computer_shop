@@ -24,10 +24,10 @@ class UserModel(SQLModel, table=True):
     middle_name: str | None = Field(default=None)
     last_name: str | None = Field(default=None)
 
-    created_time: int = Field(default_factory=current_posix_time)
-
-    phone_no: str
-    email_id: str | None
-    username: str | None
+    phone_no: str | None = Field(default=None)
+    email_id: str | None = Field(default=None)
+    username: str | None = Field(default=None)
 
     password_hashed: str
+
+    created_time: int = Field(default_factory=current_posix_time)
