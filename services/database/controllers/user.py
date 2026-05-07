@@ -25,3 +25,12 @@ def add_new_user_row(user_obj: UserModel) -> UserModel | None:
         except Exception as e:
             logger.error(f"Faild to make new user, {e}")
             return None
+
+
+def get_user_row_by_user_id(user_id: str) -> UserModel | None:
+    """
+    it will return the userobj from the user_id
+    """
+    with Session(engine) as session:
+        user_obj = session.get(UserModel, user_id)
+        return user_obj
