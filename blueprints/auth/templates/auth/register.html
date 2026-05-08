@@ -99,10 +99,9 @@ Let's Make New Account
                     </div>
 
 
-                    <a href="" class="btn btn-sm btn-outline-secondary w-75 w-sm-auto">
+                    <button type="button" class="btn btn-sm btn-outline-secondary w-75 w-sm-auto" id="guestToastBtn">
                         Login As Guest
-                    </a>
-
+                    </button>
 
                 </div>
 
@@ -111,17 +110,16 @@ Let's Make New Account
         </div>
     </div>
 
-
-
-
-
-
+    {% include 'auth/partials/_guest_toast.html' %}
 
 
     {% endblock %}
 
 
     {% block my_js %}
-    <script src="{{ url_for('static' , filename='js/password_show_hide.js') }}"></script>
+    <script src="{{ url_for('static' , filename='js/password_show_hide.js') }}">
+    </script>
 
+    <script src="{{ url_for('auth_bp.static', filename='js/guest_toast.js') }}">
+    </script>
     {% endblock %}

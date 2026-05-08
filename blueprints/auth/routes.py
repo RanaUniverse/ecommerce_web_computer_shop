@@ -39,6 +39,8 @@ auth_bp = Blueprint(
     name="auth_bp",
     import_name=__name__,
     template_folder="templates",
+    static_folder="static",
+    static_url_path="/auth/static",
 )
 
 
@@ -139,7 +141,7 @@ def register():
                 message=MESSAGE_HELP_CENTER,
                 category="danger",
             )
-            return redirect(url_for("auth_bp.register_page"))
+            return redirect(url_for("auth_bp.register"))
 
         hashed_password = generate_password_hash(password=password)
 

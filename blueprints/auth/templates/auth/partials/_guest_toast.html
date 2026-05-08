@@ -1,0 +1,32 @@
+{#
+blueprints/auth/templates/auth/partials/_guest_toast.html
+below is the toast for showing guest account
+this will connect with the button upper
+when i will setup the guest account login i will clear this below
+#}
+<div class="toast-container position-fixed top-0 end-0 p-3">
+
+    <div id="guestToast" class="toast bg-warning-subtle border border-warning shadow" role="alert" aria-live="assertive"
+        aria-atomic="true">
+
+        <div class="toast-header bg-warning">
+
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+            <strong class="me-auto">
+                Guest Login Disabled
+            </strong>
+
+            <button type="button" class="btn-close" data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+        <div class="toast-body">
+            Guest login is not available right now.
+            Please login with your account details.
+        </div>
+
+    </div>
+
+</div>
