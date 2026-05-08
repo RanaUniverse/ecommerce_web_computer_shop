@@ -12,7 +12,11 @@ from flask import (
     url_for,
 )
 
-from flask_login import login_user  # type: ignore
+from flask_login import (  # type: ignore
+    login_user,  # type: ignore
+    logout_user,
+    login_required,  # type: ignore
+)
 
 from .forms import LoginForm, RegisterForm
 
@@ -109,7 +113,7 @@ def login():
     rule="/register",
     methods=["GET", "POST"],
 )
-def register_page():
+def register():
     """
     This is not complete yet this is in demo stat
     here i will add the hash password and then
@@ -185,3 +189,11 @@ def register_page():
         template_name_or_list="auth/register.html",
         form=form,
     )
+
+
+@auth_bp.route(rule="/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("Logged out", "primary")
+    return redirect(url_for("general_bp.index"))
