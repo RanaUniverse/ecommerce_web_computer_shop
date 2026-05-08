@@ -52,8 +52,14 @@ DEBUG_BOOL: bool = True
 
 
 # Below are for the websit's content like brand and so on
-BRAND_NAME = "Rana Universe"
+# BRAND_NAME = "Rana Universe"
 
 
 # Below is need for flask's app config
 SECRET_KEY = "This is secret value."
+
+
+# some settings like values which i will pass in many places
+MESSAGE_ADMIN_CONTACT = "Please contact the administrator for assistance."
+MESSAGE_HELP_CENTER = "If the problem continues, please contact the Help Center."
+MESSAGE_TRY_AGAIN = "Something went wrong. Please try again later."
