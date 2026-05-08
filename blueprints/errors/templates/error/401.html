@@ -2,24 +2,88 @@
 This is
 blueprint/errors/templates/401.html file
 i make this to write the unauthorized html page for now simple
+1. show_msg -> This Variable i can pass here to make this good
 #}
 
 
-{% extends 'base_file.html' %}
+{% extends 'base_layout.html' %}
+
 
 {% block my_title %}
-Unauthorized Problem
+Authentication Required
 {% endblock %}
 
 {% block my_content %}
-<h1>You are not authorized to use this</h1>
-<h1>401 Error</h1>
-<h5>If you sure here is some problem please reach the team</h5>
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow border-0 text-center">
+
+                <div class="card-body p-5">
+
+                    <div class="mb-4 text-primary">
+                        <i class="bi bi-person-circle display-1"></i>
+                    </div>
+
+                    <h1 class="display-5 fw-bold text-danger">
+                        401
+                    </h1>
+
+                    <h3 class="mb-3">
+                        Authentication Required
+                    </h3>
+
+                    <p class="text-muted mb-4">
+                        Please login to continue.
+                        If you believe this is an error,
+                        contact support.
+                    </p>
+
+                    {% if show_msg %}
+                    <div class="alert alert-warning">
+                        {{ show_msg }}
+                    </div>
+                    {% endif %}
 
 
+                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
 
-{% if show_msg %}
-{{show_msg}}
-{% endif %}
+                        <a href="{{ url_for('auth_bp.login') }}" class="btn btn-primary">
+
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Login
+
+                        </a>
+
+                        <a href="{{ url_for('auth_bp.register_page') }}" class="btn btn-success">
+
+                            <i class="bi bi-person-plus me-2"></i>
+                            Register
+
+                        </a>
+
+                        <a href="{{ url_for('general_bp.index') }}" class="btn btn-outline-secondary">
+
+                            <i class="bi bi-house-door me-2"></i>
+                            Home
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
