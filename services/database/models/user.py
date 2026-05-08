@@ -26,9 +26,9 @@ class UserModel(SQLModel, UserMixin, table=True):
     middle_name: str | None = Field(default=None)
     last_name: str | None = Field(default=None)
 
-    phone_no: str | None = Field(default=None)
-    email_id: str | None = Field(default=None)
-    username: str | None = Field(default=None)
+    phone_no: str | None = Field(default=None, unique=True)
+    email_id: str | None = Field(default=None, unique=True)
+    username: str | None = Field(default=None, unique=True)
 
     password_hashed: str
 

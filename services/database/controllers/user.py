@@ -4,7 +4,7 @@ Here i will write the functions related to
 the USER Table all the CRUD i will write here
 """
 
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from ..core import engine
 from ..models.user import UserModel
@@ -33,4 +33,40 @@ def get_user_row_by_user_id(user_id: str) -> UserModel | None:
     """
     with Session(engine) as session:
         user_obj = session.get(UserModel, user_id)
+        return user_obj
+
+
+def get_user_row_by_phone_no(phone_no: str) -> UserModel | None:
+    """
+    it will search with the phone number column
+    and then it will try to send the userrow
+    """
+    with Session(engine) as session:
+        statement = select(UserModel).where(UserModel.phone_no == phone_no)
+        result = session.exec(statement=statement)
+        user_obj = result.first()
+        return user_obj
+
+
+def get_user_row_by_email_id(email_id: str) -> UserModel | None:
+    """
+    it will search with the Email id column
+    and then it will try to send the user row
+    """
+    with Session(engine) as session:
+        statement = select(UserModel).where(UserModel.email_id == email_id)
+        result = session.exec(statement=statement)
+        user_obj = result.first()
+        return user_obj
+
+
+def get_user_row_by_username(username: str) -> UserModel | None:
+    """
+    it will search with the username  column
+    and then it will try to send the user row
+    """
+    with Session(engine) as session:
+        statement = select(UserModel).where(UserModel.username == username)
+        result = session.exec(statement=statement)
+        user_obj = result.first()
         return user_obj
