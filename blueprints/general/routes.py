@@ -9,7 +9,7 @@ from flask import (
     render_template,
 )
 
-from utils.config import BRAND_NAME
+from utils.config_shop_details import BRAND_NAME
 
 general_bp = Blueprint(
     name="general_bp",

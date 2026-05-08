@@ -28,11 +28,12 @@ class LoginForm(FlaskForm):
     use in the login form making page it will also validate
     """
 
+    # for now i have only phone no, but for now i am with only phone number
     identifier = StringField(
-        label="Email Id or Phone No",
+        label="Phone No",
         validators=[DataRequired(), Length(min=10, max=50)],
         render_kw={
-            "placeholder": "Email or Phone Number",
+            "placeholder": "Phone Number",
         },
     )
 
