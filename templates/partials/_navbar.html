@@ -8,16 +8,60 @@ Here i will write the navbar code to shows in the top of the page
 <nav class="navbar navbar-expand-lg bg-info-subtle">
     <div class="container-fluid">
 
+
         <a class="navbar-brand d-flex align-items-center" href="/">
             <img src="{{ url_for('static' , filename='images/logo_square_transparent.png') }}"
                 alt=" {{BRAND_NAME}} Logo" height="40" class="me-2">
-            <span> {{BRAND_NAME}} </span>
+
+            <span class="fw-bold"> {{BRAND_NAME}} </span>
+            <!-- <img src="{{ url_for('static', filename='images/logo_linear_transparent.png') }}" alt="{{ BRAND_NAME }}"
+                height="40" class="ms-2"> -->
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+
+        <!-- <div class="d-sm-none me-2">
+            <button class="btn btn-outline-dark" type="button">
+                <i class="bi bi-search"></i>
+            </button>
+        </div> -->
+
+        <div>
+            <form class="me-3" role="search">
+
+                <div class="position-relative w-100">
+
+                    <!-- LEFT ICON -->
+                    <i id="searchIcon"
+                        class="bi bi-laptop position-absolute top-50 start-0 translate-middle-y ms-3 text-primary"></i>
+
+                    <!-- INPUT -->
+                    <input class="form-control ps-5 pe-5" type="search" placeholder="Search products..."
+                        aria-label="Search">
+
+                    <!-- RIGHT ICON -->
+                    <button class="btn position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent">
+                        <i class="bi bi-search text-muted"></i>
+                    </button>
+
+                </div>
+            </form>
+        </div>
+
+
+
+
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <i class="bi bi-justify fs-1 menu-icon">
+            </i>
+
+            <i class="bi bi-x-circle-fill fs-1 close-icon">
+            </i>
         </button>
+
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -95,14 +139,48 @@ Here i will write the navbar code to shows in the top of the page
                     </ul>
 
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">User Profile</a>
-                </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+
+
+
         </div>
+
+
+
+
+        <!-- Below is the profile pic at right -->
+        <div class="dropdown ms-auto">
+
+            <button class="btn d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle fs-1 text-primary">
+                </i>
+            </button>
+
+            <!-- DROPDOWN MENU -->
+            <ul class="dropdown-menu dropdown-menu-end shadow text-center">
+
+                <li class="dropdown-item">
+                    <a href="{{ url_for('auth_bp.login') }}" class="btn btn-primary">
+
+                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                        Login
+                    </a>
+                </li>
+
+                <li class="dropdown-item">
+                    <a href="{{ url_for('auth_bp.register') }}" class="btn btn-success">
+
+                        <i class="bi bi-person-plus me-2"></i>
+                        Register
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+
     </div>
 </nav>

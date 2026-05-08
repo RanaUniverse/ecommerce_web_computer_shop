@@ -28,6 +28,8 @@ Variables:
 
     <link rel="stylesheet" href="{{ url_for('static', filename='icons/bs_icons/bootstrap-icons.min.css' ) }}">
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar_toggler_icon_change.css' ) }}">
+
     {% block my_internal_css %}
     {#
     Here i will write the logic for the internal css
@@ -96,6 +98,7 @@ Variables:
     #}
 
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js' ) }}"></script>
+    <script src="{{ url_for('static' , filename='js/search_icon_change.js') }}"></script>
 
 
     {% block my_js %}

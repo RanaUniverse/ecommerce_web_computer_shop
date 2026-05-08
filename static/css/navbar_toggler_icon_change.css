@@ -1,0 +1,30 @@
+/* static/css/navbar_toggler_icon_change.css
+Here i will writ the code for change the toggler button 
+design change based on the button press or not */
+
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler i {
+    color: #000;
+    transition: 0.3s ease;
+}
+
+.close-icon {
+    display: none;
+}
+
+
+.navbar-toggler:not(.collapsed) .menu-icon {
+    display: none;
+}
+
+.navbar-toggler:not(.collapsed) .close-icon {
+    display: inline;
+}
