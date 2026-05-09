@@ -24,6 +24,8 @@ from blueprints import (
     auth_bp,
     error_bp,
     general_bp,
+    order_bp,
+    user_bp,
 )
 from services.extensions import (
     bcrypt,
@@ -45,6 +47,8 @@ def create_app():
     app.register_blueprint(blueprint=auth_bp)
     app.register_blueprint(blueprint=error_bp)
     app.register_blueprint(blueprint=general_bp)
+    app.register_blueprint(blueprint=user_bp)
+    app.register_blueprint(blueprint=order_bp)
 
     bcrypt.init_app(  # type: ignore
         app=app,
