@@ -32,6 +32,13 @@ def index():
     )
 
 
+@general_bp.route(rule="/settings")
+def settings():
+    return render_template(
+        template_name_or_list="general/settings.html",
+    )
+
+
 @general_bp.route(rule="/checking")
 @general_bp.route(rule="/c")
 def checking_features():
