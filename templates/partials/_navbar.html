@@ -192,12 +192,27 @@ Here i will write the navbar code to shows in the top of the page
                     <hr class="dropdown-divider">
                 </li>
 
+
                 <li>
                     <a href="{{ url_for('auth_bp.logout' ) }}"
                         class="dropdown-item rounded-3 d-flex align-items-center py-2">
                         <i class="bi bi-box-arrow-right me-2 text-danger"></i>
                         Logout
                     </a>
+                </li>
+
+                <li class="">
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li class="px-3 pb-2">
+
+                    <button id="themeToggleBtn" class="btn btn-outline-secondary w-100">
+
+                        <i class="bi bi-moon-stars-fill me-2"></i>
+
+                    </button>
+
                 </li>
 
                 {% else %}
@@ -218,6 +233,24 @@ Here i will write the navbar code to shows in the top of the page
                         Register
                     </a>
                 </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+
+
+                <!-- currently this is using twic i will use jinja macro for this later -->
+                <li class="px-3 pb-2">
+
+                    <button id="themeToggleBtn" class="btn btn-outline-secondary w-100">
+
+                        <i class="bi bi-moon-stars-fill me-2"></i>
+
+                    </button>
+
+                </li>
+
+
 
                 {% endif %}
 

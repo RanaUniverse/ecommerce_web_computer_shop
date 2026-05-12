@@ -1,0 +1,23 @@
+/* This is for changign the animation and color
+for the theme change button for dark and ligth theme */
+
+
+#themeToggleBtn {
+    transition: all 2s ease;
+}
+
+
+[data-bs-theme="dark"] #themeToggleBtn {
+
+    color: white;
+    border-color: white;
+
+}
+
+
+[data-bs-theme="dark"] #themeToggleBtn:hover {
+
+    background-color: white;
+    color: black;
+
+}

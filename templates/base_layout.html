@@ -11,7 +11,7 @@ Variables:
 #}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -30,11 +30,15 @@ Variables:
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar_toggler_icon_change.css' ) }}">
 
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/theme_toggle_button.css') }}">
+
     {% block my_internal_css %}
     {#
     Here i will write the logic for the internal css
     of whatever i will want in custom css per page
     #}
+
+
     {% endblock %}
 
 </head>
@@ -99,7 +103,7 @@ Variables:
 
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js' ) }}"></script>
     <script src="{{ url_for('static' , filename='js/search_icon_change.js') }}"></script>
-
+    <script src="{{ url_for('static' , filename = 'js/theme_toggle.js') }}"></script>
 
     {% block my_js %}
     {#
