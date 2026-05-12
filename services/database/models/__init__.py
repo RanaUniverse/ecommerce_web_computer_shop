@@ -6,9 +6,11 @@ Here i will make the models ie the table in my sql table
 from .category import CategoryModel
 from .product import ProductModel
 from .user import UserModel
+from .user_role import UserRoleModel
 
 __all__ = [
     "CategoryModel",
     "ProductModel",
     "UserModel",
+    "UserRoleModel",
 ]

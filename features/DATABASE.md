@@ -96,6 +96,16 @@ This is for storing user informations here for now i will make one table
 - email_id
 
 
+## User Role Table
+This is where i will keep the record of the user's  role
+- customer -> it will by default value
+- businesses -> for shows low prices than others customer
+- staff -> access to see who has give orders and what thigns
+- manager -> allow to change product price, add product and details
+- owner -> shows statistics and data
+- developer -> its for me actually to get some inner things
+
+
 # My Database's Functions i will make:
 
 CREATE:

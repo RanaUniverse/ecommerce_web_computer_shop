@@ -24,7 +24,7 @@ from services.database.controllers import (
     add_new_user_row,
     get_user_row_by_phone_no,
 )
-from services.database.models import UserModel
+from services.database.models import UserModel, UserRoleModel
 
 from utils.config import MESSAGE_HELP_CENTER
 
@@ -153,6 +153,7 @@ def register():
                 phone_no=phone_no,
                 email_id=email_id,
                 password_hashed=hashed_password,
+                user_role_obj=UserRoleModel(),
             )
         )
         # below i need to configure the way so that i can say what problem

@@ -4,17 +4,24 @@ Here i will write to make user table
 i will store the user's information
 """
 
+from typing import TYPE_CHECKING
+
+
 from flask_login import UserMixin  # type: ignore
 
 from sqlmodel import (
     Field,
     SQLModel,
+    Relationship,
 )
 
 from utils.general_utils import (
     generate_hex_uuid4,
     current_posix_time,
 )
+
+if TYPE_CHECKING:
+    from .user_role import UserRoleModel
 
 
 class UserModel(SQLModel, UserMixin, table=True):
@@ -33,6 +40,8 @@ class UserModel(SQLModel, UserMixin, table=True):
     password_hashed: str
 
     created_time: int = Field(default_factory=current_posix_time)
+
+    user_role_obj: UserRoleModel = Relationship(back_populates="user_obj")
 
     def get_id(self) -> str:
         """
