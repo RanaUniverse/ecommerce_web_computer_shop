@@ -55,6 +55,8 @@ alembic upgrade head
 This will do changes the structer of the database and from then i will able to add new data in the database.
 
 then i will change the model in my code and do follow the upper things again.
+then i will make sure to add this new model in the env.py or else in the `__init__.py`
+if the `__init__.py` file is imported in the .env
 
 
 ## 📦 Products Table
