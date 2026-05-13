@@ -15,3 +15,7 @@ test_data/*
 
 
 z*
+
+# the images i will serve for the products is belo
+static/uploads/products/*
+!static/uploads/products/.gitkeep
