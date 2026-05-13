@@ -9,6 +9,7 @@ from .errors.routes import error_bp
 from .general.routes import general_bp
 from .order.routes import order_bp
 from .user.routes import user_bp
+from .product.routes import product_bp
 
 __all__ = [
     "auth_bp",
@@ -16,4 +17,5 @@ __all__ = [
     "general_bp",
     "user_bp",
     "order_bp",
+    "product_bp",
 ]

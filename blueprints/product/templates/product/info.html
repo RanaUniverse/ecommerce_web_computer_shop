@@ -1,0 +1,34 @@
+{#
+blueprints/product/templates/product/info.html
+HEre i will shows the product information to the user
+#}
+
+
+{% extends 'base_layout.html' %}
+
+{% block my_content %}
+
+<div class="container mt-4">
+
+    <!-- main image to shows at upper  -->
+    <div class="text-center mb-4">
+        <img id="mainImage" src="{{ url_for('static', filename=images[0]) }}" class="img-fluid rounded shadow"
+            style="max-height: 450px; object-fit: contain;">
+    </div>
+
+    <div class="row g-2 justify-content-center">
+
+        {% for img in images %}
+        <div class="col-3 col-md-2">
+
+            <img src="{{ url_for('static', filename=img) }}" class="img-thumbnail thumb-img"
+                onclick="changeImage(this)">
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
