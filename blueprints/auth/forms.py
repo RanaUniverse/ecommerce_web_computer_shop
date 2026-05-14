@@ -23,8 +23,9 @@ from wtforms.validators import (
 
 # i need to make sure this dict value not got change by external force
 # i use this becuase bs5 need a placholder to shows goodly desing in bootstrap
-DEFAULT_PLACEHOLDER: dict[str, str] = {
+BOOTSTRAP_FLOATING_FORM_ATTRS: dict[str, str] = {
     "placeholder": " ",
+    "class": "form-control",
 }
 
 
@@ -38,7 +39,7 @@ class LoginForm(FlaskForm):
     identifier = StringField(
         label="Phone No",
         validators=[DataRequired(), Length(min=10, max=50)],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
 
     password = PasswordField(
@@ -46,7 +47,7 @@ class LoginForm(FlaskForm):
         validators=[
             DataRequired(),
         ],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
 
     remember = BooleanField(label="Remember Me", default=True)
@@ -60,11 +61,6 @@ class RegisterForm(FlaskForm):
     for bootstrap the placeholder need but it will not shows to user
     """
 
-    # i need to make sure this dict value not got change by external force
-    DEFAULT_PLACEHOLDER: dict[str, str] = {
-        "placeholder": " ",
-    }
-
     first_name = StringField(
         label="First Name",
         validators=[
@@ -74,7 +70,7 @@ class RegisterForm(FlaskForm):
                 max=50,
             ),
         ],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
 
     middle_name = StringField(
@@ -85,7 +81,7 @@ class RegisterForm(FlaskForm):
         ],
         # below is the example if i will want to pass extra things
         render_kw={
-            **DEFAULT_PLACEHOLDER,
+            **BOOTSTRAP_FLOATING_FORM_ATTRS,
         },
     )
     last_name = StringField(
@@ -94,7 +90,7 @@ class RegisterForm(FlaskForm):
             Optional(),
             Length(max=50),
         ],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
     phone_no = StringField(
         label="Phone No",
@@ -102,7 +98,7 @@ class RegisterForm(FlaskForm):
             Optional(),
             Length(min=10, max=15),
         ],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
     email_id = StringField(
         label="Email Id",
@@ -110,7 +106,7 @@ class RegisterForm(FlaskForm):
             Optional(),
             Email(),
         ],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
     username = StringField(
         label="Username",
@@ -118,12 +114,12 @@ class RegisterForm(FlaskForm):
             Optional(),
             Length(max=50),
         ],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
     password = PasswordField(
         label="Password",
         validators=[DataRequired()],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
     confirm_password = PasswordField(
         label="Confirm Password",
@@ -134,7 +130,7 @@ class RegisterForm(FlaskForm):
                 message="Please enter the same password",
             ),
         ],
-        render_kw=DEFAULT_PLACEHOLDER,
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
     # for now remember is no use i just keep
     remember = BooleanField(
