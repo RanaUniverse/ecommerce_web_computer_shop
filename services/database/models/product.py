@@ -16,6 +16,7 @@ from sqlmodel import (
 
 if TYPE_CHECKING:
     from .category import CategoryModel
+    from .product_image import ProductImageModel
 
 
 from utils.general_utils import (
@@ -29,6 +30,7 @@ class ProductModel(SQLModel, table=True):
     I make product will depends on the category table,
     many product can be from one category
     maybe some products are not any part of category
+
     """
 
     __tablename__ = "product_data"  # type: ignore
@@ -51,3 +53,7 @@ class ProductModel(SQLModel, table=True):
 
     category_id: str | None = Field(default=None, foreign_key="category_data.id_")
     category: Optional["CategoryModel"] = Relationship(back_populates="products")
+
+    product_image_obj: list[ProductImageModel] = Relationship(
+        back_populates="product_obj",
+    )
