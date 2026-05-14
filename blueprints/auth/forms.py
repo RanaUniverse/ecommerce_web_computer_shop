@@ -21,6 +21,12 @@ from wtforms.validators import (
     Optional,
 )
 
+# i need to make sure this dict value not got change by external force
+# i use this becuase bs5 need a placholder to shows goodly desing in bootstrap
+DEFAULT_PLACEHOLDER: dict[str, str] = {
+    "placeholder": " ",
+}
+
 
 class LoginForm(FlaskForm):
     """
@@ -32,9 +38,7 @@ class LoginForm(FlaskForm):
     identifier = StringField(
         label="Phone No",
         validators=[DataRequired(), Length(min=10, max=50)],
-        render_kw={
-            "placeholder": "Phone Number",
-        },
+        render_kw=DEFAULT_PLACEHOLDER,
     )
 
     password = PasswordField(
@@ -42,9 +46,7 @@ class LoginForm(FlaskForm):
         validators=[
             DataRequired(),
         ],
-        render_kw={
-            "placeholder": "Your Password",
-        },
+        render_kw=DEFAULT_PLACEHOLDER,
     )
 
     remember = BooleanField(label="Remember Me", default=True)
@@ -55,7 +57,13 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     """
     This is for allow to make new user account
+    for bootstrap the placeholder need but it will not shows to user
     """
+
+    # i need to make sure this dict value not got change by external force
+    DEFAULT_PLACEHOLDER: dict[str, str] = {
+        "placeholder": " ",
+    }
 
     first_name = StringField(
         label="First Name",
@@ -66,9 +74,7 @@ class RegisterForm(FlaskForm):
                 max=50,
             ),
         ],
-        render_kw={
-            "placeholder": "First Name?",
-        },
+        render_kw=DEFAULT_PLACEHOLDER,
     )
 
     middle_name = StringField(
@@ -77,8 +83,9 @@ class RegisterForm(FlaskForm):
             Optional(),
             Length(max=50),
         ],
+        # below is the example if i will want to pass extra things
         render_kw={
-            "placeholder": "Middle Name (Optional)",
+            **DEFAULT_PLACEHOLDER,
         },
     )
     last_name = StringField(
@@ -87,9 +94,7 @@ class RegisterForm(FlaskForm):
             Optional(),
             Length(max=50),
         ],
-        render_kw={
-            "placeholder": "Last Name (Optional)",
-        },
+        render_kw=DEFAULT_PLACEHOLDER,
     )
     phone_no = StringField(
         label="Phone No",
@@ -97,9 +102,7 @@ class RegisterForm(FlaskForm):
             Optional(),
             Length(min=10, max=15),
         ],
-        render_kw={
-            "placeholder": "Phone / Telephone No",
-        },
+        render_kw=DEFAULT_PLACEHOLDER,
     )
     email_id = StringField(
         label="Email Id",
@@ -107,7 +110,7 @@ class RegisterForm(FlaskForm):
             Optional(),
             Email(),
         ],
-        render_kw={"placeholder": "Email Address?"},
+        render_kw=DEFAULT_PLACEHOLDER,
     )
     username = StringField(
         label="Username",
@@ -115,12 +118,12 @@ class RegisterForm(FlaskForm):
             Optional(),
             Length(max=50),
         ],
-        render_kw={"placeholder": "Choose a Unique Username"},
+        render_kw=DEFAULT_PLACEHOLDER,
     )
     password = PasswordField(
         label="Password",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Enter Your Password"},
+        render_kw=DEFAULT_PLACEHOLDER,
     )
     confirm_password = PasswordField(
         label="Confirm Password",
@@ -131,11 +134,14 @@ class RegisterForm(FlaskForm):
                 message="Please enter the same password",
             ),
         ],
-        render_kw={
-            "placeholder": "Enter Password Again",
-        },
+        render_kw=DEFAULT_PLACEHOLDER,
     )
     # for now remember is no use i just keep
-    remember = BooleanField(label="Remember Me", default=True)
+    remember = BooleanField(
+        label="Remember Me",
+        default=True,
+    )
 
-    submit = SubmitField(label="Create New Account")
+    submit = SubmitField(
+        label="Create New Account",
+    )
