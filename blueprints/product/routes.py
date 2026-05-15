@@ -97,7 +97,7 @@ def add_product():
             product_obj=ProductModel(
                 name=name or "",
                 description=description,
-                quantity=quantity or ,
+                quantity=quantity or 0,
                 mrp_price=price_mrp or None,  # type: ignore
                 purchase_price=price_purchase or None,  # type: ignore
                 sell_price=price_sell or None,  # type: ignore
