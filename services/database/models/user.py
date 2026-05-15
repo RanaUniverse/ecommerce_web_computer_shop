@@ -41,7 +41,9 @@ class UserModel(SQLModel, UserMixin, table=True):
 
     created_time: int = Field(default_factory=current_posix_time)
 
-    user_role_obj: UserRoleModel = Relationship(back_populates="user_obj")
+    user_role_obj: UserRoleModel = Relationship(
+        back_populates="user_obj",
+    )
 
     def get_id(self) -> str:
         """

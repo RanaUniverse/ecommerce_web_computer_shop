@@ -37,6 +37,29 @@ class CategoryModel(SQLModel, table=True):
     name: str = Field(index=True)
     description: str | None = Field(default=None)
 
+    # i use this to store bootstrap's icon value to shows later i will use svg or iamge
+    icon_name: str | None = Field(default=None)
+
+    private_note: str | None = Field(default=None)
+
     created_time: int = Field(default_factory=current_posix_time)
 
-    products: list["ProductModel"] = Relationship(back_populates="category")
+    parent_id: str | None = Field(
+        default=None,
+        foreign_key="category_data.id_",
+    )
+
+    parent_obj: CategoryModel | None = Relationship(
+        back_populates="child_obj",
+        sa_relationship_kwargs={
+            "remote_side": "CategoryModel.id_",
+        },
+    )
+
+    child_obj: list[CategoryModel] = Relationship(
+        back_populates="parent_obj",
+    )
+
+    product_obj: list["ProductModel"] = Relationship(
+        back_populates="category_obj",
+    )

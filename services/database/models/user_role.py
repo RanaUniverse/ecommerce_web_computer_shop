@@ -38,4 +38,6 @@ class UserRoleModel(SQLModel, table=True):
 
     role: str = Field(default="customer")
 
-    user_obj: UserModel = Relationship(back_populates="user_role_obj")
+    user_obj: UserModel = Relationship(
+        back_populates="user_role_obj",
+    )

@@ -41,18 +41,23 @@ class ProductModel(SQLModel, table=True):
     )
 
     name: str = Field(index=True)
-    description: str | None
+    description: str | None = Field(default=None)
 
     created_time: int = Field(default_factory=current_posix_time)
 
     quantity: int = Field(default=0)
 
-    mrp_price: float | None
-    purchase_price: float | None
-    sell_price: float | None
+    mrp_price: float | None = Field(default=None)
+    purchase_price: float | None = Field(default=None)
+    sell_price: float | None = Field(default=None)
 
-    category_id: str | None = Field(default=None, foreign_key="category_data.id_")
-    category: Optional["CategoryModel"] = Relationship(back_populates="products")
+    category_id: str | None = Field(
+        default=None,
+        foreign_key="category_data.id_",
+    )
+    category_obj: Optional["CategoryModel"] = Relationship(
+        back_populates="product_obj",
+    )
 
     product_image_obj: list[ProductImageModel] = Relationship(
         back_populates="product_obj",

@@ -50,4 +50,6 @@ class ProductImageModel(SQLModel, table=True):
     created_time: int = Field(default_factory=current_posix_time)
 
     product_id: str = Field(foreign_key="product_data.id_")
-    product_obj: ProductModel = Relationship(back_populates="product_image_obj")
+    product_obj: ProductModel = Relationship(
+        back_populates="product_image_obj",
+    )
