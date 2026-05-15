@@ -5,7 +5,7 @@ this category will the place in which
 the products will insert
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from sqlmodel import (
     Field,
@@ -49,14 +49,14 @@ class CategoryModel(SQLModel, table=True):
         foreign_key="category_data.id_",
     )
 
-    parent_obj: CategoryModel | None = Relationship(
+    parent_obj: Optional["CategoryModel"] = Relationship(
         back_populates="child_obj",
         sa_relationship_kwargs={
             "remote_side": "CategoryModel.id_",
         },
     )
 
-    child_obj: list[CategoryModel] = Relationship(
+    child_obj: list["CategoryModel"] = Relationship(
         back_populates="parent_obj",
     )
 
