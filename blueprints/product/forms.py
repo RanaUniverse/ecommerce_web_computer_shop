@@ -10,57 +10,36 @@ from flask_wtf import (  # type: ignore
 
 from wtforms import (
     DecimalField,
-    FileField,
     IntegerField,
     MultipleFileField,
     SelectField,
-    StringField,
     SubmitField,
-    TextAreaField,
 )
 
 from flask_wtf.file import FileAllowed  # type: ignore
 
 from wtforms.validators import (
-    DataRequired,
     Length,
     NumberRange,
     Optional,
 )
 
-BOOTSTRAP_FLOATING_FORM_ATTRS: dict[str, str] = {
-    "placeholder": " ",
-    "class": "form-control",
-}
+from utils.wtforms_mixins import (
+    BOOTSTRAP_FLOATING_FORM_ATTRS,
+    NameDescriptionMixin,
+    ThumbnailImageMixin,
+)
 
 
-class ProductAddForm(FlaskForm):
+class ProductAddForm(
+    NameDescriptionMixin,
+    ThumbnailImageMixin,
+    FlaskForm,
+):
     """
     This is for showing the user the page to take product information
     and product images and so on
     """
-
-    name = StringField(
-        label="Product Name",
-        validators=[
-            DataRequired(),
-            Length(min=3, max=200),
-        ],
-        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
-    )
-
-    description = TextAreaField(
-        label="Product Description",
-        validators=[
-            Optional(),
-            Length(max=5000),
-        ],
-        render_kw={
-            **BOOTSTRAP_FLOATING_FORM_ATTRS,
-            "rows": 5,
-            "placeholder": "Enter Your Product's Details...",
-        },
-    )
 
     hsn_no = IntegerField(
         label="HSN No.",
@@ -123,26 +102,6 @@ class ProductAddForm(FlaskForm):
         validators=[Optional()],
         places=2,
         render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
-    )
-
-    image_thumbnail = FileField(
-        label="Product's Thumbnail",
-        validators=[
-            Optional(),
-            FileAllowed(
-                upload_set=[
-                    "jpg",
-                    "jpeg",
-                    "png",
-                    "webp",
-                ],
-                message="Please Select Images Only",
-            ),
-        ],
-        render_kw={
-            "accept": "image/*",
-            "class": "form-control form-control-lg",
-        },
     )
 
     # i have this this in the table yet i will do this
