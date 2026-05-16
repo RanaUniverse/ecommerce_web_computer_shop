@@ -19,6 +19,8 @@ from .forms import ProductAddForm
 
 from services.database.controllers import (
     add_one_product_row,
+    get_one_category_row_by_name,
+    get_all_category_names,
 )
 from services.database.models import (
     ProductModel,
@@ -70,27 +72,38 @@ def product_info(product_id: str):
 def add_product():
 
     form = ProductAddForm()
-
+    list_of_category = get_all_category_names()
     if form.validate_on_submit():  # type: ignore
         name = form.name.data
         description = form.description.data
-        category_id = form.category_id.data
-        brand_id = form.brand_id.data
+        category_name = form.category_name.data
+        # i will add brand id later in this product table
+        brand_id = form.brand_id.data  # type: ignore
         quantity = form.quantity.data
-        hsn_no = form.hsn_no.data
+        # i will add hsn no later in my product table
+        hsn_no = form.hsn_no.data  # type: ignore
         price_purchase = form.purchase_price.data
         price_sell = form.sell_price.data
         price_mrp = form.mrp_price.data
 
-        print("NAME:", name, type(name))
-        print("DESCRIPTION:", description, type(description))
-        print("CATEGORY ID:", category_id, type(category_id))  # type: ignore
-        print("BRAND ID:", brand_id, type(brand_id))  # type: ignore this is because this is a dropdown
-        print("QUANTITY:", quantity, type(quantity))
-        print("HSN NO:", hsn_no, type(hsn_no))
-        print("PURCHASE PRICE:", price_purchase, type(price_purchase))
-        print("SELL PRICE:", price_sell, type(price_sell))
-        print("MRP PRICE:", price_mrp, type(price_mrp))
+        if not category_name:
+            category_id = None
+        else:
+            category_obj = get_one_category_row_by_name(category_name)
+            if not category_obj:
+                category_id = None
+                flash(
+                    message="You Entered a Wrong Category Name",
+                    category="warning",
+                )
+                return render_template(
+                    "product/add.html",
+                    form=form,
+                    items=list_of_category,
+                )
+
+            else:
+                category_id = category_obj.id_
 
         # the decimal and float problem i need to solve later in postgres change to decimal
         new_product_obj = add_one_product_row(
@@ -101,6 +114,7 @@ def add_product():
                 mrp_price=price_mrp or None,  # type: ignore
                 purchase_price=price_purchase or None,  # type: ignore
                 sell_price=price_sell or None,  # type: ignore
+                category_id=category_id,
             )
         )
 
@@ -123,7 +137,12 @@ def add_product():
                 ),
             )
 
+    else:
+        print("FORM NOT VALID")
+        print(form.errors)
+
     return render_template(
         "product/add.html",
         form=form,
+        items=list_of_category,
     )

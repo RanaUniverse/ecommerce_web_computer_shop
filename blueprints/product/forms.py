@@ -13,6 +13,7 @@ from wtforms import (
     IntegerField,
     MultipleFileField,
     SelectField,
+    StringField,
     SubmitField,
 )
 
@@ -54,18 +55,26 @@ class ProductAddForm(
         render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
 
-    category_id = SelectField(
-        label="Select The Category",
-        # i will basically take this from db
-        choices=[
-            ("aaabbbccc", "Computer"),
-            ("bbbcccddd", "Laptop"),
-            ("cccdddeee", "Server"),
+    # category_id = SelectField(
+    #     label="Select The Category",
+    #     # i will basically take this from db
+    #     choices=[
+    #         ("aaabbbccc", "Computer"),
+    #         ("bbbcccddd", "Laptop"),
+    #         ("cccdddeee", "Server"),
+    #     ],
+    #     render_kw={
+    #         **BOOTSTRAP_FLOATING_FORM_ATTRS,
+    #         "class": "form-select",
+    #     },
+    # )
+
+    category_name = StringField(
+        label="Select Category",
+        validators=[
+            Optional(),
         ],
-        render_kw={
-            **BOOTSTRAP_FLOATING_FORM_ATTRS,
-            "class": "form-select",
-        },
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
 
     quantity = IntegerField(
