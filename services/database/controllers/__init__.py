@@ -4,7 +4,11 @@ I will make the functions related to the
 data insert, update or delete in this package
 """
 
-from .category import add_one_category_row
+from .category import (
+    add_one_category_row,
+    get_one_category_row_by_name,
+    get_all_category_names,
+)
 from .product import add_one_product_row
 from .user import (
     add_new_user_row,
@@ -22,4 +26,6 @@ __all__ = [
     "get_user_row_by_phone_no",
     "get_user_row_by_username",
     "get_user_row_by_user_id",
+    "get_one_category_row_by_name",
+    "get_all_category_names",
 ]

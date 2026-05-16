@@ -43,7 +43,7 @@ def delete_one_category_row_by_id(category_id: int):
     pass
 
 
-def get_one_category_row_by_name(name: str) -> CategoryModel | None:
+def get_one_category_row_by_name(name: str | None) -> CategoryModel | None:
     """
     i will pass the naem of the category if if not present it will send none
     i shoudl not pass empty string here
@@ -79,9 +79,10 @@ def get_all_category_names(
         results = session.exec(statement)
 
         names = results.all()
-        arrange_name = sorted(
+        arrange_name = sorted(  # type: ignore
             names,  # type: ignore i was sure by upper logic that None will not come
+            key=str.casefold,  # type: ignore
             reverse=reverse,
         )
         # remove None values (because name is nullable in your model)
-        return arrange_name
+        return arrange_name  # type: ignore
