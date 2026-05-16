@@ -4,6 +4,13 @@ I will make the functions related to the
 data insert, update or delete in this package
 """
 
+from .brand import (
+    add_one_brand_row,
+    get_all_brand_names,
+    get_all_products_of_brand,
+    get_one_brand_row_by_id,
+)
+
 from .category import (
     add_one_category_row,
     get_one_category_row_by_name,
@@ -28,4 +35,8 @@ __all__ = [
     "get_user_row_by_user_id",
     "get_one_category_row_by_name",
     "get_all_category_names",
+    "add_one_brand_row",
+    "get_all_brand_names",
+    "get_all_products_of_brand",
+    "get_one_brand_row_by_id",
 ]
