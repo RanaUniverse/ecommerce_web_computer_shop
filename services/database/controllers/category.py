@@ -64,3 +64,24 @@ def get_one_category_row_by_name(name: str) -> CategoryModel | None:
         obj = results.first()
 
         return obj
+
+
+def get_all_category_names(
+    reverse: bool = False,
+) -> list[str]:
+    with Session(engine) as session:
+
+        statement = select(
+            CategoryModel.name,
+        ).where(
+            CategoryModel.name is not None,
+        )
+        results = session.exec(statement)
+
+        names = results.all()
+        arrange_name = sorted(
+            names,  # type: ignore i was sure by upper logic that None will not come
+            reverse=reverse,
+        )
+        # remove None values (because name is nullable in your model)
+        return arrange_name
