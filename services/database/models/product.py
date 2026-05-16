@@ -42,7 +42,7 @@ class ProductModel(SQLModel, table=True):
 
     name: str = Field(index=True)
     description: str | None = Field(default=None)
-
+    hsn_no: int | None = Field(default=None)
     created_time: int = Field(default_factory=current_posix_time)
 
     quantity: int = Field(default=0)
