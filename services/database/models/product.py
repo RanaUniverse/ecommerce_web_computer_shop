@@ -17,6 +17,7 @@ from sqlmodel import (
 if TYPE_CHECKING:
     from .category import CategoryModel
     from .product_image import ProductImageModel
+    from .brand import BrandModel
 
 
 from utils.general_utils import (
@@ -62,3 +63,9 @@ class ProductModel(SQLModel, table=True):
     product_image_obj: list[ProductImageModel] = Relationship(
         back_populates="product_obj",
     )
+
+    brand_id: str | None = Field(
+        default=None,
+        foreign_key="brand_data.id_",
+    )
+    brand_obj: Optional["BrandModel"] = Relationship(back_populates="product_obj")
