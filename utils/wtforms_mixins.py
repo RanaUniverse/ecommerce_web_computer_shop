@@ -27,7 +27,7 @@ BOOTSTRAP_FLOATING_FORM_ATTRS: dict[str, str] = {
 class NameDescriptionMixin:
 
     name = StringField(
-        label="Category Name",
+        label="Enter The Name",
         validators=[
             DataRequired(),
             Length(min=1, max=100),
