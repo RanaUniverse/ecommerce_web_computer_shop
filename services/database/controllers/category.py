@@ -4,7 +4,7 @@ Here i will keep the functions related to
 category tables like CRUD here
 """
 
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from ..core import engine
 
@@ -41,3 +41,26 @@ def delete_one_category_row_by_id(category_id: int):
     Will the products will delete or not
     """
     pass
+
+
+def get_one_category_row_by_name(name: str) -> CategoryModel | None:
+    """
+    i will pass the naem of the category if if not present it will send none
+    i shoudl not pass empty string here
+    as i sure name is unique so i will use first()
+    """
+    if not name:
+        return None
+
+    name = name.strip()
+
+    with Session(engine) as session:
+        statement = select(
+            CategoryModel,
+        ).where(
+            CategoryModel.name == name,
+        )
+        results = session.exec(statement)
+        obj = results.first()
+
+        return obj
