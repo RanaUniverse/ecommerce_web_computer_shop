@@ -2,7 +2,7 @@
 services/database/models/brand.py
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from sqlmodel import (
     SQLModel,
@@ -41,3 +41,10 @@ class BrandModel(SQLModel, table=True):
     product_obj: list["ProductModel"] = Relationship(
         back_populates="brand_obj",
     )
+
+
+    def model_post_init(self, context: Any) -> None:
+        if not self.name:
+            return None
+
+        self.name = self.name.strip()
