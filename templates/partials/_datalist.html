@@ -1,0 +1,40 @@
+{#
+templates/partials/_datalist.html
+i will use this to make macro for generate the datalist with bs5
+
+Example of pass the values
+items=["a", "b", "c", "d", "e"]
+#}
+
+
+{# This below is fully generate the html and style for bs5 #}
+
+{% macro input_with_datalist(
+items,
+label_text="Let's Search...",
+placeholder='Search...',
+input_id='some_input_id_for_datalist',
+list_id='some_list_id_for_datalist') %}
+
+<label for="{{ input_id }}" class="form-label">
+    {{ label_text }}
+</label>
+<input class="form-control" list="{{ list_id }}" id="{{ input_id }}" placeholder="{{ placeholder }}">
+<datalist id="{{ list_id }}">
+    {% for item in items %}
+    <option value="{{ item }}">
+        {% endfor %}
+</datalist>
+{% endmacro %}
+
+
+
+
+
+{% macro generate_datalist_options(items, list_id) %}
+<datalist id="{{ list_id }}">
+    {% for item in items %}
+    <option value="{{ item }}">
+        {% endfor %}
+</datalist>
+{% endmacro %}
