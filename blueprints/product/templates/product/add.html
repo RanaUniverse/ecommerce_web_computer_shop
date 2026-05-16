@@ -8,6 +8,8 @@ i am going to use bootstrap 5
 
 #}
 
+{% from 'partials/_datalist.html' import generate_datalist_options %}
+
 {% extends 'base_layout.html' %}
 
 {% block my_content %}
@@ -63,10 +65,20 @@ i am going to use bootstrap 5
 
             <div class="row mt-1 g-3">
 
+                {#
+                This below is old of using dropdown
+                <!-- <div class="col-12 col-md-3">
+                        <div class="form-floating">
+                            {{ form.category_id() }}
+                            {{ form.category_id.label() }}
+                        </div>
+                    </div> -->
+                #}
+
                 <div class="col-12 col-md-3">
                     <div class="form-floating">
-                        {{ form.category_id() }}
-                        {{ form.category_id.label() }}
+                        {{ form.category_name(list='id_of_datalist') }}
+                        {{ form.category_name.label() }}
                     </div>
                 </div>
 
@@ -161,6 +173,7 @@ i am going to use bootstrap 5
 </div>
 
 
+{{ generate_datalist_options(items, list_id='id_of_datalist') }}
 
 
 
