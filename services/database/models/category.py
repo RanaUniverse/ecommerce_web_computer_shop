@@ -34,7 +34,11 @@ class CategoryModel(SQLModel, table=True):
         default_factory=generate_hex_uuid4,
         primary_key=True,
     )
-    name: str = Field(index=True)
+    name: str | None = Field(
+        default=None,
+        index=True,
+        unique=True,
+    )
     description: str | None = Field(default=None)
 
     # i use this to store bootstrap's icon value to shows later i will use svg or iamge
