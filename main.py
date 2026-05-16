@@ -22,6 +22,7 @@ from utils.config import (
 )
 from blueprints import (
     auth_bp,
+    category_bp,
     error_bp,
     general_bp,
     order_bp,
@@ -51,6 +52,12 @@ def create_app():
     app.register_blueprint(blueprint=user_bp)
     app.register_blueprint(blueprint=order_bp)
     app.register_blueprint(blueprint=product_bp)
+    # if i want to attach same blueprint in differnet url prefix
+    # i need to use the different name there
+    app.register_blueprint(
+        blueprint=category_bp,
+        url_prefix="/category",
+    )
 
     bcrypt.init_app(  # type: ignore
         app=app,

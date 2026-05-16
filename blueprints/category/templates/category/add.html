@@ -1,0 +1,65 @@
+{#
+blueprints/category/templates/category/add.html
+Here i will write the code to make the adding new category
+#}
+
+
+{% extends "base_layout.html" %}
+
+{% block my_content %}
+
+<div class="container mt-4">
+    <div class="border border-1 rounded p-1">
+
+        <h2>Add Category</h2>
+
+        <form method="POST">
+
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3 form-floating">
+                {{ form.name() }}
+                {{ form.name.label() }}
+            </div>
+
+
+            <div class="mt-1">
+                {{form.image_thumbnail.label(class="form-label fw-semibold")}}
+                <br>
+                {{form.image_thumbnail()}}
+            </div>
+
+
+            <div class="mb-3">
+                {{ form.description.label() }}
+                {{ form.description() }}
+            </div>
+
+            <div class="mb-3 form-floating">
+                {{ form.icon_name() }}
+                {{ form.icon_name.label() }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.private_note.label() }}
+                {{ form.private_note() }}
+            </div>
+
+            <div class="mb-3 form-floating">
+                {{ form.parent_id() }}
+                {{ form.parent_id.label() }}
+            </div>
+
+
+
+
+            <div class="mb-3">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
