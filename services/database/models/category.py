@@ -5,7 +5,7 @@ this category will the place in which
 the products will insert
 """
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from sqlmodel import (
     Field,
@@ -67,3 +67,16 @@ class CategoryModel(SQLModel, table=True):
     product_obj: list["ProductModel"] = Relationship(
         back_populates="category_obj",
     )
+
+    def model_post_init(self, context: Any) -> None:
+        """
+        I make this so that the name of the category will be
+        good to store with some no space logic
+        """
+        # return super().model_post_init(context)
+        if not self.name:
+            # this exit just for i dont want to run this
+            return None
+
+        no_space_name = self.name.strip()
+        self.name = no_space_name
