@@ -22,6 +22,7 @@ from utils.config import (
 )
 from blueprints import (
     auth_bp,
+    brand_bp,
     category_bp,
     error_bp,
     general_bp,
@@ -60,6 +61,10 @@ def create_app():
     app.register_blueprint(
         blueprint=category_bp,
         url_prefix="/category",
+    )
+    app.register_blueprint(
+        blueprint=brand_bp,
+        url_prefix="/brand",
     )
 
     bcrypt.init_app(  # type: ignore

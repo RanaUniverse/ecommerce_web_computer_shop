@@ -5,6 +5,7 @@ This will be good to make many blueprint to module my app
 """
 
 from .auth.routes import auth_bp
+from .brand.routes import brand_bp
 from .category.routes import category_bp
 from .errors.routes import error_bp
 from .general.routes import general_bp
@@ -14,6 +15,7 @@ from .product.routes import product_bp
 
 __all__ = [
     "auth_bp",
+    "brand_bp",
     "error_bp",
     "general_bp",
     "user_bp",
