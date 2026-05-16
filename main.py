@@ -51,7 +51,10 @@ def create_app():
     app.register_blueprint(blueprint=general_bp)
     app.register_blueprint(blueprint=user_bp)
     app.register_blueprint(blueprint=order_bp)
-    app.register_blueprint(blueprint=product_bp)
+    app.register_blueprint(
+        blueprint=product_bp,
+        url_prefix="/product",
+    )
     # if i want to attach same blueprint in differnet url prefix
     # i need to use the different name there
     app.register_blueprint(

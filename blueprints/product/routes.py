@@ -31,7 +31,7 @@ product_bp = Blueprint(
 )
 
 
-@product_bp.route("/product/<string:product_id>")
+@product_bp.route("/<string:product_id>")
 def product_info(product_id: str):
     """
     This will shows the product information like name
@@ -64,7 +64,7 @@ def product_info(product_id: str):
 
 
 @product_bp.route(
-    rule="/product/add",
+    rule="/add",
     methods=["GET", "POST"],
 )
 def add_product():
