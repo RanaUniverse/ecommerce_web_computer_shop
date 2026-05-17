@@ -66,7 +66,7 @@ MESSAGE_TRY_AGAIN = "Something went wrong. Please try again later."
 
 
 # where the images of the products will saved
-PRODUCT_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/category")
+PRODUCT_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/product")
 CATEGORY_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/category")
 
 
