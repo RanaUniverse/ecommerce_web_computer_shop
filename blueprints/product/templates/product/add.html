@@ -32,7 +32,7 @@ i am going to use bootstrap 5
 </div>
 
 <div class="">
-    <h1 class="text-danger text-center">Image Upload Established Yet</h1>
+    <h1 class="text-danger text-center">Image Upload Not Established Yet</h1>
 </div>
 
 
@@ -49,12 +49,6 @@ i am going to use bootstrap 5
                 {{form.name.label()}}
             </div>
 
-
-            <div class="mt-1">
-                {{form.image_thumbnail.label(class="form-label fw-semibold")}}
-                <br>
-                {{form.image_thumbnail()}}
-            </div>
 
 
             <div class="mt-1">
@@ -157,7 +151,32 @@ i am going to use bootstrap 5
                 </div>
 
 
-                <div class="mt-4">
+
+                <div class="mt-1">
+                    {{form.image_thumbnail.label(class="form-label fw-semibold")}}
+                    <br>
+                    {{form.image_thumbnail()}}
+                </div>
+
+                <div class="row mt-1 g-3">
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            {{ form.thumbnail_alt_text() }}
+                            {{ form.thumbnail_alt_text.label() }}
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating">
+                            {{ form.thumbnail_url() }}
+                            {{ form.thumbnail_url.label() }}
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mt-1">
                     {{ form.gallery_images.label(class="form-label fw-semibold") }}
                     {{ form.gallery_images() }}
                 </div>

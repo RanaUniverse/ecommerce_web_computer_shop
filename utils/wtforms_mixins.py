@@ -15,6 +15,7 @@ from wtforms.validators import (
     DataRequired,
     Length,
     Optional,
+    URL,
 )
 
 # i use below value for the bs5's input floating thigns
@@ -72,4 +73,27 @@ class ThumbnailImageMixin:
             "accept": "image/*",
             "class": "form-control form-control-lg",
         },
+    )
+
+    thumbnail_alt_text = StringField(
+        label="Thumbnail Alt Text",
+        validators=[
+            Optional(),
+            Length(
+                max=200,
+                message="Alt text must be below 200 characters.",
+            ),
+        ],
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
+    )
+
+    thumbnail_url = StringField(
+        label="Paste Image Link of already uploded image",
+        validators=[
+            Optional(),
+            URL(
+                message="The Url You Enter is Invalid, pls upload image instead",
+            ),
+        ],
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
