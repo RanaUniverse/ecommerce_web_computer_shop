@@ -8,6 +8,9 @@ Here I will write functions related to brand:
 - get all products of a brand
 """
 
+from typing import Sequence
+
+
 from sqlmodel import Session, select
 
 from ..core import engine
@@ -76,3 +79,10 @@ def get_all_products_of_brand(brand_id: str) -> list[ProductModel]:
         if brand_obj:
             return brand_obj.product_obj
         return []
+
+
+def get_all_brands_id_name() -> Sequence[tuple[str, str]]:
+    with Session(engine) as session:
+        statement = select(BrandModel.id_, BrandModel.name).order_by(BrandModel.name)
+        results = session.exec(statement).all()
+        return results
