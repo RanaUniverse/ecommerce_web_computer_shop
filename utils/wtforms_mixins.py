@@ -18,6 +18,8 @@ from wtforms.validators import (
     URL,
 )
 
+from utils.config import ALLOWED_IMAGE_EXTENSIONS
+
 # i use below value for the bs5's input floating thigns
 BOOTSTRAP_FLOATING_FORM_ATTRS: dict[str, str] = {
     "placeholder": " ",
@@ -60,13 +62,11 @@ class ThumbnailImageMixin:
         validators=[
             Optional(),
             FileAllowed(
-                upload_set=[
-                    "jpg",
-                    "jpeg",
-                    "png",
-                    "webp",
-                ],
-                message="Please Select Images Only",
+                upload_set=ALLOWED_IMAGE_EXTENSIONS,
+                message=(
+                    f"Invalid image format, please select any "
+                    f"{ALLOWED_IMAGE_EXTENSIONS} Image only"
+                ),
             ),
         ],
         render_kw={

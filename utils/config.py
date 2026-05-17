@@ -63,3 +63,16 @@ SECRET_KEY = "This is secret value."
 MESSAGE_ADMIN_CONTACT = "Please contact the administrator for assistance."
 MESSAGE_HELP_CENTER = "If the problem continues, please contact the Help Center."
 MESSAGE_TRY_AGAIN = "Something went wrong. Please try again later."
+
+
+# where the images of the products will saved
+PRODUCT_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/category")
+CATEGORY_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/category")
+
+
+ALLOWED_IMAGE_EXTENSIONS = {
+    "jpg",
+    "jpeg",
+    "png",
+    "webp",
+}
