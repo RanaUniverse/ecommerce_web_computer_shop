@@ -4,6 +4,8 @@ Hee i will write the code logic for product insertion form
 i will use flask form with wtform for against the csrf toke.
 """
 
+from typing import Any
+
 from flask_wtf import (  # type: ignore
     FlaskForm,
 )
@@ -146,3 +148,31 @@ class ProductAddForm(
     submit = SubmitField(
         label="Create Product",
     )
+
+    # This below i make from the docs of custom validation
+    # https://wtforms.readthedocs.io/en/2.3.x/validators/#custom-validators
+    def validate(self, extra_validators: Any = None):
+
+        is_valid = super().validate(extra_validators=extra_validators)
+
+        if not is_valid:
+            return False
+
+        uploaded_image = self.image_thumbnail.data
+        image_url = self.thumbnail_url.data
+
+        has_uploaded_image = bool(uploaded_image and uploaded_image.filename)
+
+        has_image_url = bool(image_url and image_url.strip())
+
+        if has_uploaded_image and has_image_url:
+            message = (
+                "Please use ONLY ONE option: "
+                "either upload an image OR provide an image URL."
+            )
+            # self.image_thumbnail.errors.append(message)
+            self.thumbnail_url.errors.append(message)  # type: ignore
+
+            return False
+
+        return True
