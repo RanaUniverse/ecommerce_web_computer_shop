@@ -9,6 +9,7 @@ from .brand import (
     get_all_brand_names,
     get_all_products_of_brand,
     get_one_brand_row_by_id,
+    get_all_brands_id_name,
 )
 
 from .category import (
@@ -39,4 +40,5 @@ __all__ = [
     "get_all_brand_names",
     "get_all_products_of_brand",
     "get_one_brand_row_by_id",
+    "get_all_brands_id_name",
 ]

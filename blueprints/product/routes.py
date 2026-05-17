@@ -21,7 +21,10 @@ from services.database.controllers import (
     add_one_product_row,
     get_one_category_row_by_name,
     get_all_category_names,
+    get_all_brands_id_name,
+    get_one_brand_row_by_id,
 )
+
 from services.database.models import (
     ProductModel,
 )
@@ -72,6 +75,7 @@ def product_info(product_id: str):
 def add_product():
 
     form = ProductAddForm()
+    form.brand_id.choices = [("", "Select Brand")] + get_all_brands_id_name()  # type: ignore
     list_of_category = get_all_category_names()
     if form.validate_on_submit():  # type: ignore
         name = form.name.data
@@ -80,11 +84,11 @@ def add_product():
         # i will add brand id later in this product table
         brand_id = form.brand_id.data  # type: ignore
         quantity = form.quantity.data
-        # i will add hsn no later in my product table
-        hsn_no = form.hsn_no.data  # type: ignore
+        hsn_no = form.hsn_no.data
         price_purchase = form.purchase_price.data
         price_sell = form.sell_price.data
         price_mrp = form.mrp_price.data
+        print(brand_id)
 
         if not category_name:
             category_id = None
@@ -105,16 +109,37 @@ def add_product():
             else:
                 category_id = category_obj.id_
 
+        if not brand_id:
+            brand_obj = None
+        else:
+            brand_obj = get_one_brand_row_by_id(brand_id)
+
+            if not brand_obj:
+                flash(
+                    message="You Selected Invalid Brand",
+                    category="warning",
+                )
+
+                return render_template(
+                    "product/add.html",
+                    form=form,
+                    items=list_of_category,
+                )
+
+        print(21212121212)
+        print(brand_obj)
         # the decimal and float problem i need to solve later in postgres change to decimal
         new_product_obj = add_one_product_row(
             product_obj=ProductModel(
                 name=name or "",
                 description=description,
                 quantity=quantity or 0,
+                hsn_no=hsn_no,
                 mrp_price=price_mrp or None,  # type: ignore
                 purchase_price=price_purchase or None,  # type: ignore
                 sell_price=price_sell or None,  # type: ignore
                 category_id=category_id,
+                brand_obj=brand_obj,
             )
         )
 
@@ -138,8 +163,9 @@ def add_product():
             )
 
     else:
-        print("FORM NOT VALID")
-        print(form.errors)
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(f"{field.upper()}: {error}", "danger")
 
     return render_template(
         "product/add.html",

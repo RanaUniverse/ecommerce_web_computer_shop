@@ -121,9 +121,7 @@ class ProductAddForm(
             Length(max=100),
         ],
         choices=[
-            ("aaabbbccc", "Dell"),
-            ("bbbcccddd", "HP India"),
-            ("cccdddeee", "Rana"),
+            ("xxx", "Select Brand"),
         ],
         render_kw={
             **BOOTSTRAP_FLOATING_FORM_ATTRS,
