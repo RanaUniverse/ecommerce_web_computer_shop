@@ -18,8 +18,8 @@ z*
 
 
 # The images will server from here when keep here thats why i will not keep track the images
-static/uploads/images/category/*/*
-static/uploads/images/product/*/*
+static/uploads/images/category/*
+static/uploads/images/product/*
 
 
 # keep demo structure like beside this folder the new folder will create and images also
