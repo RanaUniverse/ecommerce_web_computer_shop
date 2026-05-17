@@ -16,6 +16,12 @@ test_data/*
 
 z*
 
-# the images i will serve for the products is belo
-static/uploads/products/*
-!static/uploads/products/.gitkeep
+
+# The images will server from here when keep here thats why i will not keep track the images
+static/uploads/images/category/*/*
+static/uploads/images/product/*/*
+
+
+# keep demo structure like beside this folder the new folder will create and images also
+!static/uploads/images/category/000_demo_category_id/.gitkeep
+!static/uploads/images/product/000_demo_product_id/.gitkeep
