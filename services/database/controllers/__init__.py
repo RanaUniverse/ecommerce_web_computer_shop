@@ -18,6 +18,8 @@ from .category import (
     get_all_category_names,
 )
 from .product import add_one_product_row
+from .product_image import add_one_product_image_row
+
 from .user import (
     add_new_user_row,
     get_user_row_by_email_id,
@@ -41,4 +43,5 @@ __all__ = [
     "get_all_products_of_brand",
     "get_one_brand_row_by_id",
     "get_all_brands_id_name",
+    "add_one_product_image_row",
 ]
