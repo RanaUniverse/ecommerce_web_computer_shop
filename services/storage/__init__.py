@@ -5,8 +5,9 @@ product or category or different image to store in the filesystem
 later i will able to change this to api if external
 """
 
-from .product import save_product_thumbnail
+from .product import save_product_thumbnail, save_product_thumbnail_and_create_row
 
 __all__ = [
     "save_product_thumbnail",
+    "save_product_thumbnail_and_create_row",
 ]
