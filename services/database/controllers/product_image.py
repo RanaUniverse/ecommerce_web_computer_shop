@@ -4,7 +4,7 @@ Here i will make the table of the product_image and then
 i will insert the row of image locaion and data
 """
 
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 
 from ..core import engine
@@ -29,3 +29,20 @@ def add_one_product_image_row(
         except Exception as e:
             logger.error(f"Failed to save product image: {e}")
             return None
+
+
+def product_thumbnail_img_row(
+    product_id: str,
+) -> ProductImageModel | None:
+    """
+    Before calling this i need to make sure product_id
+    is present so that it will not cause issue of not found
+    """
+    with Session(engine) as session:
+        statement = (
+            select(ProductImageModel)
+            .where(ProductImageModel.product_id == product_id)
+            .where(ProductImageModel.is_primary == True)
+        )
+        obj = session.exec(statement).first()
+        return obj
