@@ -32,6 +32,7 @@ class ProductImageModel(SQLModel, table=True):
 
     external_url -> if i will want to give the image external url i will pass here
 
+    filename -> image path from local image i will store full for easyly make link
     """
 
     __tablename__ = "product_image_data"  # type: ignore
@@ -40,9 +41,11 @@ class ProductImageModel(SQLModel, table=True):
 
     filename: str | None = Field(default=None)
     alt_text: str | None = Field(default=None)
+    
     external_url: str | None = Field(default=None)
 
     is_primary: bool = Field(default=False)
+
     display_order: int | None = Field(default=0)
 
     creator_id: str | None = Field(default=None, foreign_key="user_data.id_")
