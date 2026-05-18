@@ -4,10 +4,12 @@ Here i will make the product links and how it will work in this place.
 
 I will use to store the images in the static folders
 Because the images are meant to shows alwyas easily
+
+
+works left:
+product_id=new_product_obj.id_, # type: ignore
+i need to chagne this
 """
-
-from pathlib import Path
-
 
 from flask import (
     Blueprint,
@@ -18,7 +20,6 @@ from flask import (
 )
 
 from werkzeug.datastructures import FileStorage
-from werkzeug.utils import secure_filename
 
 
 from .forms import ProductAddForm
@@ -36,7 +37,7 @@ from services.database.models import (
     ProductModel,
 )
 
-from utils.config import PRODUCT_IMAGE_UPLOAD_ROOT
+from services.storage import save_product_thumbnail
 
 product_bp = Blueprint(
     name="product_bp",
@@ -158,32 +159,40 @@ def add_product():
             return redirect(url_for("product_bp.add_product"))
 
         # this else part comes means the product creation has successfull
-        else:
-            # this time i will need to create the folder to insert the image
-            thumbnail_file: FileStorage = form.image_thumbnail.data
-            if thumbnail_file.filename:
-                product_folder = PRODUCT_IMAGE_UPLOAD_ROOT / f"{new_product_obj.id_}"
-                product_folder.mkdir(
-                    parents=True,
-                    exist_ok=True,
-                )
-                original_filename = secure_filename(thumbnail_file.filename)
-                file_extension = Path(original_filename).suffix.lower()
-                image_path = product_folder / f"thumbnail{file_extension}"
-                # i dont need to validate the extension as this is done by wtforms
-                thumbnail_file.save(image_path)
+        # else:
+        message = "Product created successfully"
+        message_category = "success"
 
-            flash(
-                message="Created product",
-                category="success",
+        # this time i will need to create the folder to insert the image
+        thumbnail_file: FileStorage = form.image_thumbnail.data
+        if thumbnail_file.filename:
+            saved_img_path = save_product_thumbnail(
+                product_id=new_product_obj.id_,  # type: ignore
+                image_file=thumbnail_file,
             )
-            # for now it send to this page, later i need to make this page good upper fun
-            return redirect(
-                url_for(
-                    endpoint="product_bp.product_info",
-                    product_id=new_product_obj.id_,
-                ),
-            )
+
+            if saved_img_path:
+                message += " and thumbnail image saved successfully."
+
+            else:
+                # i wish this should never run as image save should go right
+                message += (
+                    ", but thumbnail image could not be saved. " "Please contact admin."
+                )
+                message_category = "warning"
+
+        flash(
+            message=message,
+            category=message_category,
+        )
+
+        # for now it send to this page, later i need to make this page good upper fun
+        return redirect(
+            url_for(
+                endpoint="product_bp.product_info",
+                product_id=new_product_obj.id_,
+            ),
+        )
 
     else:
         for field, errors in form.errors.items():
