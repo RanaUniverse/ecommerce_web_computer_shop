@@ -37,7 +37,7 @@ from services.database.models import (
     ProductModel,
 )
 
-from services.storage import save_product_thumbnail
+from services.storage import save_product_thumbnail_and_create_row
 
 product_bp = Blueprint(
     name="product_bp",
@@ -99,6 +99,7 @@ def add_product():
         price_purchase = form.purchase_price.data
         price_sell = form.sell_price.data
         price_mrp = form.mrp_price.data
+        alt_text = form.thumbnail_alt_text.data
 
         if not category_name:
             category_id = None
@@ -166,9 +167,10 @@ def add_product():
         # this time i will need to create the folder to insert the image
         thumbnail_file: FileStorage = form.image_thumbnail.data
         if thumbnail_file.filename:
-            saved_img_path = save_product_thumbnail(
-                product_id=new_product_obj.id_,  # type: ignore
+            saved_img_path = save_product_thumbnail_and_create_row(
                 image_file=thumbnail_file,
+                product_id=new_product_obj.id_,  # type: ignore
+                alt_text=alt_text,
             )
 
             if saved_img_path:

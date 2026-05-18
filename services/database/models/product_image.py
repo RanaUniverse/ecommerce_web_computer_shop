@@ -41,7 +41,7 @@ class ProductImageModel(SQLModel, table=True):
 
     filename: str | None = Field(default=None)
     alt_text: str | None = Field(default=None)
-    
+
     external_url: str | None = Field(default=None)
 
     is_primary: bool = Field(default=False)
@@ -53,6 +53,6 @@ class ProductImageModel(SQLModel, table=True):
     created_time: int = Field(default_factory=current_posix_time)
 
     product_id: str = Field(foreign_key="product_data.id_")
-    product_obj: ProductModel = Relationship(
+    product_obj: "ProductModel" = Relationship(
         back_populates="product_image_obj",
     )
