@@ -69,10 +69,11 @@ MESSAGE_TRY_AGAIN = "Something went wrong. Please try again later."
 PRODUCT_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/product")
 CATEGORY_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/category")
 
-
 ALLOWED_IMAGE_EXTENSIONS = {
     "jpg",
     "jpeg",
     "png",
     "webp",
 }
+
+THUMBNAIL_IMAGE_PREFIX = "product_thumbnail"
