@@ -59,6 +59,11 @@ then i will make sure to add this new model in the env.py or else in the `__init
 if the `__init__.py` file is imported in the .env
 
 
+### For rename column 
+FOr this i need to careful, suppose in past i have col name `filename` then i will change this to `filepath`.
+After i change this and then run revision cmd i found in the migraion script module it say. op.add_column & op.drop_column. i needed to use op.alter_table.
+
+
 ## 📦 Products Table
 
 - id_

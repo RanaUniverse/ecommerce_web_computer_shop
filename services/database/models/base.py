@@ -26,7 +26,7 @@ class ImageBase(SQLModel):
         primary_key=True,
     )
 
-    filename: str | None = Field(default=None)
+    filepath: str | None = Field(default=None)
     alt_text: str | None = Field(default=None)
 
     external_url: str | None = Field(default=None)
