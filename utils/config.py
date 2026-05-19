@@ -76,4 +76,4 @@ ALLOWED_IMAGE_EXTENSIONS = {
     "webp",
 }
 
-THUMBNAIL_IMAGE_PREFIX = "product_thumbnail"
+IMAGE_THUMBNAIL_PREFIX = "product_thumbnail"
