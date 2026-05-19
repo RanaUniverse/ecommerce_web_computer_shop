@@ -39,5 +39,5 @@ class ProductGalleryImageModel(ImageBase, table=True):
     )
 
     product_obj: "ProductModel" = Relationship(
-        back_populates="product_image_obj",
+        back_populates="product_gallery_image_obj",
     )

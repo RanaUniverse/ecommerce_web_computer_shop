@@ -60,7 +60,7 @@ class ProductModel(SQLModel, table=True):
         back_populates="product_obj",
     )
 
-    product_image_obj: list["ProductGalleryImageModel"] = Relationship(
+    product_gallery_image_obj: list["ProductGalleryImageModel"] = Relationship(
         back_populates="product_obj",
     )
 
