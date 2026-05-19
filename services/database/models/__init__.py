@@ -6,7 +6,7 @@ Here i will make the models ie the table in my sql table
 from .brand import BrandModel
 from .category import CategoryModel
 from .product import ProductModel
-from .product_image import ProductImageModel
+from .product_image import ProductGalleryImageModel
 from .user import UserModel
 from .user_role import UserRoleModel
 
@@ -16,5 +16,5 @@ __all__ = [
     "ProductModel",
     "UserModel",
     "UserRoleModel",
-    "ProductImageModel",
+    "ProductGalleryImageModel",
 ]
