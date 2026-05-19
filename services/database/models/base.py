@@ -29,8 +29,6 @@ class ImageBase(SQLModel):
 
     external_url: str | None = Field(default=None)
 
-    display_order: int | None = Field(default=0)
-
     creator_id: str | None = Field(
         default=None,
         foreign_key="user_data.id_",

@@ -20,6 +20,8 @@ from .base import ImageBase
 class ProductImageModel(ImageBase, table=True):
     __tablename__ = "product_image_data"  # type: ignore
 
+    display_order: int | None = Field(default=0)
+
     product_id: str = Field(foreign_key="product_data.id_")
 
     product_obj: "ProductModel" = Relationship(
