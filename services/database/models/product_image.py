@@ -41,3 +41,17 @@ class ProductGalleryImageModel(ImageBase, table=True):
     product_obj: "ProductModel" = Relationship(
         back_populates="product_gallery_image_obj",
     )
+
+
+class ProductThumbnailImageModel(ImageBase, table=True):
+    __tablename__ = "product_thumbnail_image_data"  # type: ignore
+
+    product_id: str = Field(
+        foreign_key="product_data.id_",
+        index=True,
+        unique=True,
+    )
+
+    product_obj: "ProductModel" = Relationship(
+        back_populates="product_thumbnail_image_obj",
+    )
