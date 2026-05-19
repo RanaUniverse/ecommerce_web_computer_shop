@@ -39,10 +39,8 @@ def product_thumbnail_img_row(
     is present so that it will not cause issue of not found
     """
     with Session(engine) as session:
-        statement = (
-            select(ProductImageModel)
-            .where(ProductImageModel.product_id == product_id)
-            .where(ProductImageModel.is_primary == True)
+        statement = select(ProductImageModel).where(
+            ProductImageModel.product_id == product_id
         )
         obj = session.exec(statement).first()
         return obj

@@ -87,7 +87,6 @@ def save_product_thumbnail_and_create_row(
     product_image_obj = ProductImageModel(
         filepath=str(image_path),
         alt_text=alt_text,
-        is_primary=True,
         creator_id=creator_id,
         product_id=product_id,
     )
