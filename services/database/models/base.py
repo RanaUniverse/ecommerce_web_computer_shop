@@ -19,8 +19,6 @@ class ImageBase(SQLModel):
     This is generic class there
     """
 
-    __tablename__ = "product_image_data"  # type: ignore
-
     id_: str = Field(
         default_factory=generate_hex_uuid4,
         primary_key=True,
