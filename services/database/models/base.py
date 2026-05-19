@@ -29,8 +29,6 @@ class ImageBase(SQLModel):
 
     external_url: str | None = Field(default=None)
 
-    is_primary: bool = Field(default=False)
-
     display_order: int | None = Field(default=0)
 
     creator_id: str | None = Field(
