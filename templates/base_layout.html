@@ -37,8 +37,6 @@ Variables:
     Here i will write the logic for the internal css
     of whatever i will want in custom css per page
     #}
-
-
     {% endblock %}
 
 </head>
@@ -49,36 +47,9 @@ Variables:
         {% include 'partials/_navbar.html' %}
     </header>
 
+    
 
-    {#
-    Below the category value will be one of the bootstrap color which i will use Here
-    #}
-    {% with messages = get_flashed_messages(with_categories = true) %}
-    {% if messages %}
-    <div class="container mt-3">
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }} 
-        alert-dismissible fade show shadow
-        border rounded 
-        border-1 border-{{category}} 
-        fw-bold" role="alert">
-
-
-            {% if category == 'success' %}
-            <i class="bi bi-check-circle-fill me-2"></i>
-            {% elif category == 'danger' %}
-            <i class="bi bi-x-circle-fill me-2"></i>
-            {% elif category == 'primary' %}
-            <i class="bi bi-info-circle-fill me-2"></i>
-            {% endif %}
-
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-    {% endwith %}
+    {%- include 'partials/_flash_messages.html' -%}
 
 
 
