@@ -12,6 +12,7 @@ from .general.routes import general_bp
 from .order.routes import order_bp
 from .user.routes import user_bp
 from .product.routes import product_bp
+from .testing.routes import testing_bp
 
 __all__ = [
     "auth_bp",
@@ -22,4 +23,5 @@ __all__ = [
     "order_bp",
     "product_bp",
     "category_bp",
+    "testing_bp",
 ]

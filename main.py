@@ -29,6 +29,7 @@ from blueprints import (
     order_bp,
     user_bp,
     product_bp,
+    testing_bp,
 )
 from services.extensions import (
     bcrypt,
@@ -47,6 +48,10 @@ def create_app():
 
     app.config["SECRET_KEY"] = SECRET_KEY
 
+    app.register_blueprint(
+        blueprint=testing_bp,
+        url_prefix="/testing",
+    )
     app.register_blueprint(blueprint=auth_bp)
     app.register_blueprint(blueprint=error_bp)
     app.register_blueprint(blueprint=general_bp)
