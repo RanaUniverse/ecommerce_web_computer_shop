@@ -12,57 +12,71 @@ The constants are organized into classes so they can be accessed
 cleanly from other parts of the application.
 """
 
-from typing import Final
-
 
 class AuthMessages:
-    LOGIN_SUCCESS: Final = "Login successful"
-    LOGIN_FAILED: Final = "Invalid email or password"
-    LOGOUT_SUCCESS: Final = "Logged out successfully"
-    ACCOUNT_CREATED: Final = "Account created successfully"
-    ACCOUNT_EXISTS: Final = "Account already exists"
-    PASSWORD_RESET_SENT: Final = "Password reset link sent to your email"
-    PASSWORD_RESET_SUCCESS: Final = "Password reset successful"
+    LOGIN_SUCCESS = "Login successful"
+    LOGIN_FAILED = "Invalid email or password"
+    LOGOUT_SUCCESS = "Logged out successfully"
+    ACCOUNT_CREATED = "Account created successfully"
+    ACCOUNT_EXISTS = "Account already exists"
+    PASSWORD_RESET_SENT = "Password reset link sent to your email"
+    PASSWORD_RESET_SUCCESS = "Password reset successful"
 
 
 class CommonMessages:
-    TRY_AGAIN: Final = "Please try again"
-    SOMETHING_WENT_WRONG: Final = "Something went wrong"
-    CONTACT_ADMIN: Final = "Please contact admin"
-    OPERATION_SUCCESS: Final = "Operation completed successfully"
-    INVALID_REQUEST: Final = "Invalid request"
-    UNAUTHORIZED_ACCESS: Final = "Unauthorized access"
+    TRY_AGAIN = "Please try again"
+    SOMETHING_WENT_WRONG = "Something went wrong"
+    CONTACT_ADMIN = "Please contact admin"
+    OPERATION_SUCCESS = "Operation completed successfully"
+    INVALID_REQUEST = "Invalid request"
+    UNAUTHORIZED_ACCESS = "Unauthorized access"
 
 
 class PermissionMessages:
-    ACCESS_DENIED: Final = "You do not have permission to access this resource"
-    LOGIN_REQUIRED: Final = "Please login first"
-    ADMIN_ONLY: Final = "This action is allowed for admin only"
-    FORBIDDEN: Final = "You are not allowed to perform this action"
+    ACCESS_DENIED = "You do not have permission to access this resource"
+    LOGIN_REQUIRED = "Please login first"
+    ADMIN_ONLY = "This action is allowed for admin only"
+    FORBIDDEN = "You are not allowed to perform this action"
 
 
 class ProductMessages:
-    PRODUCT_NOT_FOUND: Final = "Product not found"
-    PRODUCT_ADDED: Final = "Product added successfully"
-    PRODUCT_UPDATED: Final = "Product updated successfully"
-    PRODUCT_DELETED: Final = "Product deleted successfully"
-    INVALID_PRODUCT: Final = "Invalid product details"
-    OUT_OF_STOCK: Final = "This product is out of stock"
+    PRODUCT_NOT_FOUND = "Product not found"
+    PRODUCT_ADDED = "Product added successfully"
+    PRODUCT_UPDATED = "Product updated successfully"
+    PRODUCT_DELETED = "Product deleted successfully"
+    INVALID_PRODUCT = "Invalid product details"
+    OUT_OF_STOCK = "This product is out of stock"
 
 
 class CartMessages:
-    ADDED_TO_CART: Final = "Product added to cart"
-    REMOVED_FROM_CART: Final = "Product removed from cart"
-    CART_EMPTY: Final = "Your cart is empty"
-    CART_UPDATED: Final = "Cart updated successfully"
-    ITEM_NOT_IN_CART: Final = "Item not found in cart"
+    ADDED_TO_CART = "Product added to cart"
+    REMOVED_FROM_CART = "Product removed from cart"
+    CART_EMPTY = "Your cart is empty"
+    CART_UPDATED = "Cart updated successfully"
+    ITEM_NOT_IN_CART = "Item not found in cart"
 
 
 class OrderMessages:
-    ORDER_SUCCESS: Final = "Order placed successfully"
-    ORDER_FAILED: Final = "Failed to place order"
-    PAYMENT_FAILED: Final = "Payment failed"
-    PAYMENT_SUCCESS: Final = "Payment successful"
-    ORDER_CANCELLED: Final = "Order cancelled successfully"
-    ORDER_NOT_FOUND: Final = "Order not found"
-    ORDER_ALREADY_PROCESSED: Final = "Order already processed"
+    ORDER_SUCCESS = "Order placed successfully"
+    ORDER_FAILED = "Failed to place order"
+    PAYMENT_FAILED = "Payment failed"
+    PAYMENT_SUCCESS = "Payment successful"
+    ORDER_CANCELLED = "Order cancelled successfully"
+    ORDER_NOT_FOUND = "Order not found"
+    ORDER_ALREADY_PROCESSED = "Order already processed"
+
+
+class BS5Alert:
+    """
+    This will contains the key value so that i will use this
+    https://getbootstrap.com/docs/5.3/components/alerts/
+    """
+
+    PRIMARY = "primary"
+    SECONDARY = "secondary"
+    SUCCESS = "success"
+    DANGER = "danger"
+    WARNING = "warning"
+    INFO = "info"
+    LIGHT = "light"
+    DARK = "dark"
