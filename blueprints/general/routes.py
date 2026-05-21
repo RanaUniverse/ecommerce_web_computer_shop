@@ -37,11 +37,3 @@ def settings():
     return render_template(
         template_name_or_list="general/settings.html",
     )
-
-
-@general_bp.route(rule="/checking")
-@general_bp.route(rule="/c")
-def checking_features():
-    return render_template(
-        template_name_or_list="general/checking_features.html",
-    )

@@ -51,3 +51,10 @@ def bs_alert():
     return render_template(
         template_name_or_list="testing/index.html",
     )
+
+
+@testing_bp.route(rule="/bs_toast")
+def checking_features():
+    return render_template(
+        template_name_or_list="testing/bs_toast.html",
+    )
