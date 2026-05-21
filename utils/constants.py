@@ -24,12 +24,12 @@ class AuthMessages:
 
 
 class CommonMessages:
-    TRY_AGAIN = "Please try again"
-    SOMETHING_WENT_WRONG = "Something went wrong"
-    CONTACT_ADMIN = "Please contact admin"
-    OPERATION_SUCCESS = "Operation completed successfully"
-    INVALID_REQUEST = "Invalid request"
-    UNAUTHORIZED_ACCESS = "Unauthorized access"
+    TRY_AGAIN = "Please Try Again"
+    SOMETHING_WENT_WRONG = "Something Went Wrong"
+    CONTACT_ADMIN = "Please Contact Admin"
+    OPERATION_SUCCESS = "Operation Completed Successfully"
+    INVALID_REQUEST = "Invalid Request"
+    UNAUTHORIZED_ACCESS = "Unauthorized Access"
 
 
 class PermissionMessages:
