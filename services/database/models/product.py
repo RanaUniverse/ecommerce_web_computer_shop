@@ -25,6 +25,16 @@ from utils.general_utils import (
     current_posix_time,
 )
 
+# class ProductBase(SQLModel):
+
+
+# class ProductCrete(SQLModel):
+
+
+# class ProductOutPublic():
+
+# class ProductOutAdmin():
+
 
 class ProductModel(SQLModel, table=True):
     """
@@ -46,7 +56,7 @@ class ProductModel(SQLModel, table=True):
     hsn_no: int | None = Field(default=None)
     created_time: int = Field(default_factory=current_posix_time)
 
-    quantity: int = Field(default=0)
+    quantity: int | None = Field(default=None)
 
     mrp_price: float | None = Field(default=None)
     purchase_price: float | None = Field(default=None)
