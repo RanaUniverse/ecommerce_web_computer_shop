@@ -37,6 +37,8 @@ from services.database.models import (
     ProductModel,
 )
 
+from services.database.models.product import ProductCreate
+
 from services.storage import save_product_thumbnail_and_create_row
 
 product_bp = Blueprint(
@@ -46,7 +48,7 @@ product_bp = Blueprint(
 )
 
 
-@product_bp.route("/<string:product_id>")
+@product_bp.route("/view/<string:product_id>")
 def product_info(product_id: str):
     """
     This will shows the product information like name
@@ -89,17 +91,17 @@ def add_product():
     list_of_category = get_all_category_names()
 
     if form.validate_on_submit():  # type: ignore
-        name = form.name.data
-        description = form.description.data
-        category_name = form.category_name.data
+        name = form.name.data or ""
+        description = form.description.data or None
+        category_name = form.category_name.data or None
         # i will add brand id later in this product table
-        brand_id = form.brand_id.data  # type: ignore
+        brand_id: str | None = form.brand_id.data or None
         quantity = form.quantity.data
         hsn_no = form.hsn_no.data
         price_purchase = form.purchase_price.data
         price_sell = form.sell_price.data
         price_mrp = form.mrp_price.data
-        alt_text = form.thumbnail_alt_text.data
+        alt_text = form.thumbnail_alt_text.data or None
 
         if not category_name:
             category_id = None
@@ -136,20 +138,26 @@ def add_product():
                     form=form,
                     items=list_of_category,
                 )
+        # here the ignore is ok, as this will validate and convert its data as pydnatic model
+        product_create_schema_obj = ProductCreate(
+            name=name,
+            description=description,
+            hsn_no=hsn_no,
+            mrp_price=price_mrp,  # type: ignore
+            sell_price=price_sell,  # type: ignore
+            brand_id=brand_id,
+            category_id=category_id,
+            quantity=quantity,
+            purchase_price=price_purchase,  # type: ignore
+            # creator_id= somethigns_will_do_later_after_role_and_login
+        )
 
-        # the decimal and float problem i need to solve later in postgres change to decimal
+        product_model_db_obj = ProductModel.model_validate(
+            obj=product_create_schema_obj,
+        )
+
         new_product_obj = add_one_product_row(
-            product_obj=ProductModel(
-                name=name or "",
-                description=description,
-                quantity=quantity or 0,
-                hsn_no=hsn_no,
-                mrp_price=price_mrp or None,  # type: ignore
-                purchase_price=price_purchase or None,  # type: ignore
-                sell_price=price_sell or None,  # type: ignore
-                category_id=category_id,
-                brand_obj=brand_obj,
-            )
+            product_obj=product_model_db_obj,
         )
 
         if not new_product_obj:
