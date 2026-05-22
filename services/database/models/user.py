@@ -22,6 +22,7 @@ from utils.general_utils import (
 
 if TYPE_CHECKING:
     from .user_role import UserRoleModel
+    from .product import ProductModel
 
 
 class UserModel(SQLModel, UserMixin, table=True):
@@ -43,6 +44,10 @@ class UserModel(SQLModel, UserMixin, table=True):
 
     user_role_obj: UserRoleModel = Relationship(
         back_populates="user_obj",
+    )
+
+    created_product_obj: list["ProductModel"] = Relationship(
+        back_populates="creator_obj",
     )
 
     def get_id(self) -> str:

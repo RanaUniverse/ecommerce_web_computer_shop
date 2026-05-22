@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from .category import CategoryModel
     from .product_image import ProductGalleryImageModel, ProductThumbnailImageModel
     from .brand import BrandModel
+    from .user import UserModel
 
 
 from utils.general_utils import (
@@ -83,3 +84,12 @@ class ProductModel(SQLModel, table=True):
         foreign_key="brand_data.id_",
     )
     brand_obj: Optional["BrandModel"] = Relationship(back_populates="product_obj")
+
+    creator_id: str | None = Field(
+        default=None,
+        foreign_key="user_data.id_",
+        index=True,
+    )
+    creator_obj: Optional["UserModel"] = Relationship(
+        back_populates="created_product_obj",
+    )
