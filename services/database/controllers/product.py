@@ -117,15 +117,20 @@ def update_product_row(
 from ..models.product import ProductOutPublic
 
 
-def get_product_out_public_schema_row(product_id: str):
+def get_product_out_public_schema_row(product_id: str) -> ProductOutPublic | None:
     with Session(engine) as session:
+        print("#####")
+        print("Calling in the schema function there")
         product_obj = session.get(ProductModel, product_id)
+
+        if not product_obj:
+            print("in here product_obj not get so productoutpublc will also none")
+            return None
 
         # This upper give product_obj now i need to conver ti to productOutPublic model
         product_out_public_obj = ProductOutPublic.model_validate(
             obj=product_obj,
         )
-        print("#####")
-        print("Calling in the schema function there")
+        
         print(product_out_public_obj)
         return product_out_public_obj

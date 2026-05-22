@@ -61,7 +61,7 @@ def product_info(product_id: str):
     print("********")
     print("inside the route thigns")
     print(product_public_out_obj)
-    return f"Product information of the product id?,<br>{product_public_out_obj}"
+    return f"Product information of the product id is:<br>{product_public_out_obj}"
 
 
 @product_bp.route(
