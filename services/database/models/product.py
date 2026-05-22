@@ -26,18 +26,65 @@ from utils.general_utils import (
     current_posix_time,
 )
 
-# class ProductBase(SQLModel):
+
+class ProductBase(SQLModel):
+
+    name: str = Field(index=True)
+    description: str | None = Field(default=None)
+    hsn_no: int | None = Field(default=None)
+
+    mrp_price: float | None = Field(default=None)
+    sell_price: float | None = Field(default=None)
+
+    brand_id: str | None = Field(
+        default=None,
+        foreign_key="brand_data.id_",
+    )
+    category_id: str | None = Field(
+        default=None,
+        foreign_key="category_data.id_",
+    )
 
 
-# class ProductCrete(SQLModel):
+class ProductCreate(ProductBase):
+    quantity: int | None = Field(default=None)
+    purchase_price: float | None = Field(default=None)
+
+    creator_id: str | None = Field(
+        default=None,
+        foreign_key="user_data.id_",
+        index=True,
+    )
 
 
-# class ProductOutPublic():
+class ProductOutPublic(ProductBase):
+    pass
 
-# class ProductOutAdmin():
+
+class ProductOutAdmin(ProductCreate):
+    pass
 
 
-class ProductModel(SQLModel, table=True):
+class ProductUpdate(SQLModel):
+    """
+    This is when admin will update the product information
+    """
+
+    name: str | None = None
+    description: str | None = None
+    hsn_no: int | None = None
+
+    quantity: int | None = None
+
+    purchase_price: float | None = None
+    sell_price: float | None = None
+    mrp_price: float | None = None
+
+    brand_id: str | None = None
+    category_id: str | None = None
+
+
+class ProductModel(ProductCreate, table=True):
     """
     I make product will depends on the category table,
     many product can be from one category
@@ -52,21 +99,12 @@ class ProductModel(SQLModel, table=True):
         primary_key=True,
     )
 
-    name: str = Field(index=True)
-    description: str | None = Field(default=None)
-    hsn_no: int | None = Field(default=None)
     created_time: int = Field(default_factory=current_posix_time)
 
-    quantity: int | None = Field(default=None)
-
-    mrp_price: float | None = Field(default=None)
-    purchase_price: float | None = Field(default=None)
-    sell_price: float | None = Field(default=None)
-
-    category_id: str | None = Field(
-        default=None,
-        foreign_key="category_data.id_",
+    brand_obj: Optional["BrandModel"] = Relationship(
+        back_populates="product_obj",
     )
+
     category_obj: Optional["CategoryModel"] = Relationship(
         back_populates="product_obj",
     )
@@ -79,17 +117,6 @@ class ProductModel(SQLModel, table=True):
         back_populates="product_obj",
     )
 
-    brand_id: str | None = Field(
-        default=None,
-        foreign_key="brand_data.id_",
-    )
-    brand_obj: Optional["BrandModel"] = Relationship(back_populates="product_obj")
-
-    creator_id: str | None = Field(
-        default=None,
-        foreign_key="user_data.id_",
-        index=True,
-    )
     creator_obj: Optional["UserModel"] = Relationship(
         back_populates="created_product_obj",
     )
