@@ -9,7 +9,7 @@ from flask import (
     Blueprint,
 )
 
-from utils.constants import BS5Alert
+from utils.constants_messages import BS5Alert
 
 testing_bp = Blueprint(
     name="testing_bp",
