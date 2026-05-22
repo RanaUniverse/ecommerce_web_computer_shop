@@ -112,3 +112,20 @@ def update_product_row(
         session.refresh(product)
 
         return product
+
+
+from ..models.product import ProductOutPublic
+
+
+def get_product_out_public_schema_row(product_id: str):
+    with Session(engine) as session:
+        product_obj = session.get(ProductModel, product_id)
+
+        # This upper give product_obj now i need to conver ti to productOutPublic model
+        product_out_public_obj = ProductOutPublic.model_validate(
+            obj=product_obj,
+        )
+        print("#####")
+        print("Calling in the schema function there")
+        print(product_out_public_obj)
+        return product_out_public_obj

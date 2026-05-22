@@ -47,37 +47,21 @@ product_bp = Blueprint(
     template_folder="templates",
 )
 
+from services.database.controllers.product import get_product_out_public_schema_row
+
 
 @product_bp.route("/view/<string:product_id>")
 def product_info(product_id: str):
     """
     This will shows the product information like name
-    images and so on
+    images and so on for now it will shows the thumbnail image
+    and little informaion aobut title, price for public
     """
-
-    image_folder = f"uploads/products/{product_id}"
-    images = [
-        f"{image_folder}/1.png",
-        f"{image_folder}/2.png",
-        f"{image_folder}/3.png",
-        f"{image_folder}/4.png",
-        f"{image_folder}/5.png",
-        f"{image_folder}/6.png",
-        f"{image_folder}/7.png",
-        f"{image_folder}/8.png",
-        f"{image_folder}/9.png",
-    ]
-
-    product = {
-        "id": product_id,
-        "name": f"Product {product_id}",
-        "description": "This is a demo product",
-    }
-    return render_template(
-        "product/info.html",
-        product=product,
-        images=images,
-    )
+    product_public_out_obj = get_product_out_public_schema_row(product_id)
+    print("********")
+    print("inside the route thigns")
+    print(product_public_out_obj)
+    return f"Product information of the product id?,<br>{product_public_out_obj}"
 
 
 @product_bp.route(

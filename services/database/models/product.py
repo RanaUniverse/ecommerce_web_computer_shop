@@ -58,7 +58,8 @@ class ProductCreate(ProductBase):
 
 
 class ProductOutPublic(ProductBase):
-    pass
+    # the id_ will come from the database table thats why i keep here to shows public
+    id_: str
 
 
 class ProductOutAdmin(ProductCreate):
