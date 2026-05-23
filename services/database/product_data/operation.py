@@ -14,7 +14,7 @@ from ..core import engine
 
 from ..models import ProductModel
 
-from ..schema import ProductOutPublic
+from ..schemas import ProductOutPublic
 
 
 from utils.custom_logger import logger
