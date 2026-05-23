@@ -1,5 +1,5 @@
 """
-services/database/controllers/category.py
+services/database/category_data/operation.py
 Here i will keep the functions related to
 category tables like CRUD here
 """

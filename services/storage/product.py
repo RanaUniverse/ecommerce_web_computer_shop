@@ -14,9 +14,7 @@ from utils.config import (
     PRODUCT_IMAGE_UPLOAD_ROOT,
 )
 
-from ..database.controllers import (
-    add_product_thumbnail_image_row,
-)
+from ..database.operations import add_product_thumbnail_image_row
 
 from services.database.models import ProductThumbnailImageModel
 from utils.custom_logger import logger

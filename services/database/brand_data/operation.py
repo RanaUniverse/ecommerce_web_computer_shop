@@ -1,5 +1,5 @@
 """
-services/database/controllers/brand.py
+services/database/brand_data/operation.py
 Here I will write functions related to brand:
 - add brand
 - get brand by id

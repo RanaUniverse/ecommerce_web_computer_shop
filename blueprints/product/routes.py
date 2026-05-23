@@ -25,12 +25,13 @@ from werkzeug.datastructures import FileStorage
 from .forms import ProductAddForm
 
 
-from services.database.controllers import (
+from services.database.operations import (
     add_one_product_row,
     get_one_category_row_by_name,
     get_all_category_names,
     get_all_brands_id_name,
     get_one_brand_row_by_id,
+    get_product_out_public_schema_row,
 )
 
 from services.database.models import (
@@ -46,8 +47,6 @@ product_bp = Blueprint(
     import_name=__name__,
     template_folder="templates",
 )
-
-from services.database.controllers.product import get_product_out_public_schema_row
 
 
 @product_bp.route("/view/<string:product_id>")

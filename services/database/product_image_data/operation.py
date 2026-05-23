@@ -1,5 +1,5 @@
 """
-services/database/controllers/product_image.py
+services/database/product_image_data/operation.py
 Here i will make the table of the product_image and then
 i will insert the row of image location and data
 """

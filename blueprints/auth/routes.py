@@ -20,10 +20,11 @@ from flask_login import (  # type: ignore
 
 from .forms import LoginForm, RegisterForm
 
-from services.database.controllers import (
+from services.database.operations import (
     add_new_user_row,
     get_user_row_by_phone_no,
 )
+
 from services.database.models import UserModel, UserRoleModel
 
 from utils.config import MESSAGE_HELP_CENTER

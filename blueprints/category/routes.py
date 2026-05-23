@@ -15,7 +15,7 @@ from flask import (
 from .forms import CategoryAddForm
 
 from services.database.models import CategoryModel
-from services.database.controllers import add_one_category_row
+from services.database.operations import add_one_category_row
 
 category_bp = Blueprint(
     name="category_bp",

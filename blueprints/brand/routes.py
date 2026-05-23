@@ -13,7 +13,7 @@ from flask import (
 from .forms import BrandAddForm
 
 from services.database.models import BrandModel
-from services.database.controllers import add_one_brand_row
+from services.database.operations import add_one_brand_row
 
 brand_bp = Blueprint(
     name="brand_bp",
