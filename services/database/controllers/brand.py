@@ -13,9 +13,11 @@ from typing import Sequence
 
 from sqlmodel import Session, select
 
+
 from ..core import engine
-from ..models.brand import BrandModel
-from ..models.product import ProductModel
+
+from ..models import BrandModel, ProductModel
+
 
 from utils.custom_logger import logger
 

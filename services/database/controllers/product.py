@@ -9,9 +9,13 @@ from typing import Any
 
 from sqlmodel import Session
 
+
 from ..core import engine
 
-from ..models.product import ProductModel
+from ..models import ProductModel
+
+from ..schema import ProductOutPublic
+
 
 from utils.custom_logger import logger
 
@@ -114,9 +118,6 @@ def update_product_row(
         return product
 
 
-from ..models.product import ProductOutPublic
-
-
 def get_product_out_public_schema_row(product_id: str) -> ProductOutPublic | None:
     with Session(engine) as session:
         print("#####")
@@ -131,6 +132,6 @@ def get_product_out_public_schema_row(product_id: str) -> ProductOutPublic | Non
         product_out_public_obj = ProductOutPublic.model_validate(
             obj=product_obj,
         )
-        
+
         print(product_out_public_obj)
         return product_out_public_obj

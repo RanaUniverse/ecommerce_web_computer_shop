@@ -1,13 +1,14 @@
 """
 services/database/controllers/product_image.py
 Here i will make the table of the product_image and then
-i will insert the row of image locaion and data
+i will insert the row of image location and data
 """
 
 from sqlmodel import Session, select
 
 
 from ..core import engine
+
 from ..models import (
     ProductGalleryImageModel,
     ProductThumbnailImageModel,

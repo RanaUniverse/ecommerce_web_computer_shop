@@ -6,8 +6,12 @@ the USER Table all the CRUD i will write here
 
 from sqlmodel import Session, select
 
+
 from ..core import engine
-from ..models.user import UserModel
+
+from ..models import UserModel
+
+
 from utils.custom_logger import logger
 
 

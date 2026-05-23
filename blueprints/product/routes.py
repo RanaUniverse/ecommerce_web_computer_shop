@@ -37,7 +37,7 @@ from services.database.models import (
     ProductModel,
 )
 
-from services.database.models.product import ProductCreate
+from services.database.schema import ProductCreate
 
 from services.storage import save_product_thumbnail_and_create_row
 

@@ -6,9 +6,11 @@ category tables like CRUD here
 
 from sqlmodel import Session, select
 
+
 from ..core import engine
 
-from ..models.category import CategoryModel
+from ..models import CategoryModel
+
 
 from utils.custom_logger import logger
 
