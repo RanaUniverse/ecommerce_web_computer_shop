@@ -119,22 +119,19 @@ def update_product_row(
 
 
 def get_product_out_public_schema_row(product_id: str) -> ProductOutPublic | None:
+    """
+    I will pass the product_id it will return the information to make
+    the product page for showing product informations like images and id
+    """
+
     with Session(engine) as session:
-        print("#####")
-        print("Calling in the schema function there")
         product_obj = session.get(ProductModel, product_id)
-        print("Product obj:,", product_obj)
-        # print("Product's image obj,", product_obj.product_thumbnail_image_obj)
 
         if not product_obj:
-            print("in here product_obj not get so productoutpublc will also none")
             return None
 
-        # This upper give product_obj now i need to conver ti to productOutPublic model
+        # This upper give product_obj now i need to convert it to productOutPublic model
         product_out_public_obj = ProductOutPublic.model_validate(
             obj=product_obj,
         )
-
-        print("Public out obj", product_out_public_obj)
-        print("function end")
         return product_out_public_obj
