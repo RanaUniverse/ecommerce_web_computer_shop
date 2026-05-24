@@ -44,11 +44,31 @@ from services.database.schemas import ProductCreate
 
 from services.storage import save_product_thumbnail_and_create_row
 
+
+from utils.config import IMAGE_NOT_FOUND_IMAGE_PATH
+
 product_bp = Blueprint(
     name="product_bp",
     import_name=__name__,
     template_folder="templates",
 )
+
+
+# @product_bp.app_context_processor
+# def inject_brand():
+#     return {
+#         "IMAGE_NOT_FOUND_IMG": IMAGE_NOT_FOUND_IMAGE_PATH,
+
+
+#     }
+
+
+# i make this because for the things related to this
+@product_bp.context_processor
+def inject_brand():
+    return {
+        "IMAGE_NOT_FOUND_IMG": IMAGE_NOT_FOUND_IMAGE_PATH,
+    }
 
 
 @product_bp.route("/view/<string:product_id>")
@@ -59,10 +79,13 @@ def product_info(product_id: str):
     and little informaion aobut title, price for public
     """
     product_public_out_obj = get_product_out_public_schema_row(product_id)
-    print("********")
-    print("inside the route thigns")
-    print(product_public_out_obj)
-    return f"Product information of the product id is:<br>{product_public_out_obj}"
+    if not product_public_out_obj:
+        return "Product Not Exists with the id of" "<br>" f"{product_id.upper()}"
+
+    return render_template(
+        template_name_or_list="product/info.html",
+        product_thumbnail_obj=product_public_out_obj.product_thumbnail_image_obj,
+    )
 
 
 @product_bp.route(
@@ -207,7 +230,7 @@ def add_product():
         # for now it send to this page, later i need to make this page good upper fun
         return redirect(
             url_for(
-                endpoint="general_bp.index",
+                endpoint="product_bp.product_info",
                 product_id=new_product_obj.id_,
             ),
         )

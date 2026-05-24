@@ -1,0 +1,29 @@
+{#
+blueprints/product/templates/product/partials/_product_image.html
+Here this is for showing the product's image
+in the front page as thumbnail image
+it will generate the image of the product from the
+productTHumbnailImageobj and then shows this
+
+Priority:
+1. External URL
+2. Filepath's Image
+3. Demo Image of Not Available
+#}
+
+{% macro generate_product_thumbnail_image(product_thumbnail_obj) %}
+
+
+{% if product_thumbnail_obj and product_thumbnail_obj.external_url %}
+<img src="{{ product_thumbnail_obj.external_url }}" alt="{{ product_thumbnail_obj.alt_text }}" width="50%">
+
+{% elif product_thumbnail_obj and product_thumbnail_obj.filepath %}
+<img src="/{{ product_thumbnail_obj.filepath }}" alt="{{ product_thumbnail_obj.alt_text }}" width="50%">
+
+{% else %}
+<img src="{{ url_for('static', filename=IMAGE_NOT_FOUND_IMG ) }}" alt="Temporarily Image Not Available" width="50%">
+{% endif %}
+
+
+
+{% endmacro %}
