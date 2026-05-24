@@ -2,10 +2,15 @@
 services/database/product_data/schema.py
 """
 
+from typing import Optional
+
+
 from sqlmodel import (
     Field,
     SQLModel,
 )
+
+from ..product_image_data.schema import ProductThumbnailImageOut
 
 
 class ProductBase(SQLModel):
@@ -52,6 +57,7 @@ class ProductOutPublic(ProductBase):
 
     # the id_ will come from the database table thats why i keep here to shows public
     id_: str
+    product_thumbnail_image_obj: Optional[ProductThumbnailImageOut] = None
 
 
 class ProductOutAdmin(ProductCreate):

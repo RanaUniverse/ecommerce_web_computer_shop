@@ -14,7 +14,7 @@ from ..core import engine
 
 from ..models import ProductModel
 
-from ..schemas import ProductOutPublic
+from .schema import ProductOutPublic
 
 
 from utils.custom_logger import logger
@@ -123,6 +123,8 @@ def get_product_out_public_schema_row(product_id: str) -> ProductOutPublic | Non
         print("#####")
         print("Calling in the schema function there")
         product_obj = session.get(ProductModel, product_id)
+        print("Product obj:,", product_obj)
+        # print("Product's image obj,", product_obj.product_thumbnail_image_obj)
 
         if not product_obj:
             print("in here product_obj not get so productoutpublc will also none")
@@ -133,5 +135,6 @@ def get_product_out_public_schema_row(product_id: str) -> ProductOutPublic | Non
             obj=product_obj,
         )
 
-        print(product_out_public_obj)
+        print("Public out obj", product_out_public_obj)
+        print("function end")
         return product_out_public_obj

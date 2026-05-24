@@ -4,10 +4,7 @@ services/database/product_image_data/model.py
 
 from typing import TYPE_CHECKING
 
-from sqlmodel import (
-    Field,
-    Relationship,
-)
+from sqlmodel import Field, Relationship
 
 from ..base import ImageBase
 
