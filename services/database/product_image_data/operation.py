@@ -66,3 +66,24 @@ def product_thumbnail_img_row(
         )
         obj = session.exec(statement).first()
         return obj
+
+
+def add_product_thumbnail_external_url(
+    product_obj: ProductThumbnailImageModel,
+) -> ProductThumbnailImageModel | None:
+    """
+    I will need to modefy this fucntion to only take the
+    url and alt text not the product_image_uploadedbyuser
+    """
+    with Session(engine) as session:
+        try:
+            session.add(product_obj)
+            session.commit()
+            session.refresh(product_obj)
+            return product_obj
+
+        except Exception as e:
+            logger.warning(
+                msg=f"Inserting product's thumbnail's external url got fails, {e}",
+            )
+            return None
