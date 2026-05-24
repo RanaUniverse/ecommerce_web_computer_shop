@@ -32,10 +32,12 @@ from services.database.operations import (
     get_all_brands_id_name,
     get_one_brand_row_by_id,
     get_product_out_public_schema_row,
+    add_product_thumbnail_external_url,
 )
 
 from services.database.models import (
     ProductModel,
+    ProductThumbnailImageModel,
 )
 
 from services.database.schemas import ProductCreate
@@ -85,6 +87,7 @@ def add_product():
         price_sell = form.sell_price.data
         price_mrp = form.mrp_price.data
         alt_text = form.thumbnail_alt_text.data or None
+        thumbnail_url = form.thumbnail_url.data or None
 
         if not category_name:
             category_id = None
@@ -157,11 +160,13 @@ def add_product():
 
         # this time i will need to create the folder to insert the image
         thumbnail_file: FileStorage = form.image_thumbnail.data
+
         if thumbnail_file.filename:
             saved_img_path = save_product_thumbnail_and_create_row(
                 image_file=thumbnail_file,
                 product_id=new_product_obj.id_,  # type: ignore
                 alt_text=alt_text,
+                external_url=thumbnail_url,
             )
 
             if saved_img_path:
@@ -174,6 +179,26 @@ def add_product():
                 )
                 message_category = "warning"
 
+        elif thumbnail_url:
+            product_thumbnail_obj = add_product_thumbnail_external_url(
+                ProductThumbnailImageModel(
+                    # later i will use schema where id_ will need there
+                    product_id=new_product_obj.id_,  # type: ignore
+                    external_url=thumbnail_url,
+                    alt_text=alt_text,
+                    # creator_id=creator_id_iwilldoitlater,
+                )
+            )
+
+            if not product_thumbnail_obj:
+                message += "External Image saving fails, "
+                # i think this will done when problem in db
+            else:
+                message += "Product created successfully with external url"
+
+        else:
+            message += "No thumbnail image upload nor the thumbnail link has passed"
+
         flash(
             message=message,
             category=message_category,
@@ -182,7 +207,7 @@ def add_product():
         # for now it send to this page, later i need to make this page good upper fun
         return redirect(
             url_for(
-                endpoint="product_bp.product_info",
+                endpoint="general_bp.index",
                 product_id=new_product_obj.id_,
             ),
         )
