@@ -25,6 +25,7 @@ def save_product_thumbnail_and_create_row(
     product_id: str,
     alt_text: str | None = None,
     creator_id: str | None = None,
+    external_url: str | None = None,
 ) -> ProductThumbnailImageModel | None:
     """
     I want to save the image in the disk and also add the record simultaniously
@@ -56,6 +57,7 @@ def save_product_thumbnail_and_create_row(
         alt_text=alt_text,
         creator_id=creator_id,
         product_id=product_id,
+        external_url=external_url,
     )
 
     saved_row = add_product_thumbnail_image_row(
