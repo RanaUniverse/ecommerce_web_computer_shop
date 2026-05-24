@@ -66,8 +66,9 @@ MESSAGE_TRY_AGAIN = "Something went wrong. Please try again later."
 
 
 # where the images of the products will saved
-PRODUCT_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/product")
-CATEGORY_IMAGE_UPLOAD_ROOT = Path("static/uploads/images/category")
+# i remove the static/ because by default i will keep those in static
+PRODUCT_IMAGE_UPLOAD_ROOT = Path("uploads/images/product")
+CATEGORY_IMAGE_UPLOAD_ROOT = Path("uploads/images/category")
 
 ALLOWED_IMAGE_EXTENSIONS = {
     "jpg",
@@ -77,3 +78,6 @@ ALLOWED_IMAGE_EXTENSIONS = {
 }
 
 IMAGE_THUMBNAIL_PREFIX = "product_thumbnail"
+
+# This image is in the static folder which i will use in the url_for
+IMAGE_NOT_FOUND_IMAGE_PATH = "images/image_not_found.png"
