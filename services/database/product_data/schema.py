@@ -1,5 +1,8 @@
 """
 services/database/product_data/schema.py
+Here i will make the schemas class so that i can sure
+what what data i will share with whom,
+ProductOut will have for public and admin differently
 """
 
 from typing import Optional
@@ -9,6 +12,7 @@ from sqlmodel import (
     Field,
     SQLModel,
 )
+
 
 from ..product_image_data.schema import ProductThumbnailImageOut
 
