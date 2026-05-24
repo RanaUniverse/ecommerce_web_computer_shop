@@ -81,3 +81,5 @@ IMAGE_THUMBNAIL_PREFIX = "product_thumbnail"
 
 # This image is in the static folder which i will use in the url_for
 IMAGE_NOT_FOUND_IMAGE_PATH = "images/image_not_found.png"
+
+STATIC_PATH = Path("static")

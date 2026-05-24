@@ -18,7 +18,8 @@ Priority:
 <img src="{{ product_thumbnail_obj.external_url }}" alt="{{ product_thumbnail_obj.alt_text }}" width="50%">
 
 {% elif product_thumbnail_obj and product_thumbnail_obj.filepath %}
-<img src="/{{ product_thumbnail_obj.filepath }}" alt="{{ product_thumbnail_obj.alt_text }}" width="50%">
+<img src="{{ url_for('static', filename=product_thumbnail_obj.filepath ) }}" alt="{{ product_thumbnail_obj.alt_text }}"
+    width="50%">
 
 {% else %}
 <img src="{{ url_for('static', filename=IMAGE_NOT_FOUND_IMG ) }}" alt="Temporarily Image Not Available" width="50%">

@@ -17,6 +17,7 @@ from utils.config import (
 from ..database.operations import add_product_thumbnail_image_row
 
 from services.database.models import ProductThumbnailImageModel
+from utils.config import STATIC_PATH
 from utils.custom_logger import logger
 
 
@@ -36,7 +37,7 @@ def save_product_thumbnail_and_create_row(
     image_extension = Path(image_filename_from_user).suffix.lower()
     image_name = f"{IMAGE_THUMBNAIL_PREFIX}{image_extension}"
 
-    product_folder = PRODUCT_IMAGE_UPLOAD_ROOT / product_id
+    product_folder = STATIC_PATH / PRODUCT_IMAGE_UPLOAD_ROOT / product_id
     product_folder.mkdir(
         parents=True,
         exist_ok=True,
@@ -51,9 +52,10 @@ def save_product_thumbnail_and_create_row(
         # i wished this should not happens
         logger.warning(f"Image save to disk fials, {e}")
         return None
+    filepath_without_static = image_path.relative_to(STATIC_PATH)
 
     db_image_obj = ProductThumbnailImageModel(
-        filepath=str(image_path),
+        filepath=str(filepath_without_static),
         alt_text=alt_text,
         creator_id=creator_id,
         product_id=product_id,
