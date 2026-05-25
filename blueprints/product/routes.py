@@ -82,8 +82,10 @@ def product_info(product_id: str):
     if not product_public_out_obj:
         return "Product Not Exists with the id of" "<br>" f"{product_id.upper()}"
 
+    # return f"{product_public_out_obj}"
     return render_template(
         template_name_or_list="product/info.html",
+        product_obj=product_public_out_obj,
         product_thumbnail_obj=product_public_out_obj.product_thumbnail_image_obj,
     )
 

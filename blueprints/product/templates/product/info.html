@@ -5,22 +5,36 @@ HEre i will shows the product information to the user
 Things to pass in this?
 
 1. product_thumbnail_obj -> can be obj or None
+2. product_obj=product_public_out_obj_schema
 #}
 
-
-{% from 'product/partials/_product_image.html' import generate_product_thumbnail_image with context%}
-
+{% from 'product/partials/_product_image.html' import generate_product_thumbnail_image with context %}
 {% extends 'base_layout.html' %}
-
 
 {% block my_content %}
 
-You Have a Product:
+<div class="container mt-4">
+    <h1>Product Information</h1>
+    <hr>
 
-<h1>
-    Product Information Page:
-</h1>
-{{ generate_product_thumbnail_image(product_thumbnail_obj) }}
+    {{ generate_product_thumbnail_image(product_thumbnail_obj) }}
 
+    <br><br>
+
+    <p><strong>Name:</strong> {{ product_obj.name }}</p>
+    <p><strong>Description:</strong> {{ product_obj.description or "N/A" }}</p>
+    <p><strong>HSN No:</strong> {{ product_obj.hsn_no or "N/A" }}</p>
+
+    <hr>
+
+    <p><strong>MRP Price:</strong> {{ product_obj.mrp_price or "N/A" }}</p>
+    <p><strong>Sell Price:</strong> {{ product_obj.sell_price or "N/A" }}</p>
+
+    <hr>
+
+    <p><strong>Brand:</strong> {{ product_obj.brand_obj.name or "N/A" }}</p>
+    <p><strong>Category:</strong> {{ product_obj.category_obj.name or "N/A" }}</p>
+
+</div>
 
 {% endblock %}
