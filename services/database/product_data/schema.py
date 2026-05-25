@@ -15,6 +15,7 @@ from sqlmodel import (
 
 
 from ..product_image_data.schema import ProductThumbnailImageOut
+from ..category_data.schema import CategoryMinimal
 
 
 class ProductBase(SQLModel):
@@ -62,6 +63,7 @@ class ProductOutPublic(ProductBase):
     # the id_ will come from the database table thats why i keep here to shows public
     id_: str
     product_thumbnail_image_obj: Optional[ProductThumbnailImageOut] = None
+    category_obj: Optional[CategoryMinimal] = None
 
 
 class ProductOutAdmin(ProductCreate):
