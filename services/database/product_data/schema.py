@@ -15,6 +15,7 @@ from sqlmodel import (
 
 
 from ..product_image_data.schema import ProductThumbnailImageOut
+from ..brand_data.schema import BrandMinimal
 from ..category_data.schema import CategoryMinimal
 
 
@@ -64,6 +65,7 @@ class ProductOutPublic(ProductBase):
     id_: str
     product_thumbnail_image_obj: Optional[ProductThumbnailImageOut] = None
     category_obj: Optional[CategoryMinimal] = None
+    brand_obj: Optional[BrandMinimal] = None
 
 
 class ProductOutAdmin(ProductCreate):
