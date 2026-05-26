@@ -6,9 +6,15 @@ Things to pass in this?
 
 1. product_thumbnail_obj -> can be obj or None
 2. product_obj=product_public_out_obj_schema
+3. gallery_images -> list of gallery images out schema
 #}
 
 {% from 'product/partials/_product_image.html' import generate_product_thumbnail_image with context %}
+
+{% from 'product/partials/_product_image.html' import generate_img_for_one_product_gallery_image with context %}
+
+
+
 {% extends 'base_layout.html' %}
 
 {% block my_content %}
@@ -36,9 +42,30 @@ Things to pass in this?
     <p><strong>Category:</strong> {{ product_obj.category_obj.name or "N/A" }}</p>
 
     <br>
-    Let's see all gallery images
+    <h1>Gallery Images</h1>
     <br>
-    {{ product_obj.product_gallery_image_obj }}
+
+
+
+
+
+    {% if gallery_images %}
+
+    <div class="gallery_container">
+        {% for image in gallery_images %}
+        <div class="gallery-item">
+            {{ generate_img_for_one_product_gallery_image(image) }}
+        </div>
+        {% endfor %}
+    </div>
+
+
+    {% else %}
+    image not exists
+    {% endif %}
+
+
+
 
 
 </div>

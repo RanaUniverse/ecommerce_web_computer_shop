@@ -25,6 +25,28 @@ Priority:
 <img src="{{ url_for('static', filename=IMAGE_NOT_FOUND_IMG ) }}" alt="Temporarily Image Not Available" width="50%">
 {% endif %}
 
+{% endmacro %}
 
+
+
+
+
+
+{% macro generate_img_for_one_product_gallery_image(image) %}
+
+{% if image.external_url %}
+{% set img_path = image.external_url %}
+
+{% elif image.filepath %}
+{% set img_path = url_for('static', filename=image.filepath ) %}
+
+{% else %}
+{% set img_path = None %}
+
+{% endif %}
+
+{% if img_path %}
+<img src="{{ img_path }}" alt="{{ image.alt_text or 'Product Image' }}" width="30%">
+{% endif %}
 
 {% endmacro %}
