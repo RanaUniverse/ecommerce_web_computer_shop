@@ -32,6 +32,7 @@ from utils.wtforms_mixins import (
     NameDescriptionMixin,
     ThumbnailImageMixin,
 )
+from utils.config import ALLOWED_IMAGE_EXTENSIONS
 
 
 class ProductAddForm(
@@ -132,17 +133,40 @@ class ProductAddForm(
     )
 
     # i have not implimentate yet this
-    gallery_images = MultipleFileField(
-        label="Product's Gallery Images",
+    # gallery_images = MultipleFileField(
+    #     label="Product's Gallery Images",
+    #     validators=[
+    #         Optional(),
+    #     ],
+    #     render_kw={
+    #         "accept": "image/*",
+    #         "class": "form-control",
+    #         "multiple": True,
+    #     },
+    # )
+
+
+
+    gallery_images = MultipleFileField(  
+        label="Product Gallery Image's",
         validators=[
             Optional(),
+            FileAllowed(
+                upload_set=ALLOWED_IMAGE_EXTENSIONS,
+                message=(
+                    f"Invalid image format, please select any "
+                    f"{ALLOWED_IMAGE_EXTENSIONS} images only"
+                ),
+            ),
         ],
         render_kw={
             "accept": "image/*",
-            "class": "form-control",
-            "multiple": True,
+            "class": "form-control form-control-lg",
+            "multiple": True,  # 👈 tells browser to allow multiple selection
         },
     )
+
+
 
     # below here i will add a idea of upload many images
     submit = SubmitField(
