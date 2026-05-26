@@ -18,6 +18,15 @@ from ..models import (
 from utils.custom_logger import logger
 
 
+from typing import TypedDict
+
+
+# i have defined thsi in another module i need to refactor this later
+class GalleryImageRecord(TypedDict):
+    image_path: str
+    order: int
+
+
 def add_one_product_image_row(
     product_image_obj: ProductGalleryImageModel,
 ) -> ProductGalleryImageModel | None:
@@ -86,4 +95,45 @@ def add_product_thumbnail_external_url(
             logger.warning(
                 msg=f"Inserting product's thumbnail's external url got fails, {e}",
             )
+            return None
+
+
+def add_product_gallery_image_rows(
+    image_records: list[GalleryImageRecord],
+    product_id: str,
+    creator_id: str | None = None,
+) -> list[ProductGalleryImageModel] | None:
+    """
+    The order is in the int part of the image_records so i will use this.
+    later i will add alt text and external link using a schema obj
+    int-> it will say how many images has been inserted in the db table
+    """
+    gallery_objs: list[ProductGalleryImageModel] = []
+
+    for one_image in image_records:
+        obj = ProductGalleryImageModel(
+            filepath=one_image.get("image_path"),
+            display_order=one_image.get("order"),
+            product_id=product_id,
+            creator_id=creator_id,
+        )
+        gallery_objs.append(obj)
+
+    with Session(engine) as session:
+
+        try:
+            session.add_all(gallery_objs)
+            session.commit()
+
+            for obj in gallery_objs:
+                session.refresh(obj)
+
+            # print(gallery_objs)
+            # for _ in gallery_objs:
+            #     print(_)
+
+            return gallery_objs
+
+        except Exception as e:
+            logger.error(f"Failed to save into thumbnail image row in db, {e}")
             return None

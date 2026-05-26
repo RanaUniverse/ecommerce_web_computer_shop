@@ -31,6 +31,7 @@ from .product_data.operation import (
 from .product_image_data.operation import (
     add_product_thumbnail_image_row,
     add_product_thumbnail_external_url,
+    add_product_gallery_image_rows,
 )
 
 __all__ = [
@@ -47,4 +48,5 @@ __all__ = [
     "get_product_out_public_schema_row",
     "add_product_thumbnail_image_row",
     "add_product_thumbnail_external_url",
+    "add_product_gallery_image_rows",
 ]
