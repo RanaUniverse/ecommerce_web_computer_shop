@@ -14,7 +14,7 @@ from ..core import engine
 
 from ..models import ProductModel
 
-from .schema import ProductOutPublic
+from .schema import ProductOutPublic, ProductDetailOutPublic
 
 
 from utils.custom_logger import logger
@@ -118,7 +118,9 @@ def update_product_row(
         return product
 
 
-def get_product_out_public_schema_row(product_id: str) -> ProductOutPublic | None:
+def get_product_out_public_schema_row(
+    product_id: str,
+) -> ProductOutPublic | None:
     """
     I will pass the product_id it will return the information to make
     the product page for showing product informations like images and id
@@ -135,3 +137,24 @@ def get_product_out_public_schema_row(product_id: str) -> ProductOutPublic | Non
             obj=product_obj,
         )
         return product_out_public_obj
+
+
+def get_product_detail_out_public_schema_row(
+    product_id: str,
+) -> ProductDetailOutPublic | None:
+    """
+    I will pass the product id and it will return full product informaion
+    like with gallery images for public
+    """
+    with Session(engine) as session:
+        product_obj = session.get(ProductModel, product_id)
+
+        if not product_obj:
+            return None
+
+        product_detail_out_public_obj = ProductDetailOutPublic.model_validate(
+            obj=product_obj,
+        )
+        print("ssssssss")
+        print(product_detail_out_public_obj)
+        return product_detail_out_public_obj

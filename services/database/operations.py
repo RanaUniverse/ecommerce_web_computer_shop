@@ -26,6 +26,7 @@ from .category_data.operation import (
 from .product_data.operation import (
     add_one_product_row,
     get_product_out_public_schema_row,
+    get_product_detail_out_public_schema_row,
 )
 
 from .product_image_data.operation import (
@@ -49,4 +50,5 @@ __all__ = [
     "add_product_thumbnail_image_row",
     "add_product_thumbnail_external_url",
     "add_product_gallery_image_rows",
+    "get_product_detail_out_public_schema_row",
 ]
