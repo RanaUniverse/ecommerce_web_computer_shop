@@ -42,7 +42,10 @@ from services.database.models import (
 
 from services.database.schemas import ProductCreate
 
-from services.storage import save_product_thumbnail_and_create_row
+from services.storage import (
+    save_product_thumbnail_and_create_row,
+    save_product_gallery_images_and_create_rows,
+)
 
 
 from utils.config import IMAGE_NOT_FOUND_IMAGE_PATH
@@ -223,6 +226,29 @@ def add_product():
 
         else:
             message += "No thumbnail image upload nor the thumbnail link has passed"
+
+        # Now from here i will check for multiple images uploded by the admin i will check  those
+        gallery_images: list[FileStorage] = form.gallery_images.data
+
+        real_gallery_images: list[FileStorage] = []
+
+        for f in gallery_images:
+            if f and f.filename:
+                real_gallery_images.append(f)
+
+        if real_gallery_images:
+            saved_images = save_product_gallery_images_and_create_rows(
+                image_files=gallery_images,
+                product_id=new_product_obj.id_,  # type: ignore
+                # later i will use product schema out which will have must str not none
+                # the creator id i will use later upon admin checking
+                # creator_id="yyy",
+            )
+            if saved_images:
+                message += f"{len(saved_images)} images has been saved for this product"
+
+            else:
+                message += f"Gallery images saving fails pls contact admin"
 
         flash(
             message=message,
