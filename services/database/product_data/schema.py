@@ -14,7 +14,7 @@ from sqlmodel import (
 )
 
 
-from ..product_image_data.schema import ProductThumbnailImageOut
+from ..product_image_data.schema import ProductThumbnailImageOut, ProductGalleryImageOut
 from ..brand_data.schema import BrandMinimal
 from ..category_data.schema import CategoryMinimal
 
@@ -66,6 +66,16 @@ class ProductOutPublic(ProductBase):
     product_thumbnail_image_obj: Optional[ProductThumbnailImageOut] = None
     category_obj: Optional[CategoryMinimal] = None
     brand_obj: Optional[BrandMinimal] = None
+
+
+class ProductDetailOutPublic(ProductOutPublic):
+    """
+    This is for showing many informatin of the product
+    so that i can use this to shows info page with many data
+    """
+
+    product_gallery_image_obj: list[ProductGalleryImageOut] | None = None
+    # gallery_obj : Optional[list[ProductGalleryImageOut]] = None
 
 
 class ProductOutAdmin(ProductCreate):
