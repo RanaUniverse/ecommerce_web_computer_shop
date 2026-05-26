@@ -31,8 +31,9 @@ from services.database.operations import (
     get_all_category_names,
     get_all_brands_id_name,
     get_one_brand_row_by_id,
-    get_product_out_public_schema_row,
+    # get_product_out_public_schema_row,
     add_product_thumbnail_external_url,
+    get_product_detail_out_public_schema_row,
 )
 
 from services.database.models import (
@@ -81,7 +82,7 @@ def product_info(product_id: str):
     images and so on for now it will shows the thumbnail image
     and little informaion aobut title, price for public
     """
-    product_public_out_obj = get_product_out_public_schema_row(product_id)
+    product_public_out_obj = get_product_detail_out_public_schema_row(product_id)
     if not product_public_out_obj:
         return "Product Not Exists with the id of" "<br>" f"{product_id.upper()}"
 
@@ -90,6 +91,7 @@ def product_info(product_id: str):
         template_name_or_list="product/info.html",
         product_obj=product_public_out_obj,
         product_thumbnail_obj=product_public_out_obj.product_thumbnail_image_obj,
+        gallery_images=product_public_out_obj.product_gallery_image_obj,
     )
 
 

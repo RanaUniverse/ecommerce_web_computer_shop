@@ -35,6 +35,12 @@ Things to pass in this?
     <p><strong>Brand:</strong> {{ product_obj.brand_obj.name or "N/A" }}</p>
     <p><strong>Category:</strong> {{ product_obj.category_obj.name or "N/A" }}</p>
 
+    <br>
+    Let's see all gallery images
+    <br>
+    {{ product_obj.product_gallery_image_obj }}
+
+
 </div>
 
 {% endblock %}
