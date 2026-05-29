@@ -58,7 +58,7 @@ class PermissionMessages:
 
 class ProductMessages:
     PRODUCT_NOT_FOUND = "Product not found"
-    PRODUCT_ADDED = "Product added successfully"
+    PRODUCT_CREATED = "Product Created successfully"
     PRODUCT_UPDATED = "Product updated successfully"
     PRODUCT_DELETED = "Product deleted successfully"
     INVALID_PRODUCT = "Invalid product details"

@@ -15,6 +15,8 @@ from .forms import BrandAddForm
 from services.database.models import BrandModel
 from services.database.operations import add_one_brand_row
 
+from utils.constants_messages import CommonMessages, BS5Alert, ProductMessages
+
 brand_bp = Blueprint(
     name="brand_bp",
     import_name=__name__,
@@ -26,7 +28,6 @@ brand_bp = Blueprint(
 def add():
 
     form = BrandAddForm()
-    print(form.errors)
     if form.validate_on_submit():  # type: ignore
         name = form.name.data
         description = form.description.data
@@ -43,14 +44,14 @@ def add():
         )
         if not new_brand_obj:
             flash(
-                message="Somethign Went wrong, contact admin",
-                category="warning",
+                message=CommonMessages.MESSAGE_HELP_CENTER,
+                category=BS5Alert.WARNING,
             )
         else:
 
             flash(
-                message="Brand Created Successfully",
-                category="primary",
+                message=ProductMessages.PRODUCT_CREATED,
+                category=BS5Alert.INFO,
             )
 
             return redirect(url_for("general_bp.index"))
@@ -58,7 +59,10 @@ def add():
     else:
         for field, errors in form.errors.items():
             for error in errors:
-                flash(f"{field.upper()}: {error}", "danger")
+                flash(
+                    message=f"{field.upper()}: {error}",
+                    category=BS5Alert.DANGER,
+                )
 
     return render_template(
         "brand/add.html",
