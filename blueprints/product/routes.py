@@ -274,10 +274,11 @@ def add_product():
                 category=message_category,
             )
 
-        flash(
-            message="No Gallery Images has been keep for this product",
-            category=BS5Alert.WARNING,
-        )
+        else:
+            flash(
+                message="No Gallery Images has been keep for this product",
+                category=BS5Alert.WARNING,
+            )
 
         # for now it send to this page, later i need to make this page good upper fun
         return redirect(
