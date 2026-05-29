@@ -32,21 +32,45 @@ def bs_alert():
     Here i will check the bs alert from the flash()
     """
 
-    flash("Primary: Welcome to Rana Store 👋", BS5Alert.PRIMARY)
+    flash(
+        message="Primary: Welcome to Rana Store 👋",
+        category=BS5Alert.PRIMARY,
+    )
 
-    flash("Secondary: Browse our latest deals and offers 🛍️", BS5Alert.SECONDARY)
+    flash(
+        message="Secondary: Browse our latest deals and offers 🛍️",
+        category=BS5Alert.SECONDARY,
+    )
 
-    flash("Success: Item added to cart successfully 🛒", BS5Alert.SUCCESS)
+    flash(
+        message="Success: Item added to cart successfully 🛒",
+        category=BS5Alert.SUCCESS,
+    )
 
-    flash("Danger: Payment failed. Please try again ❌", BS5Alert.DANGER)
+    flash(
+        message="Danger: Payment failed. Please try again ❌",
+        category=BS5Alert.DANGER,
+    )
 
-    flash("Warning: Limited stock available for some items ⚠️", BS5Alert.WARNING)
+    flash(
+        message="Warning: Limited stock available for some items ⚠️",
+        category=BS5Alert.WARNING,
+    )
 
-    flash("Info: New arrivals are now live 🔥", BS5Alert.INFO)
+    flash(
+        message="Info: New arrivals are now live 🔥",
+        category=BS5Alert.INFO,
+    )
 
-    flash("Light: Free shipping on orders above $50 🚚", BS5Alert.LIGHT)
+    flash(
+        message="Light: Free shipping on orders above $50 🚚",
+        category=BS5Alert.LIGHT,
+    )
 
-    flash("Dark: Dark mode enabled 🌙", BS5Alert.DARK)
+    flash(
+        message="Dark: Dark mode enabled 🌙",
+        category=BS5Alert.DARK,
+    )
 
     return render_template(
         template_name_or_list="testing/index.html",
