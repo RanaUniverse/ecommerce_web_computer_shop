@@ -14,16 +14,33 @@ cleanly from other parts of the application.
 
 
 class AuthMessages:
-    LOGIN_SUCCESS = "Login successful"
-    LOGIN_FAILED = "Invalid email or password"
-    LOGOUT_SUCCESS = "Logged out successfully"
-    ACCOUNT_CREATED = "Account created successfully"
-    ACCOUNT_EXISTS = "Account already exists"
-    PASSWORD_RESET_SENT = "Password reset link sent to your email"
-    PASSWORD_RESET_SUCCESS = "Password reset successful"
+    # Success messages
+    LOGIN_SUCCESS = "Welcome back! You have logged in successfully."
+    LOGOUT_SUCCESS = "You have been logged out successfully."
+    REGISTER_SUCCESS = "Your account has been created successfully."
+    PASSWORD_RESET_SUCCESS = "Your password has been reset successfully."
+
+    # Error messages
+    LOGIN_FAILED = "Invalid phone/email or password."
+    ACCOUNT_EXISTS = "An account with this phone/email already exists."
+    ACCOUNT_NOT_FOUND = "No account found with this email/phone number."
+    INVALID_CREDENTIALS = "Incorrect login credentials."
+    PASSWORD_MISMATCH = "Passwords do not match."
+    PASSWORD_NEED = "You Must need to enter Your Password."
+    INVALID_RESET_TOKEN = "Invalid or expired reset link."
+    CREADANTIAL_NEED = "Please Enter Email Id / Phone Number and Password"
+
+    # Info messages
+    PASSWORD_RESET_SENT = "Password reset instructions have been sent to your email."
+    EMAIL_VERIFICATION_SENT = "Verification email sent successfully."
+
+    # Warning messages
+    LOGIN_REQUIRED = "Please log in to continue."
+    SESSION_EXPIRED = "Your session has expired. Please log in again."
 
 
 class CommonMessages:
+    MESSAGE_HELP_CENTER = "If the problem continues, please contact the Help Center."
     TRY_AGAIN = "Please Try Again"
     SOMETHING_WENT_WRONG = "Something Went Wrong"
     CONTACT_ADMIN = "Please Contact Admin"
