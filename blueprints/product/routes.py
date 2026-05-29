@@ -50,6 +50,12 @@ from services.storage import (
 
 
 from utils.config import IMAGE_NOT_FOUND_IMAGE_PATH
+from utils.constants_messages import (
+    BS5Alert,
+    CommonMessages,
+    ProductCategoryMessages,
+    ProductMessages,
+)
 
 product_bp = Blueprint(
     name="product_bp",
@@ -126,8 +132,8 @@ def add_product():
             if not category_obj:
                 category_id = None
                 flash(
-                    message="You Entered a Wrong Category Name",
-                    category="warning",
+                    message=ProductCategoryMessages.CATEGORY_NOT_FOUND,
+                    category=BS5Alert.WARNING,
                 )
                 return render_template(
                     "product/add.html",
@@ -146,7 +152,7 @@ def add_product():
             if not brand_obj:
                 flash(
                     message="You Selected Invalid Brand",
-                    category="warning",
+                    category=BS5Alert.WARNING,
                 )
 
                 return render_template(
@@ -178,19 +184,21 @@ def add_product():
 
         if not new_product_obj:
             flash(
-                message="Somethign is wrong",
-                category="error",
+                message=CommonMessages.SOMETHING_WENT_WRONG,
+                category=BS5Alert.WARNING,
             )
             return redirect(url_for("product_bp.add_product"))
 
         # this else part comes means the product creation has successfull
-        # else:
-        message = "Product created successfully"
-        message_category = "success"
+        flash(
+            message=ProductMessages.PRODUCT_CREATED,
+            category=BS5Alert.INFO,
+        )
 
         # this time i will need to create the folder to insert the image
         thumbnail_file: FileStorage = form.image_thumbnail.data
-
+        # this is saying if the thumbnail_file came as None, it will
+        # fails but still i not found any way it can be there i need to check later
         if thumbnail_file.filename:
             saved_img_path = save_product_thumbnail_and_create_row(
                 image_file=thumbnail_file,
@@ -200,14 +208,13 @@ def add_product():
             )
 
             if saved_img_path:
-                message += " and thumbnail image saved successfully."
+                message = "Product Thumbnail Has Been Created Successfully"
+                message_category = BS5Alert.PRIMARY
 
             else:
                 # i wish this should never run as image save should go right
-                message += (
-                    ", but thumbnail image could not be saved. " "Please contact admin."
-                )
-                message_category = "warning"
+                message = "Product Thumbnail has not saved, pls contact Admin"
+                message_category = BS5Alert.WARNING
 
         elif thumbnail_url:
             product_thumbnail_obj = add_product_thumbnail_external_url(
@@ -221,13 +228,21 @@ def add_product():
             )
 
             if not product_thumbnail_obj:
-                message += "External Image saving fails, "
+                message = "External Image as Thumbnail saving fails , pls contact Admin"
+                message_category = BS5Alert.WARNING
                 # i think this will done when problem in db
             else:
-                message += "Product created successfully with external url"
+                message = "External Image Has Been saved as the product's Thumbnail"
+                message_category = BS5Alert.PRIMARY
 
         else:
-            message += "No thumbnail image upload nor the thumbnail link has passed"
+            message = "No Thumbnail is Creted For This Product"
+            message_category = BS5Alert.WARNING
+
+        flash(
+            message=message,
+            category=message_category,
+        )
 
         # Now from here i will check for multiple images uploded by the admin i will check  those
         gallery_images: list[FileStorage] = form.gallery_images.data
@@ -247,14 +262,21 @@ def add_product():
                 # creator_id="yyy",
             )
             if saved_images:
-                message += f"{len(saved_images)} images has been saved for this product"
+                message = f"{len(saved_images)} gallery images saved successfully"
+                message_category = BS5Alert.INFO
 
             else:
-                message += f"Gallery images saving fails pls contact admin"
+                message = "Failed to save gallery images, Please Contact Admin"
+                message_category = BS5Alert.WARNING
+
+            flash(
+                message=message,
+                category=message_category,
+            )
 
         flash(
-            message=message,
-            category=message_category,
+            message="No Gallery Images has been keep for this product",
+            category=BS5Alert.WARNING,
         )
 
         # for now it send to this page, later i need to make this page good upper fun
@@ -268,7 +290,10 @@ def add_product():
     else:
         for field, errors in form.errors.items():
             for error in errors:
-                flash(f"{field.upper()}: {error}", "danger")
+                flash(
+                    message=f"{field.upper()}: {error}",
+                    category=BS5Alert.DANGER,
+                )
 
     return render_template(
         "product/add.html",
