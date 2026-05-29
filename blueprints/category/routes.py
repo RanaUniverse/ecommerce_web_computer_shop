@@ -17,6 +17,8 @@ from .forms import CategoryAddForm
 from services.database.models import CategoryModel
 from services.database.operations import add_one_category_row
 
+from utils.constants_messages import ProductCategoryMessages, CommonMessages, BS5Alert
+
 category_bp = Blueprint(
     name="category_bp",
     import_name=__name__,
@@ -53,18 +55,14 @@ def add():
 
         if not new_category_obj:
             flash(
-                message="Something went wrong",
-                category="error",
+                message=CommonMessages.SOMETHING_WENT_WRONG,
+                category=BS5Alert.WARNING,
             )
             return redirect(url_for("category_bp.add"))
         else:
             flash(
-                message="Category Creation Successful",
-                category="primary",
-            )
-            flash(
-                message="You Can Add Another Category Here",
-                category="primary",
+                message=ProductCategoryMessages.CATEGORY_CREATED,
+                category=BS5Alert.INFO,
             )
             return redirect(url_for("category_bp.add"))
 

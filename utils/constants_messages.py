@@ -65,6 +65,22 @@ class ProductMessages:
     OUT_OF_STOCK = "This product is out of stock"
 
 
+class ProductCategoryMessages:
+    CATEGORY_CREATED = "Category created successfully"
+    CATEGORY_UPDATED = "Category updated successfully"
+    CATEGORY_DELETED = "Category deleted successfully"
+
+    CATEGORY_NOT_FOUND = "Category not found"
+    CATEGORY_ALREADY_EXISTS = "Category already exists"
+
+    INVALID_CATEGORY = "Invalid category details"
+    CATEGORY_HAS_PRODUCTS = (
+        "This category cannot be deleted because it contains products"
+    )
+
+    CATEGORY_STATUS_UPDATED = "Category status updated successfully"
+
+
 class CartMessages:
     ADDED_TO_CART = "Product added to cart"
     REMOVED_FROM_CART = "Product removed from cart"
