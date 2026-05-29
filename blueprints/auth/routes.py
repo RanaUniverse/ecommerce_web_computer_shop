@@ -29,6 +29,9 @@ from services.database.models import UserModel, UserRoleModel
 
 from utils.config import MESSAGE_HELP_CENTER
 
+from utils.constants_messages import AuthMessages, CommonMessages, BS5Alert
+
+
 from utils.custom_logger import logger
 
 from utils.security import (
@@ -61,25 +64,25 @@ def login():
         print(remember)
 
         if not phone_no or not password:
-            # i wish this will not happens
+            # i wish this will not happens because flask-wtf already verify this
             logger.error(
                 "on time of login phone or password need to come after validate"
             )
             flash(
-                message="Please Enter Valid Phone Number & Password",
-                category="warning",
+                message=AuthMessages.CREADANTIAL_NEED,
+                category=BS5Alert.WARNING,
             )
             return redirect(url_for("auth_bp.login"))
 
         user_obj = get_user_row_by_phone_no(phone_no=phone_no)
         if not user_obj:
             flash(
-                message="Please Check The login details and try with correct one",
-                category="error",
+                message=AuthMessages.ACCOUNT_NOT_FOUND,
+                category=BS5Alert.WARNING,
             )
             flash(
-                message=MESSAGE_HELP_CENTER,
-                category="primary",
+                message=CommonMessages.MESSAGE_HELP_CENTER,
+                category=BS5Alert.PRIMARY,
             )
             return redirect(url_for("auth_bp.login"))
 
@@ -90,17 +93,20 @@ def login():
         )
         if not is_password_correct:
             flash(
-                message="Your Password Does Not Match Try Again or contact admin",
-                category="warning",
+                message=AuthMessages.PASSWORD_MISMATCH,
+                category=BS5Alert.DANGER,
             )
             return redirect(url_for("auth_bp.login"))
 
         # it measn password is correct
         # i need to impliment remember or not
-        login_user(user_obj)
+        login_user(
+            user=user_obj,
+            remember=True,
+        )
         flash(
-            message="You Have Been Login Successfully enjoy",
-            category="primary",
+            message=AuthMessages.LOGIN_SUCCESS,
+            category=BS5Alert.INFO,
         )
         return redirect(url_for("general_bp.index"))
 
@@ -133,18 +139,22 @@ def register():
 
         if not password:
             # i wished this will never run what i think
-            logger.error("Something wrong in password become none")
+            logger.error("Something wrong in password become none in register")
             flash(
-                message="Password is required",
-                category="warning",
+                message=AuthMessages.PASSWORD_NEED,
+                category=BS5Alert.WARNING,
             )
             flash(
                 message=MESSAGE_HELP_CENTER,
-                category="danger",
+                category=BS5Alert.PRIMARY,
             )
             return redirect(url_for("auth_bp.register"))
 
-        hashed_password = generate_password_hash(password=password)
+        # from here the account creatin step will start actually
+        # i will add otp verification step here in this place mabye
+        hashed_password = generate_password_hash(
+            password=password,
+        )
 
         new_user_obj = add_new_user_row(
             user_obj=UserModel(
@@ -158,26 +168,30 @@ def register():
             )
         )
         # below i need to configure the way so that i can say what problem
-        # has occurs like passowrd fiale, or username or phone number or
+        # has occurs like passowrd problem, or username or phone number or
         # email already exists liekt his problem
         if not new_user_obj:
             flash(
-                message="Somethings went wrong pls try again",
-                category="error",
+                message=CommonMessages.SOMETHING_WENT_WRONG,
+                category=BS5Alert.WARNING,
             )
         else:
-            # it means user data has been inserted in the table goodly=
-            login_user(new_user_obj)
+            # it means user data has been inserted in the table goodly
+            login_user(
+                new_user_obj,
+                remember=True,
+            )
+            # maybe i will change this  True to condition from the user
             name = f"{new_user_obj.first_name or ''} {new_user_obj.last_name or ''}".strip()
 
             # actually i will use flask login for session and cookie
             flash(
-                message=(f"Login & Accont Creation successful 🎉"),
-                category="success",
+                message=AuthMessages.REGISTER_SUCCESS,
+                category=BS5Alert.INFO,
             )
             flash(
-                message=(f"Hello {name}, You are login successfully 🎉"),
-                category="success",
+                message=f"{name}, {AuthMessages.LOGIN_SUCCESS}",
+                category=BS5Alert.INFO,
             )
             return redirect(
                 location=url_for("general_bp.index"),
@@ -186,7 +200,10 @@ def register():
     else:
         for field, errors in form.errors.items():
             for error in errors:
-                flash(f"{field.upper()} : {error}", "warning")
+                flash(
+                    message=f"{field.upper()} : {error}",
+                    category=BS5Alert.DANGER,
+                )
 
     # this level code below will run on the get req
     return render_template(
@@ -199,5 +216,9 @@ def register():
 @login_required
 def logout():
     logout_user()
-    flash("Logged out", "primary")
+    flash(
+        message=AuthMessages.LOGOUT_SUCCESS,
+        category=BS5Alert.SECONDARY,
+    )
+
     return redirect(url_for("general_bp.index"))
