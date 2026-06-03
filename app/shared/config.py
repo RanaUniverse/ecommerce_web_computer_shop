@@ -5,78 +5,71 @@ Here i will keep write the configurations informations
 
 from pathlib import Path
 
+
+from pydantic_settings import (
+    BaseSettings,
+    SettingsConfigDict,
+)
+
 # the test dir is for storing the logger and normal
 # database sqlite .db file to store here
 TEST_DIR = Path("test_data")
 TEST_DIR.mkdir(parents=True, exist_ok=True)
 
 
-
-
-
-# Below is for the log file
-ENABLE_CONSOLE_LOGGING: bool = True
-ENABLE_FILE_LOGGING: bool = True
-LOG_FILE_NAME: str = "sample_log_file.txt"
-
-
-
-
-
-# Below is for related with the database
-
-
-# if i will want to use postgres i will use true else
-# if i want to use sqlite i will use false
-# this below and postgres informiaon will come from dot env
-IS_USING_POSTGRES: bool = True
-
-
-if IS_USING_POSTGRES:
-
-    DB_USERNAME = "rana"
-    DB_PASSWORD = "abc"
-    DB_HOST = "localhost"
-    DB_PORT = "5432"
-    DB_NAME = "r"
-
-    POSTGRES_DATABASE_URL = f"postgresql+psycopg2://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-    DATABASE_URL = POSTGRES_DATABASE_URL
-
-else:
-    # this will use normal sqlite for testing
-    sqlite_file_name = TEST_DIR / "demo_data.db"
-    SQLITE_DATABASE_URL = f"sqlite:///{sqlite_file_name}"
-
-    DATABASE_URL = SQLITE_DATABASE_URL
-
-
-# Below i will write the values that will need for the
-# flask run from main.py some values
-
-HOST_ADDRESS = "0.0.0.0"
-PORT_INT = 9999
-DEBUG_BOOL: bool = True
-
-# Below is need for flask's app config
-SECRET_KEY = "This is secret value."
-
-
-class Config:
+class Settings(BaseSettings):
     """
-    This is for some config values i will use the class's
-    instance to use the value from here
+    This is for the env values coming from the .env like environment files
+    pydantic will care about this and it will works
     """
 
-    database_url = DATABASE_URL
-    secret_key = SECRET_KEY
-    debug = DEBUG_BOOL
-    host = HOST_ADDRESS
-    port = PORT_INT
+    # application hosting related things
+    app_host: str
+    app_port: int
+    app_debug: bool
+    app_secret_key: str
+
+    # logging related
+    enable_console_logging: bool = True
+    enable_file_logging: bool = True
+    log_file_name: str = "sample_log_file.txt"
+
+    # from below the database related thigns will be calculated in the computed fields
+    sqlite_filename: str = "demo_data.db"
+    use_postgres: bool = False
+    db_username: str
+    db_password: str
+    db_host: str
+    db_port: int
+    db_name: str
+
+    # below is pydantic's settings thigns for there of env path
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+    )
+
+    @property
+    def db_url(self) -> str:
+        if self.use_postgres:
+            POSTGRES_URL = (
+                f"postgresql+psycopg2://"
+                f"{self.db_username}:"
+                f"{self.db_password}@"
+                f"{self.db_host}:"
+                f"{self.db_port}/"
+                f"{self.db_name}"
+            )
+            return POSTGRES_URL
+
+        else:
+            sqlite_filepath = TEST_DIR / self.sqlite_filename
+            SQLITE_URL = f"sqlite:///" f"{sqlite_filepath}"
+            return SQLITE_URL
 
 
-settings = Config()
+# i will use this below instance in all my needed module
+config_settings = Settings()  # type: ignore
 
 
 # where the images of the products will saved
