@@ -6,6 +6,8 @@ Here i will keep write the configurations informations
 from pathlib import Path
 
 
+from pydantic import BaseModel
+
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
@@ -15,6 +17,64 @@ from pydantic_settings import (
 # database sqlite .db file to store here
 TEST_DIR = Path("test_data")
 TEST_DIR.mkdir(parents=True, exist_ok=True)
+
+
+class ShopDetails(BaseModel):
+    """
+    This is where i will keep the name of the details of the shop
+    like name and very important constants for the business this is for
+
+    This model contains details that are displayed throughout the
+    application, such as contact information, address, branding,
+    social media links, and business-related settings.
+    """
+
+    brand_name: str = "Rana Universe"
+
+    shop_name: str = "Rana Computer Shop"
+    shop_tagline: str = "Computers, Accessories & Tech Solutions"
+
+    shop_description: str = (
+        "Trusted computer shop for laptops, accessories, "
+        "gaming products, and repair services."
+    )
+
+    shop_gstin: str = "XYZ123ABC789RANA"
+    shop_pan: str = "ABCDE1234Z"
+
+    shop_phone: str = "9988776655"
+    shop_whatsapp: str = "9998887776"
+    shop_email: str = "example+shop@gmail.com"
+    shop_support_email: str = "example+support@gmail.com"
+
+    shop_address: str = "Kalinagar NH 116 B"
+    shop_city: str = "City of Rana"
+    shop_state: str = "West Bengal"
+    shop_country: str = "India"
+    shop_pincode: str = "721430"
+
+    shop_full_address: str = (
+        "Rana Universe, Contai-Nandakumar Road, Henria, "
+        "Purba Medinipur, West Bengal 721430, India"
+    )
+
+    shop_url_facebook: str = "https://facebook.com/RanaUniverse"
+    shop_url_instagram: str = "https://instagram.com/RanaUniverse"
+    shop_url_telegram: str = "https://t.me/RanaUniverse"
+    shop_url_youtube: str = "https://youtube.com/@RanaUniverse"
+
+    free_delivery_min_amount: int = 1000
+
+    shop_opening_time: str = "10 AM - 10 PM"
+    shop_online_support_timing: str = "8 AM - 6 PM"
+
+    @property
+    def whatsapp_link(self) -> str:
+        return f"https://wa.me/91{self.shop_whatsapp}"
+
+
+# i will use this instance everywhere later
+shop_details = ShopDetails()
 
 
 class Settings(BaseSettings):
