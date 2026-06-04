@@ -6,12 +6,7 @@ Here i will make my own logger for my own usecase
 import logging
 
 
-from ..config import (
-    ENABLE_CONSOLE_LOGGING,
-    ENABLE_FILE_LOGGING,
-    LOG_FILE_NAME,
-    TEST_DIR,
-)
+from ..config import config_settings, TEST_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +18,9 @@ formatter = logging.Formatter(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
+LOG_FILE_NAME = config_settings.log_file_name
 
-if ENABLE_FILE_LOGGING:
+if config_settings.enable_file_logging:
     file_handler = logging.FileHandler(
         filename=TEST_DIR / LOG_FILE_NAME,
         mode="a",
@@ -34,7 +30,7 @@ if ENABLE_FILE_LOGGING:
     file_handler.setFormatter(formatter)
 
 
-if ENABLE_CONSOLE_LOGGING:
+if config_settings.enable_console_logging:
     console_handler = logging.StreamHandler()
     logger.addHandler(console_handler)
     console_handler.setFormatter(formatter)

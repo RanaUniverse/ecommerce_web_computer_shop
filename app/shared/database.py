@@ -9,10 +9,10 @@ from sqlmodel import (
     SQLModel,
 )
 
-from .config import settings
+from .config import config_settings
 
 engine = create_engine(
-    url=settings.database_url,
+    url=config_settings.db_url,
 )
 
 
