@@ -74,7 +74,7 @@ class ShopDetails(BaseModel):
 
 
 # i will use this instance everywhere later
-shop_details = ShopDetails()
+config_shop_details = ShopDetails()
 
 
 class Settings(BaseSettings):
