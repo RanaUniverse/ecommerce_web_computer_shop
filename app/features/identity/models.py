@@ -82,7 +82,8 @@ class UserRoleModel(SQLModel, table=True):
     )
 
     description: str = Field(
-        max_length=1000,
+        max_length=5000,
+        description="Some information about the role why for this user has this role",
     )
     # the description is not any idea for now later i will add this
 

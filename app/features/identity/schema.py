@@ -22,7 +22,10 @@ class UserCreate(UserBase):
     phone_no: str | None = Field(default=None, unique=True)
     email_id: str | None = Field(default=None, unique=True)
     username: str | None = Field(default=None, unique=True)
-    password_hashed: str
+    password_hashed: str = Field(
+        description="At time of saving this i will encrypt this so that at the "
+        "moment it enter in my backend it become encrypted."
+    )
 
 
 class UserUpdate(SQLModel):
@@ -40,7 +43,10 @@ class UserPasswordUpdate(SQLModel):
     be done in separated logic like validate latest login
     """
 
-    password_hashed: str | None = None
+    password_hashed: str | None = Field(
+        description="At time of saving this i will encrypt this so that at the "
+        "moment it enter in my backend it become encrypted."
+    )
 
 
 class UserOutPublic(UserBase):
