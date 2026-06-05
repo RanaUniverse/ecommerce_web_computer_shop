@@ -25,7 +25,7 @@ from blueprints import (
     brand_bp,
     category_bp,
     error_bp,
-    general_bp,
+    # general_bp,
     order_bp,
     user_bp,
     product_bp,
@@ -35,6 +35,9 @@ from services.extensions import (
     bcrypt,
     login_manager,
 )
+
+
+from app.features.general.routes import general_bp
 
 
 def create_app():
