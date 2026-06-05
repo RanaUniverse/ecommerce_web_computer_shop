@@ -6,6 +6,7 @@ this and it will work
 
 from sqlmodel import (
     create_engine,
+    Session,
     SQLModel,
 )
 
@@ -22,3 +23,8 @@ engine = create_engine(
 # and then the main.py will run to do the operaions not making db
 def create_db_and_engine():
     SQLModel.metadata.create_all(bind=engine)
+
+
+def get_session():
+    with Session(engine) as session:
+        yield session
