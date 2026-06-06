@@ -4,7 +4,7 @@ app/features/catalog/models/brand.py
 Brand related table class will be here
 """
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 
 from sqlmodel import (
@@ -17,6 +17,7 @@ from sqlmodel import (
 from ....shared.utils.general_utils import generate_hex_uuid4
 
 if TYPE_CHECKING:
+    from .image import BrandThumbnailImageModel
     from .product import ProductModel
 
 
@@ -44,6 +45,9 @@ class BrandModel(
     logo_filename: str | None = Field(default=None)
 
     product_obj: list["ProductModel"] = Relationship(
+        back_populates="brand_obj",
+    )
+    brand_thumbnail_image_obj: Optional[BrandThumbnailImageModel] = Relationship(
         back_populates="brand_obj",
     )
 
