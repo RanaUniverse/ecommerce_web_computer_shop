@@ -81,7 +81,8 @@ class UserRoleModel(SQLModel, table=True):
         default=user_roles.CUSTOMER,
     )
 
-    description: str = Field(
+    description: str | None = Field(
+        default=None,
         max_length=5000,
         description="Some information about the role why for this user has this role",
     )
