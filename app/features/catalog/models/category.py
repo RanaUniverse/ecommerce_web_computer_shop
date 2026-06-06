@@ -16,7 +16,8 @@ from sqlmodel import (
     SQLModel,
 )
 
-from utils.general_utils import (
+
+from ....shared.utils.general_utils import (
     current_posix_time,
     generate_hex_uuid4,
 )

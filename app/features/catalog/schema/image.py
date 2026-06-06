@@ -14,9 +14,7 @@ from sqlmodel import (
 )
 
 
-from utils.general_utils import (
-    current_posix_time,
-)
+from ....shared.utils.general_utils import current_posix_time
 
 
 class ImageSourceSchema(SQLModel):

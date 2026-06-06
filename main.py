@@ -11,33 +11,27 @@ sys.dont_write_bytecode = True
 
 # Now from below i will write my main logic of code
 
+
 from flask import Flask
 
 
-from utils.config import (
-    HOST_ADDRESS,
-    PORT_INT,
-    DEBUG_BOOL,
-    SECRET_KEY,
+from app.shared.config import (
+    config_settings,
 )
-from blueprints import (
-    auth_bp,
-    brand_bp,
-    category_bp,
-    error_bp,
-    # general_bp,
-    order_bp,
-    user_bp,
-    product_bp,
-    testing_bp,
-)
-from services.extensions import (
-    bcrypt,
+
+from app.shared.extensions import (
     login_manager,
+    bcrypt,
 )
 
 
+from app.features.catalog.routes.brand import brand_bp
+from app.features.catalog.routes.category import category_bp
+from app.features.catalog.routes.product import product_bp
+from app.features.errors.routes import error_bp
 from app.features.general.routes import general_bp
+from app.features.identity.routes import auth_bp, user_bp
+from app.features.ordering.routes import order_bp
 
 
 def create_app():
@@ -49,31 +43,18 @@ def create_app():
         __name__,
     )
 
-    app.config["SECRET_KEY"] = SECRET_KEY
+    app.config["SECRET_KEY"] = config_settings.app_secret_key
 
-    app.register_blueprint(
-        blueprint=testing_bp,
-        url_prefix="/testing",
-    )
+    # if i want to attach same blueprint in differnet url prefix
+    # i need to use the different name there
     app.register_blueprint(blueprint=auth_bp)
     app.register_blueprint(blueprint=error_bp)
     app.register_blueprint(blueprint=general_bp)
     app.register_blueprint(blueprint=user_bp)
     app.register_blueprint(blueprint=order_bp)
-    app.register_blueprint(
-        blueprint=product_bp,
-        url_prefix="/product",
-    )
-    # if i want to attach same blueprint in differnet url prefix
-    # i need to use the different name there
-    app.register_blueprint(
-        blueprint=category_bp,
-        url_prefix="/category",
-    )
-    app.register_blueprint(
-        blueprint=brand_bp,
-        url_prefix="/brand",
-    )
+    app.register_blueprint(blueprint=brand_bp, url_prefix="/brand")
+    app.register_blueprint(blueprint=category_bp, url_prefix="/category")
+    app.register_blueprint(blueprint=product_bp, url_prefix="/product")
 
     bcrypt.init_app(  # type: ignore
         app=app,
@@ -88,9 +69,9 @@ def create_app():
 def main():
     app = create_app()
     app.run(
-        host=HOST_ADDRESS,
-        port=PORT_INT,
-        debug=DEBUG_BOOL,
+        host=config_settings.app_host,
+        port=config_settings.app_port,
+        debug=config_settings.app_debug,
     )
 
 

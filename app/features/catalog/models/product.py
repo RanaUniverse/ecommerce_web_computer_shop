@@ -17,10 +17,7 @@ from sqlmodel import (
 
 from ..schema.product import ProductCreate
 
-from utils.general_utils import (
-    generate_hex_uuid4,
-    current_posix_time,
-)
+from ....shared.utils.general_utils import generate_hex_uuid4, current_posix_time
 
 if TYPE_CHECKING:
     from .image import (

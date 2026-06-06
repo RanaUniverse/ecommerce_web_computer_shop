@@ -1,0 +1,126 @@
+{#
+app/features/identity/templates/auth/register.html
+
+Here i will shows the login page of user want to register for new account
+#}
+
+{% extends 'base_layout.html' %}
+
+{% block my_title %}
+Let's Make New Account
+{% endblock %}
+
+
+
+
+
+{% block my_content %}
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="card shadow border-0 col-md-8">
+
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p class="text-success text-center fw-semibold">
+                    Register With Us For More Discounts
+                </p>
+
+
+                <div class="mb-3 form-floating">
+                    {{form.first_name()}}
+                    {{form.first_name.label()}}
+                </div>
+
+                <div class="mb-3 form-floating">
+                    {{form.middle_name()}}
+                    {{form.middle_name.label()}}
+                </div>
+
+                <div class="mb-3 form-floating">
+                    {{form.last_name()}}
+                    {{form.last_name.label()}}
+                </div>
+
+                <div class="form-floating mb-3">
+                    {{ form.phone_no() }}
+                    {{ form.phone_no.label() }}
+                </div>
+
+                <div class="form-floating mb-3">
+                    {{ form.email_id() }}
+                    {{ form.email_id.label() }}
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        {{ form.password() }}
+                        {{ form.password.label() }}
+                    </div>
+                    <button type="button" class="input-group-text btn border btn-outline-warning"
+                        onclick="PassShowHideFun()">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        {{ form.confirm_password() }}
+                        {{ form.confirm_password.label() }}
+                    </div>
+                    <button type="button" class="input-group-text btn border btn-outline-warning"
+                        onclick="PassShowHideFun()">
+                        <i id="eyeIcon" class="bi bi-eye"></i>
+                    </button>
+                </div>
+
+
+                {# This below part is checking the values from forms.py #}
+                {% for error in form.confirm_password.errors %}
+                <div class="text-danger small mb-3">
+                    {{ error }}
+                </div>
+                {% endfor %}
+
+
+
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center gap-2 mb-3">
+
+
+                    <a href="{{ url_for('auth_bp.login' ) }}" class="btn btn-sm btn-outline-info w-75 w-sm-auto">
+                        Login With Existing Account
+                    </a>
+
+
+                    <div class="form-check">
+                        {{ form.remember(class="form-check-input") }}
+                        {{ form.remember.label(class="form-check-label") }}
+                    </div>
+
+
+                    <button type="button" class="btn btn-sm btn-outline-secondary w-75 w-sm-auto" id="guestToastBtn">
+                        Login As Guest
+                    </button>
+
+                </div>
+
+                {{form.submit(class="btn btn-primary w-100 py-2 mb-3")}}
+            </form>
+        </div>
+    </div>
+
+    {% include 'auth/partials/_guest_toast.html' %}
+
+
+    {% endblock %}
+
+
+    {% block my_js %}
+    <script src="{{ url_for('static' , filename='js/password_show_hide.js') }}">
+    </script>
+
+    <script src="{{ url_for('auth_bp.static', filename='js/guest_toast.js') }}">
+    </script>
+    {% endblock %}

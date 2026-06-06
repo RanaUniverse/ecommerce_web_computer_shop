@@ -4,10 +4,6 @@ app/features/catalog/models/brand.py
 Brand related table class will be here
 """
 
-"""
-services/database/brand_data/model.py
-"""
-
 from typing import TYPE_CHECKING, Any
 
 
@@ -18,9 +14,7 @@ from sqlmodel import (
 )
 
 
-from utils.general_utils import (
-    generate_hex_uuid4,
-)
+from ....shared.utils.general_utils import generate_hex_uuid4
 
 if TYPE_CHECKING:
     from .product import ProductModel

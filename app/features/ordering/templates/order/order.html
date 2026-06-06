@@ -1,0 +1,112 @@
+{#
+app/features/ordering/templates/order/order.html
+
+Here i will shows the order page
+like what what thigns user has bought cancled and so on
+
+#}
+
+
+
+{% extends 'base_layout.html' %}
+
+{% block my_title %}
+My Orders
+{% endblock %}
+
+{% block my_content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <!-- HEADER -->
+            <div class="mb-4">
+                <h2 class="fw-bold">
+                    <i class="bi bi-bag-check me-2 text-primary"></i>
+                    My Orders
+                </h2>
+                <p class="text-muted">
+                    Track your purchases from {{ BRAND_NAME }}
+                </p>
+            </div>
+
+            <!-- ORDERS TABLE -->
+            <div class="card shadow border-0 rounded-4">
+
+                <div class="card-body p-0">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for order in orders %}
+
+                            <tr>
+
+                                <td>#{{ order.id }}</td>
+
+                                <td>{{ order.date }}</td>
+
+                                <td>
+                                    {% if order.status == "Delivered" %}
+                                    <span class="badge bg-success">Delivered</span>
+                                    {% elif order.status == "Shipped" %}
+                                    <span class="badge bg-primary">Shipped</span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark">
+                                        {{ order.status }}
+                                    </span>
+                                    {% endif %}
+                                </td>
+
+                                <td>{{ order.items }}</td>
+
+                                <td>₹{{ order.total }}</td>
+
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!-- EMPTY STATE (future use) -->
+            {% if not orders %}
+            <div class="text-center mt-5 text-muted">
+                <i class="bi bi-inbox display-4"></i>
+                <p>No orders yet</p>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

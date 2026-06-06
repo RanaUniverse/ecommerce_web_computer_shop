@@ -16,7 +16,9 @@ from flask_bcrypt import Bcrypt  # type: ignore
 
 from flask_login import LoginManager  # type: ignore
 
-from .database.operations import get_user_row_by_user_id
+from ..features.identity.operations import get_user_row_by_user_id
+
+# from .database.operations import get_user_row_by_user_id
 
 bcrypt = Bcrypt()
 

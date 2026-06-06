@@ -11,6 +11,7 @@ from sqlmodel import Field, Relationship
 
 
 from ..schema.image import ImageBase
+from ....shared.utils.general_utils import generate_hex_uuid4
 
 if TYPE_CHECKING:
     from .product import ProductModel
@@ -19,6 +20,10 @@ if TYPE_CHECKING:
 class ProductThumbnailImageModel(ImageBase, table=True):
     __tablename__ = "product_thumbnail_image_data"  # type: ignore
 
+    id_: str = Field(
+        default_factory=generate_hex_uuid4,
+        primary_key=True,
+    )
     product_id: str = Field(
         foreign_key="product_data.id_",
         index=True,
@@ -33,6 +38,10 @@ class ProductThumbnailImageModel(ImageBase, table=True):
 class ProductGalleryImageModel(ImageBase, table=True):
     __tablename__ = "product_gallery_image_data"  # type: ignore
 
+    id_: str = Field(
+        default_factory=generate_hex_uuid4,
+        primary_key=True,
+    )
     display_order: int | None = Field(default=0)
 
     product_id: str = Field(
