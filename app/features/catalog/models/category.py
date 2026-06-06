@@ -24,6 +24,7 @@ from ....shared.utils.general_utils import (
 
 if TYPE_CHECKING:
     from .product import ProductModel
+    from .image import CategoryThumbnailImageModel
 
 
 class CategoryModel(SQLModel, table=True):
@@ -72,6 +73,10 @@ class CategoryModel(SQLModel, table=True):
 
     product_obj: list["ProductModel"] = Relationship(
         back_populates="category_obj",
+    )
+
+    category_thumbnail_image_obj: Optional["CategoryThumbnailImageModel"] = Relationship(
+        back_populates="product_obj",
     )
 
     def model_post_init(self, context: Any) -> None:

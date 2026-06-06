@@ -15,6 +15,7 @@ from ....shared.utils.general_utils import generate_hex_uuid4
 
 if TYPE_CHECKING:
     from .product import ProductModel
+    from .category import CategoryModel
 
 
 class ProductThumbnailImageModel(ImageBase, table=True):
@@ -51,4 +52,21 @@ class ProductGalleryImageModel(ImageBase, table=True):
 
     product_obj: "ProductModel" = Relationship(
         back_populates="product_gallery_image_obj",
+    )
+
+
+class CategoryThumbnailImageModel(ImageBase, table=True):
+    __tablename__ = "category_thumbnail_image_data"  # type: ignore
+
+    id_: str = Field(
+        default_factory=generate_hex_uuid4,
+        primary_key=True,
+    )
+    category_id: str = Field(
+        foreign_key="category_data.id_",
+        index=True,
+    )
+
+    category_obj: "CategoryModel" = Relationship(
+        back_populates="category_thumbnail_image_obj",
     )
