@@ -10,14 +10,26 @@ from sqlmodel import SQLModel
 
 # This below will import all the models my db has
 # so it will need for alembic to check and work
-from services.database.models import *
-from services.database.core import DATABASE_URL
+
+from app.shared.config import config_settings
+
+from app.features.cart.models import *
+
+from app.features.catalog.models.brand import *
+from app.features.catalog.models.category import *
+from app.features.catalog.models.image import *
+from app.features.catalog.models.product import *
+
+from app.features.identity.models import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+config.set_main_option(
+    name="sqlalchemy.url",
+    value=config_settings.db_url,
+)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
