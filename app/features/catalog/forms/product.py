@@ -169,6 +169,7 @@ class ProductAddForm(
         label="Private Info for This Product",
         validators=[
             Length(min=1, max=5000),
+            Optional(),
         ],
         render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
     )
