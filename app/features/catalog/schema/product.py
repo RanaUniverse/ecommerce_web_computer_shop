@@ -50,12 +50,45 @@ class ProductCreate(ProductBase):
 
     quantity: int | None = Field(default=None)
     purchase_price: float | None = Field(default=None)
+    private_note: str | None = Field(
+        default=None,
+        max_length=5000,
+        description="i will store some private information here for admin",
+    )
 
     creator_id: str | None = Field(
         default=None,
         foreign_key="user_data.id_",
         index=True,
     )
+
+
+class ProductUpdate(SQLModel):
+    """
+    This is when admin will update the product information
+    the field will come only have the value to update and all others
+    are kept as none this is why all has None here
+    """
+
+    name: str | None = None
+    description: str | None = None
+    hsn_no: int | None = None
+
+    quantity: int | None = None
+
+    purchase_price: float | None = None
+    sell_price: float | None = None
+    mrp_price: float | None = None
+
+    # private_note: str | None = None
+    private_note: str | None = Field(
+        default=None,
+        max_length=5000,
+        description="i will store some private information here for admin",
+    )
+
+    brand_id: str | None = None
+    category_id: str | None = None
 
 
 class ProductOutPublic(ProductBase):
@@ -87,24 +120,3 @@ class ProductOutAdmin(ProductCreate):
 
     id_: str
     product_gallery_image_obj: list[ProductGalleryImageOut] | None = None
-
-
-class ProductUpdate(SQLModel):
-    """
-    This is when admin will update the product information
-    the field will come only have the value to update and all others
-    are kept as none this is why all has None here
-    """
-
-    name: str | None = None
-    description: str | None = None
-    hsn_no: int | None = None
-
-    quantity: int | None = None
-
-    purchase_price: float | None = None
-    sell_price: float | None = None
-    mrp_price: float | None = None
-
-    brand_id: str | None = None
-    category_id: str | None = None
