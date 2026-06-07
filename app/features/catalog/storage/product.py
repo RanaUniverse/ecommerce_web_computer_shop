@@ -45,16 +45,14 @@ def save_product_thumbnail_and_create_row(
     external_url: str | None = None,
 ) -> ProductThumbnailImageModel | None:
     """
-    Save a product thumbnail image to disk and create its database record.
+    Save a product thumbnail image and create its database record.
 
-    This function performs both filesystem and database operations as a
-    single workflow:
+    The image is first written to disk and then inserted into the database.
+    If the database operation fails, the saved image is removed to keep the
+    filesystem and database in sync.
 
-    1. Saves the uploaded image to the product's thumbnail directory.
-    2. Creates a corresponding ProductThumbnailImageModel record.
-    3. If database insertion fails after the image is saved, the image
-       file is deleted to avoid leaving orphaned files on disk.
-
+    Returns:
+        The created ProductThumbnailImageModel on success, otherwise None.
     """
 
     image_filename_from_user = secure_filename(image_file.filename or "")
