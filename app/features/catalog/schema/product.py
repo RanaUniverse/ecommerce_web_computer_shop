@@ -112,11 +112,10 @@ class ProductDetailOutPublic(ProductOutPublic):
     product_gallery_image_obj: list[ProductGalleryImageOut] | None = None
 
 
-class ProductOutAdmin(ProductCreate):
+class ProductOutAdmin(ProductDetailOutPublic):
     """
     This is for showing the admin of product details to check
     statistics and also after create this will return for showing the data
     """
 
-    id_: str
-    product_gallery_image_obj: list[ProductGalleryImageOut] | None = None
+    private_note: str | None = None
