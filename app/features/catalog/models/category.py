@@ -64,7 +64,7 @@ class CategoryModel(
 
     category_thumbnail_image_obj: Optional["CategoryThumbnailImageModel"] = (
         Relationship(
-            back_populates="product_obj",
+            back_populates="category_obj",
         )
     )
 
