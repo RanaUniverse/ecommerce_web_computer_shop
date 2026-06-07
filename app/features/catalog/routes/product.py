@@ -38,9 +38,7 @@ from ..operations.category import (
     get_all_category_names,
     get_one_category_row_by_name,
 )
-from ..operations.image import (
-    add_product_thumbnail_external_url,
-)
+from ..operations.image import add_product_thumbnail_by_external_url
 from ..operations.product import (
     add_one_product_row,
     get_product_detail_out_public_schema_row,
@@ -106,6 +104,10 @@ def product_info(product_id: str):
     )
 
 
+from ..schema.product import ProductCreate
+from ..service import product as product_ser
+
+
 @product_bp.route(
     rule="/add",
     methods=["GET", "POST"],
@@ -129,42 +131,43 @@ def add_product():
         price_mrp = form.mrp_price.data
         alt_text = form.thumbnail_alt_text.data or None
         thumbnail_url = form.thumbnail_url.data or None
+        private_note = form.private_note.data or None
 
-        if not category_name:
-            category_id = None
-        else:
-            category_obj = get_one_category_row_by_name(category_name)
-            if not category_obj:
-                category_id = None
-                flash(
-                    message=ProductCategoryMessages.CATEGORY_NOT_FOUND,
-                    category=BS5Alert.WARNING,
-                )
-                return render_template(
-                    "product/add.html",
-                    form=form,
-                    items=list_of_category,
-                )
+        # if not category_name:
+        #     category_id = None
+        # else:
+        #     category_obj = get_one_category_row_by_name(category_name)
+        #     if not category_obj:
+        #         category_id = None
+        #         flash(
+        #             message=ProductCategoryMessages.CATEGORY_NOT_FOUND,
+        #             category=BS5Alert.WARNING,
+        #         )
+        #         return render_template(
+        #             "product/add.html",
+        #             form=form,
+        #             items=list_of_category,
+        #         )
 
-            else:
-                category_id = category_obj.id_
+        #     else:
+        #         category_id = category_obj.id_
 
-        if not brand_id:
-            brand_obj = None
-        else:
-            brand_obj = get_one_brand_row_by_id(brand_id)
+        # if not brand_id:
+        #     brand_obj = None
+        # else:
+        #     brand_obj = get_one_brand_row_by_id(brand_id)
 
-            if not brand_obj:
-                flash(
-                    message="You Selected Invalid Brand",
-                    category=BS5Alert.WARNING,
-                )
+        #     if not brand_obj:
+        #         flash(
+        #             message="You Selected Invalid Brand",
+        #             category=BS5Alert.WARNING,
+        #         )
 
-                return render_template(
-                    "product/add.html",
-                    form=form,
-                    items=list_of_category,
-                )
+        #         return render_template(
+        #             "product/add.html",
+        #             form=form,
+        #             items=list_of_category,
+        #         )
         # here the ignore is ok, as this will validate and convert its data as pydnatic model
         product_create_schema_obj = ProductCreate(
             name=name,
@@ -173,10 +176,28 @@ def add_product():
             mrp_price=price_mrp,  # type: ignore
             sell_price=price_sell,  # type: ignore
             brand_id=brand_id,
-            category_id=category_id,
+            # category_id=category_id,
             quantity=quantity,
             purchase_price=price_purchase,  # type: ignore
+            private_note=private_note,
             # creator_id= somethigns_will_do_later_after_role_and_login
+        )
+        gallery_images: list[FileStorage] = form.gallery_images.data
+
+        real_gallery_images: list[FileStorage] = []
+
+        for f in gallery_images:
+            if f and f.filename:
+                real_gallery_images.append(f)
+        print("yyy")
+
+        obj = product_ser.create_new_product_row_with_images(
+            product_obj=product_create_schema_obj,
+            thumbnail_file=form.image_thumbnail.data,
+            thumbnail_url=thumbnail_url,
+            thumbnail_alt_text=alt_text,
+            gallery_images=real_gallery_images,
+            category_name=category_name,
         )
 
         product_model_db_obj = ProductModel.model_validate(
@@ -200,90 +221,90 @@ def add_product():
             category=BS5Alert.INFO,
         )
 
-        # this time i will need to create the folder to insert the image
-        thumbnail_file: FileStorage = form.image_thumbnail.data
-        # this is saying if the thumbnail_file came as None, it will
-        # fails but still i not found any way it can be there i need to check later
-        if thumbnail_file.filename:
-            saved_img_path = save_product_thumbnail_and_create_row(
-                image_file=thumbnail_file,
-                product_id=new_product_obj.id_,  # type: ignore
-                alt_text=alt_text,
-                external_url=thumbnail_url,
-            )
+        # # this time i will need to create the folder to insert the image
+        # thumbnail_file: FileStorage = form.image_thumbnail.data
+        # # this is saying if the thumbnail_file came as None, it will
+        # # fails but still i not found any way it can be there i need to check later
+        # if thumbnail_file.filename:
+        #     saved_img_path = save_product_thumbnail_and_create_row(
+        #         image_file=thumbnail_file,
+        #         product_id=new_product_obj.id_,  # type: ignore
+        #         alt_text=alt_text,
+        #         external_url=thumbnail_url,
+        #     )
 
-            if saved_img_path:
-                message = "Product Thumbnail Has Been Created Successfully"
-                message_category = BS5Alert.PRIMARY
+        #     if saved_img_path:
+        #         message = "Product Thumbnail Has Been Created Successfully"
+        #         message_category = BS5Alert.PRIMARY
 
-            else:
-                # i wish this should never run as image save should go right
-                message = "Product Thumbnail has not saved, pls contact Admin"
-                message_category = BS5Alert.WARNING
+        #     else:
+        #         # i wish this should never run as image save should go right
+        #         message = "Product Thumbnail has not saved, pls contact Admin"
+        #         message_category = BS5Alert.WARNING
 
-        elif thumbnail_url:
-            product_thumbnail_obj = add_product_thumbnail_external_url(
-                ProductThumbnailImageModel(
-                    # later i will use schema where id_ will need there
-                    product_id=new_product_obj.id_,  # type: ignore
-                    external_url=thumbnail_url,
-                    alt_text=alt_text,
-                    # creator_id=creator_id_iwilldoitlater,
-                )
-            )
+        # elif thumbnail_url:
+        #     product_thumbnail_obj = add_product_thumbnail_by_external_url(
+        #         ProductThumbnailImageModel(
+        #             # later i will use schema where id_ will need there
+        #             product_id=new_product_obj.id_,  # type: ignore
+        #             external_url=thumbnail_url,
+        #             alt_text=alt_text,
+        #             # creator_id=creator_id_iwilldoitlater,
+        #         )
+        #     )
 
-            if not product_thumbnail_obj:
-                message = "External Image as Thumbnail saving fails , pls contact Admin"
-                message_category = BS5Alert.WARNING
-                # i think this will done when problem in db
-            else:
-                message = "External Image Has Been saved as the product's Thumbnail"
-                message_category = BS5Alert.PRIMARY
+        #     if not product_thumbnail_obj:
+        #         message = "External Image as Thumbnail saving fails , pls contact Admin"
+        #         message_category = BS5Alert.WARNING
+        #         # i think this will done when problem in db
+        #     else:
+        #         message = "External Image Has Been saved as the product's Thumbnail"
+        #         message_category = BS5Alert.PRIMARY
 
-        else:
-            message = "No Thumbnail is Creted For This Product"
-            message_category = BS5Alert.WARNING
+        # else:
+        #     message = "No Thumbnail is Creted For This Product"
+        #     message_category = BS5Alert.WARNING
 
-        flash(
-            message=message,
-            category=message_category,
-        )
+        # flash(
+        #     message=message,
+        #     category=message_category,
+        # )
 
         # Now from here i will check for multiple images uploded by the admin i will check  those
-        gallery_images: list[FileStorage] = form.gallery_images.data
+        # gallery_images: list[FileStorage] = form.gallery_images.data
 
-        real_gallery_images: list[FileStorage] = []
+        # real_gallery_images: list[FileStorage] = []
 
-        for f in gallery_images:
-            if f and f.filename:
-                real_gallery_images.append(f)
+        # for f in gallery_images:
+        #     if f and f.filename:
+        #         real_gallery_images.append(f)
 
-        if real_gallery_images:
-            saved_images = save_product_gallery_images_and_create_rows(
-                image_files=gallery_images,
-                product_id=new_product_obj.id_,  # type: ignore
-                # later i will use product schema out which will have must str not none
-                # the creator id i will use later upon admin checking
-                # creator_id="yyy",
-            )
-            if saved_images:
-                message = f"{len(saved_images)} gallery images saved successfully"
-                message_category = BS5Alert.INFO
+        # if real_gallery_images:
+        #     saved_images = save_product_gallery_images_and_create_rows(
+        #         image_files=gallery_images,
+        #         product_id=new_product_obj.id_,  # type: ignore
+        #         # later i will use product schema out which will have must str not none
+        #         # the creator id i will use later upon admin checking
+        #         # creator_id="yyy",
+        #     )
+        #     if saved_images:
+        #         message = f"{len(saved_images)} gallery images saved successfully"
+        #         message_category = BS5Alert.INFO
 
-            else:
-                message = "Failed to save gallery images, Please Contact Admin"
-                message_category = BS5Alert.WARNING
+        #     else:
+        #         message = "Failed to save gallery images, Please Contact Admin"
+        #         message_category = BS5Alert.WARNING
 
-            flash(
-                message=message,
-                category=message_category,
-            )
+        #     flash(
+        #         message=message,
+        #         category=message_category,
+        #     )
 
-        else:
-            flash(
-                message="No Gallery Images has been keep for this product",
-                category=BS5Alert.WARNING,
-            )
+        # else:
+        #     flash(
+        #         message="No Gallery Images has been keep for this product",
+        #         category=BS5Alert.WARNING,
+        #     )
 
         # for now it send to this page, later i need to make this page good upper fun
         return redirect(

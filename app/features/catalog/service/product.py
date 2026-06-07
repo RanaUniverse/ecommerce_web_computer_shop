@@ -1,0 +1,154 @@
+"""
+app/features/catalog/service_product.py
+
+For product related business logic will be kept here
+"""
+
+from werkzeug.datastructures import FileStorage
+
+from ..models.image import ProductThumbnailImageModel
+from ..models.product import ProductModel
+
+from ..schema.product import ProductCreate, ProductOutAdmin
+
+from ..operations import brand as brand_ops
+from ..operations import category as category_ops
+from ..operations import image as image_ops
+from ..operations import product as product_ops
+
+from ..storage import (
+    save_product_gallery_images_and_create_rows,
+    save_product_thumbnail_and_create_row,
+)
+
+
+class CategoryNotFoundError(Exception):
+    pass
+
+
+class BrandNotFoundError(Exception):
+    pass
+
+
+class ProductCreationError(Exception):
+    pass
+
+
+class ProductThumbnailSaveError(Exception):
+    pass
+
+
+class ProductGalleryImageSaveError(Exception):
+    pass
+
+
+def create_new_product_row_with_images(
+    product_obj: ProductCreate,
+    category_name: str | None,
+    thumbnail_file: FileStorage | None,
+    thumbnail_url: str | None,
+    thumbnail_alt_text: str | None,
+    gallery_images: list[FileStorage],
+) -> ProductOutAdmin:
+    """
+    This will do all the operations of insert the product into the table
+    save the iamges in ssd and store the informaiotn in the tables
+
+        gallery_images: list[FileStorage] = form.gallery_images.data
+
+
+    """
+    # First i will check the Brand Id validation
+    if product_obj.brand_id:
+        brand_obj = brand_ops.get_one_brand_row_by_id(
+            brand_id=product_obj.brand_id,
+        )
+        if not brand_obj:
+            raise BrandNotFoundError(
+                "Brand selected is not found, maybe user  did some js change.",
+            )
+
+    # NOw from the category name i will make the id and insert in the schema
+    category_id = None
+    if category_name:
+        category_obj = category_ops.get_one_category_row_by_name(
+            name=category_name,
+        )
+        if not category_obj:
+            raise CategoryNotFoundError(
+                f"Category: {category_name} not Exixts.",
+            )
+        category_id = category_obj.id_
+
+    # i will want to insert the category_id there explicitely
+    product_obj.category_id = category_id
+    product_model = ProductModel.model_validate(
+        obj=product_obj,
+        from_attributes=True,
+    )
+
+    saved_product = product_ops.add_one_product_row(
+        product_obj=product_model,
+    )
+
+    if not saved_product:
+        raise ProductCreationError(
+            "Failed To Create the Product",
+        )
+        return None
+
+    # Now after the product has inserted i want to insert the thumbnail here
+    if thumbnail_file and thumbnail_file.filename:
+
+        thumbnail_obj = save_product_thumbnail_and_create_row(
+            image_file=thumbnail_file,
+            product_id=saved_product.id_,
+            alt_text=thumbnail_alt_text,
+            creator_id=saved_product.creator_id,
+            external_url=thumbnail_url,
+        )
+        if not thumbnail_obj:
+            raise ProductThumbnailSaveError(
+                "Save Thumbnail files got fails",
+            )
+
+    elif thumbnail_url:
+        thumbnail_obj = image_ops.add_product_thumbnail_by_external_url(
+            thumbnail_obj=ProductThumbnailImageModel(
+                external_url=thumbnail_url,
+                alt_text=thumbnail_alt_text,
+                creator_id=product_obj.creator_id,
+                product_id=saved_product.id_,
+            )
+        )
+        if not thumbnail_obj:
+            raise ProductThumbnailSaveError(
+                "Saving thumbnail with url only fails",
+            )
+
+    real_gallery_images: list[FileStorage] = []
+
+    for f in gallery_images:
+        if f and f.filename:
+            real_gallery_images.append(f)
+
+    if real_gallery_images:
+        # later i will use product schema out which will have must str not none
+        saved_images = save_product_gallery_images_and_create_rows(
+            image_files=real_gallery_images,
+            product_id=saved_product.id_,
+            creator_id=product_obj.creator_id,
+        )
+        if not saved_images:
+            raise ProductGalleryImageSaveError(
+                "Gallery images saving fails",
+            )
+    print("xxxxxxx")
+    print(saved_product)
+    print(type(saved_product))
+    out_obj = ProductOutAdmin.model_validate(
+        obj=saved_product,
+        from_attributes=True,
+    )
+    print("YYYYYYYY")
+    print(out_obj)
