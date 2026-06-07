@@ -14,7 +14,7 @@ from sqlmodel import (
 
 
 from .brand import BrandMinimalOut
-from .category import CategoryMinimalOut
+from .category import CategoryOutMinimal
 from .image import (
     ProductGalleryImageOut,
     ProductThumbnailImageOut,
@@ -66,7 +66,7 @@ class ProductOutPublic(ProductBase):
     # the id_ will come from the database table thats why i keep here to shows public
     id_: str
     product_thumbnail_image_obj: Optional[ProductThumbnailImageOut] = None
-    category_obj: Optional[CategoryMinimalOut] = None
+    category_obj: Optional[CategoryOutMinimal] = None
     brand_obj: Optional[BrandMinimalOut] = None
 
 

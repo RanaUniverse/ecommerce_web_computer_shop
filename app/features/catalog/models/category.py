@@ -13,7 +13,6 @@ from typing import TYPE_CHECKING, Any, Optional
 from sqlmodel import (
     Field,
     Relationship,
-    SQLModel,
 )
 
 
@@ -21,13 +20,17 @@ from ....shared.utils.general_utils import (
     current_posix_time,
     generate_hex_uuid4,
 )
+from ..schema.category import CategoryCreateRequest
 
 if TYPE_CHECKING:
     from .product import ProductModel
     from .image import CategoryThumbnailImageModel
 
 
-class CategoryModel(SQLModel, table=True):
+class CategoryModel(
+    CategoryCreateRequest,
+    table=True,
+):
     """
     The relation between category and product are like
     one category can have many or no product at all
@@ -39,25 +42,9 @@ class CategoryModel(SQLModel, table=True):
         default_factory=generate_hex_uuid4,
         primary_key=True,
     )
-    name: str | None = Field(
-        default=None,
-        index=True,
-        unique=True,
-    )
-    description: str | None = Field(default=None)
-
-    # i use this to store bootstrap's icon value to shows later i will use svg or iamge
-    icon_name: str | None = Field(default=None)
-
-    private_note: str | None = Field(default=None)
 
     created_time: int = Field(
         default_factory=current_posix_time,
-    )
-
-    parent_id: str | None = Field(
-        default=None,
-        foreign_key="category_data.id_",
     )
 
     parent_obj: Optional["CategoryModel"] = Relationship(
@@ -75,8 +62,10 @@ class CategoryModel(SQLModel, table=True):
         back_populates="category_obj",
     )
 
-    category_thumbnail_image_obj: Optional["CategoryThumbnailImageModel"] = Relationship(
-        back_populates="product_obj",
+    category_thumbnail_image_obj: Optional["CategoryThumbnailImageModel"] = (
+        Relationship(
+            back_populates="product_obj",
+        )
     )
 
     def model_post_init(self, context: Any) -> None:
