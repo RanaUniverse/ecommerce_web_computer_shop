@@ -13,7 +13,7 @@ from sqlmodel import (
 )
 
 
-from .brand import BrandMinimalOut
+from .brand import BrandOutMinimal
 from .category import CategoryOutMinimal
 from .image import (
     ProductGalleryImageOut,
@@ -67,7 +67,7 @@ class ProductOutPublic(ProductBase):
     id_: str
     product_thumbnail_image_obj: Optional[ProductThumbnailImageOut] = None
     category_obj: Optional[CategoryOutMinimal] = None
-    brand_obj: Optional[BrandMinimalOut] = None
+    brand_obj: Optional[BrandOutMinimal] = None
 
 
 class ProductDetailOutPublic(ProductOutPublic):
