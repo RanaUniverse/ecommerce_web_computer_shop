@@ -38,7 +38,7 @@ class CategoryModel(
 
     __tablename__ = "category_data"  # type: ignore
 
-    id_: str | None = Field(
+    id_: str = Field(
         default_factory=generate_hex_uuid4,
         primary_key=True,
     )
