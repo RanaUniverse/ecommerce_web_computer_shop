@@ -78,19 +78,20 @@ def product_thumbnail_img_row(
         return obj
 
 
-def add_product_thumbnail_external_url(
-    product_obj: ProductThumbnailImageModel,
+# TODO i will make this take the image schema not the things like this
+def add_product_thumbnail_by_external_url(
+    thumbnail_obj: ProductThumbnailImageModel,
 ) -> ProductThumbnailImageModel | None:
     """
-    I will need to modefy this fucntion to only take the
-    url and alt text not the product_image_uploadedbyuser
+    External Url and Alt Text
+    This two is only necessary to work with this
     """
     with Session(engine) as session:
         try:
-            session.add(product_obj)
+            session.add(thumbnail_obj)
             session.commit()
-            session.refresh(product_obj)
-            return product_obj
+            session.refresh(thumbnail_obj)
+            return thumbnail_obj
 
         except Exception as e:
             logger.warning(
