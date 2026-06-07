@@ -42,12 +42,15 @@ class BrandModel(
 
     website_url: str | None = Field(default=None)
 
-    logo_filename: str | None = Field(default=None)
+    logo_filename: str | None = Field(
+        default=None,
+        description="Currently i have no idea how i will use this",
+    )
 
     product_obj: list["ProductModel"] = Relationship(
         back_populates="brand_obj",
     )
-    brand_thumbnail_image_obj: Optional[BrandThumbnailImageModel] = Relationship(
+    brand_thumbnail_image_obj: Optional["BrandThumbnailImageModel"] = Relationship(
         back_populates="brand_obj",
     )
 
