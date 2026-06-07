@@ -37,6 +37,7 @@ class GalleryImageRecord(TypedDict):
     order: int
 
 
+# TODO i will make this take the image schema not the things like this
 def save_product_thumbnail_and_create_row(
     image_file: FileStorage,
     product_id: str,
