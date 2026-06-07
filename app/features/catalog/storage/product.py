@@ -45,8 +45,16 @@ def save_product_thumbnail_and_create_row(
     external_url: str | None = None,
 ) -> ProductThumbnailImageModel | None:
     """
-    I want to save the image in the disk and also add the record simultaniously
-    in the database thats why i keep both logic in this same function
+    Save a product thumbnail image to disk and create its database record.
+
+    This function performs both filesystem and database operations as a
+    single workflow:
+
+    1. Saves the uploaded image to the product's thumbnail directory.
+    2. Creates a corresponding ProductThumbnailImageModel record.
+    3. If database insertion fails after the image is saved, the image
+       file is deleted to avoid leaving orphaned files on disk.
+
     """
 
     image_filename_from_user = secure_filename(image_file.filename or "")
