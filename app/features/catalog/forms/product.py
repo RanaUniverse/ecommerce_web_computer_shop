@@ -165,6 +165,14 @@ class ProductAddForm(
         },
     )
 
+    private_note = StringField(
+        label="Private Info for This Product",
+        validators=[
+            Length(min=1, max=5000),
+        ],
+        render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
+    )
+
     # below here i will add a idea of upload many images
     submit = SubmitField(
         label="Create Product",
