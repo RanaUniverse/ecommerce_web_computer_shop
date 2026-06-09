@@ -1,5 +1,5 @@
 """
-app/features/catalog/storage/product.py
+app/features/catalog/service/storage/product.py
 
 Here i will write the product related things to save in my storage and so on
 """
@@ -9,26 +9,28 @@ from typing import TypedDict
 from pathlib import Path
 
 
+from sqlmodel import Session
+
 from werkzeug.utils import secure_filename
 
 from werkzeug.datastructures import FileStorage
 
 
-from ..operations.image import (
+from ...operations.image import (
     add_product_gallery_image_rows,
     add_product_thumbnail_image_row,
 )
 
-from ..models.image import ProductThumbnailImageModel, ProductGalleryImageModel
+from ...models.image import ProductThumbnailImageModel, ProductGalleryImageModel
 
-from ....shared.config import (
+from .....shared.config import (
     ALLOWED_IMAGE_EXTENSIONS,
     IMAGE_THUMBNAIL_PREFIX,
     PRODUCT_IMAGE_UPLOAD_ROOT,
     STATIC_PATH,
 )
 
-from ....shared.utils.custom_logger import logger
+from .....shared.utils.custom_logger import logger
 
 
 # i have use this in another place i need to refactor
@@ -39,6 +41,7 @@ class GalleryImageRecord(TypedDict):
 
 # TODO i will make this take the image schema not the things like this
 def save_product_thumbnail_and_create_row(
+    session: Session,
     image_file: FileStorage,
     product_id: str,
     alt_text: str | None = None,
@@ -86,6 +89,7 @@ def save_product_thumbnail_and_create_row(
     )
 
     saved_row = add_product_thumbnail_image_row(
+        session=session,
         thumbnail_obj=db_image_obj,
     )
     # if db insert fails i need to delte the image from storage
@@ -106,6 +110,7 @@ def save_product_thumbnail_and_create_row(
 
 
 def save_product_gallery_images_and_create_rows(
+    session: Session,
     image_files: list[FileStorage],
     product_id: str,
     creator_id: str | None = None,
@@ -164,6 +169,7 @@ def save_product_gallery_images_and_create_rows(
 
     # this is outside the loop so taht it will not insert many time
     db_record = add_product_gallery_image_rows(
+        session=session,
         image_records=image_records,
         product_id=product_id,
         creator_id=creator_id,
