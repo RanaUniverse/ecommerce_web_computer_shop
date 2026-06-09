@@ -52,7 +52,7 @@ def create_new_product_row_with_images(
     thumbnail_url: str | None,
     thumbnail_alt_text: str | None,
     gallery_images: list[FileStorage],
-) -> ProductOutAdmin | None:
+) -> ProductOutAdmin:
     """
     This will do all the operations of insert the product into the table
     save the iamges in ssd and store the informaiotn in the tables
@@ -101,7 +101,6 @@ def create_new_product_row_with_images(
             raise ProductCreationError(
                 "Failed To Create the Product",
             )
-            return None
 
         # Now after the product has inserted i want to insert the thumbnail here
         if thumbnail_file and thumbnail_file.filename:
