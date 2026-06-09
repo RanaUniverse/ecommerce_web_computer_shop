@@ -152,15 +152,11 @@ def create_new_product_row_with_images(
                 raise ProductGalleryImageSaveError(
                     "Gallery images saving fails",
                 )
-        print("xxxxxxx")
-        print(saved_product)
-        print(type(saved_product))
         out_obj = ProductOutAdmin.model_validate(
             obj=saved_product,
             from_attributes=True,
         )
-        print("YYYYYYYY")
-        print(out_obj)
+        return out_obj
 
 
 def get_product_details_for_admin(
