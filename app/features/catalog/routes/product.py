@@ -90,7 +90,7 @@ def add_product():
     existing_brands = brand_ser.get_all_brands_id_name_pair()
     form.brand_id.choices = [("", "Select Brand")] + existing_brands  # type: ignore
 
-    list_of_category = category_ser.get_list_of_all_category_name()
+    list_of_category = category_ser.list_of_category_names()
 
     if form.validate_on_submit():  # type: ignore
         name = form.name.data or ""
@@ -198,7 +198,7 @@ def add_product():
                 message="An unexpected error occurred. Please try again later.",
                 category=BS5Alert.DANGER,
             )
-            status_code = 406
+            status_code = 500
 
         return (
             render_template(

@@ -16,14 +16,16 @@ from flask import (
 )
 
 
+from .. import exceptions as exc
+
 from ..forms.category import CategoryAddForm
 
-from ..models.category import CategoryModel
-from ..operations.category import add_one_category_row
+from ..schema.category import CategoryCreateRequest
+
+from ..service import category as category_ser
 
 from ....shared.utils.constants_messages import (
     BS5Alert,
-    CommonMessages,
     ProductCategoryMessages,
 )
 
@@ -41,40 +43,67 @@ def add():
     """
 
     form = CategoryAddForm()
+    list_of_category = category_ser.list_of_category_names()
+
     if form.validate_on_submit():  # type: ignore
         name = form.name.data
         description = form.description.data
         icon_name = form.icon_name.data
         private_note = form.private_note.data
-        parent_id = form.parent_id.data or None
-        # because i want to insert as None when parent id not abialbale
+        # parent_id = form.parent_id.data or None
+        parent_category = form.parent_category_name.data or None
+        # because i want to insert as None when parent id not passed
 
-        print(parent_id, type(parent_id))
-
-        new_category_obj = add_one_category_row(
-            category_obj=CategoryModel(
-                name=name or "",
-                description=description,
-                icon_name=icon_name,
-                private_note=private_note,
-                parent_id=parent_id,
-            )
+        category_create_obj = CategoryCreateRequest(
+            name=name,
+            description=description,
+            icon_name=icon_name,
+            private_note=private_note,
         )
 
-        if not new_category_obj:
-            flash(
-                message=CommonMessages.SOMETHING_WENT_WRONG,
-                category=BS5Alert.WARNING,
+        try:
+            # here i will actually return a page which will shows the category info
+            # TODO
+            # i will use this below and it will stop wrning
+            new_category_obj = category_ser.add_one_category(  # type: ignore
+                obj=category_create_obj,
+                parent_category_name=parent_category,
             )
-            return redirect(url_for("category_bp.add"))
-        else:
             flash(
                 message=ProductCategoryMessages.CATEGORY_CREATED,
-                category=BS5Alert.INFO,
+                category=BS5Alert.SUCCESS,
             )
             return redirect(url_for("category_bp.add"))
+
+        except (
+            exc.ParentCategoryNotFoundError,
+            exc.DuplicateCategoryNameError,
+            exc.CategoryCreationFailError,
+        ) as e:
+            flash(
+                message=e.frontend_error_msg,
+                category=BS5Alert.WARNING,
+            )
+            status_code = e.frontend_status_code
+
+        except Exception:
+            flash(
+                message="An unexpected error occurred. Please try again later.",
+                category=BS5Alert.DANGER,
+            )
+            status_code = 500
+
+        return (
+            render_template(
+                "category/add.html",
+                form=form,
+                items=list_of_category,
+            ),
+            status_code,
+        )
 
     return render_template(
         "category/add.html",
         form=form,
+        items=list_of_category,
     )
