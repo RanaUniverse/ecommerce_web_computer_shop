@@ -144,31 +144,67 @@ def add_product():
             # TODO
             # i will add here extra mechanism so that it will say if thumbnail or gallery
             # images has been saved successfully or not
-        except product_ser.CategoryNotFoundError as e:
-            flash(str(e), BS5Alert.WARNING)
 
-        except product_ser.BrandNotFoundError as e:
-            flash(str(e), BS5Alert.WARNING)
+        # except product_ser.CategoryNotFoundError as e:
+        #     flash(
+        #         message=e.frontend_error_msg,
+        #         category=BS5Alert.WARNING,
+        #     )
+        #     status_code = e.frontend_status_code
 
-        except product_ser.ProductCreationError as e:
-            flash(str(e), BS5Alert.WARNING)
+        # except product_ser.BrandNotFoundError as e:
+        #     flash(
+        #         message=e.frontend_error_msg,
+        #         category=BS5Alert.WARNING,
+        #     )
+        #     status_code = e.frontend_status_code
 
-        except product_ser.ProductThumbnailSaveError as e:
-            flash(str(e), BS5Alert.WARNING)
+        # except product_ser.ProductCreationError as e:
+        #     flash(
+        #         message=e.frontend_error_msg,
+        #         category=BS5Alert.WARNING,
+        #     )
+        #     status_code = e.frontend_status_code
 
-        except product_ser.ProductGalleryImageSaveError as e:
-            flash(str(e), BS5Alert.WARNING)
-
-        except Exception as e:
+        except (
+            product_ser.CategoryNotFoundError,
+            product_ser.BrandNotFoundError,
+            product_ser.ProductCreationError,
+        ) as e:
             flash(
-                message="Somethings Wrong",
+                message=e.frontend_error_msg,
                 category=BS5Alert.WARNING,
             )
+            status_code = e.frontend_status_code
 
-        return render_template(
-            "product/add.html",
-            form=form,
-            items=list_of_category,
+        except product_ser.ProductThumbnailSaveError:
+            flash(
+                message="Product created, but the thumbnail image could not be saved.",
+                category=BS5Alert.WARNING,
+            )
+            status_code = 400
+
+        except product_ser.ProductGalleryImageSaveError:
+            flash(
+                message="Product created, but one or more gallery images could not be saved.",
+                category=BS5Alert.WARNING,
+            )
+            status_code = 405
+
+        except Exception:
+            flash(
+                message="An unexpected error occurred. Please try again later.",
+                category=BS5Alert.DANGER,
+            )
+            status_code = 406
+
+        return (
+            render_template(
+                "product/add.html",
+                form=form,
+                items=list_of_category,
+            ),
+            status_code,
         )
 
     else:

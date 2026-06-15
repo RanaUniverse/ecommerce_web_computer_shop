@@ -4,37 +4,52 @@ app/features/catalog/service_product.py
 For product related business logic will be kept here
 """
 
+from sqlmodel import Session
+
 from werkzeug.datastructures import FileStorage
 
-from ..models.image import ProductThumbnailImageModel
-from ..models.product import ProductModel
-
-from ..schema.product import ProductCreate, ProductOutAdmin, ProductDetailOutPublic
 
 from ..operations import brand as brand_ops
 from ..operations import category as category_ops
 from ..operations import image as image_ops
 from ..operations import product as product_ops
 
+from ..models.image import ProductThumbnailImageModel
+from ..models.product import ProductModel
+
+from ..schema.product import ProductCreate, ProductOutAdmin, ProductDetailOutPublic
+
+from ....shared.database import engine
+
 from .storage.product import (
     save_product_gallery_images_and_create_rows,
     save_product_thumbnail_and_create_row,
 )
 
-from sqlmodel import Session
-from ....shared.database import engine
-
 
 class CategoryNotFoundError(Exception):
-    pass
+    # this came when user give wrong info
+    frontend_status_code = 422
+    frontend_error_msg = (
+        "The selected category does not exist. Please choose a valid category."
+    )
 
 
 class BrandNotFoundError(Exception):
-    pass
+    # this came when user give wrong info
+    frontend_status_code = 422
+    frontend_error_msg = (
+        "The selected brand does not exist. Please choose a valid brand."
+    )
 
 
 class ProductCreationError(Exception):
-    pass
+    # this is when server side issue like storage problem or db problem
+    frontend_status_code = 500
+    frontend_error_msg = (
+        "Faild to create the product, due to technical issue "
+        "in backend, pls try again else contact admin / developer"
+    )
 
 
 class ProductThumbnailSaveError(Exception):
