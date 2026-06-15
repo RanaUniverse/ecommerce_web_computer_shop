@@ -30,7 +30,7 @@ def add_one_category_row(
         session.refresh(category_obj)
         return category_obj
     except Exception as e:
-        logger.error(f"Faild to new category, {e}")
+        logger.error(f"Failed to add new Category, {e}")
         return None
 
 
@@ -79,6 +79,7 @@ def get_one_category_row_by_name(
     return obj
 
 
+# TODO I need to work on this below fun carefully
 def get_all_category_names(
     session: Session,
     reverse: bool = False,
@@ -97,5 +98,4 @@ def get_all_category_names(
         key=str.casefold,  # type: ignore
         reverse=reverse,
     )
-    # remove None values (because name is nullable in your model)
     return arrange_name  # type: ignore
