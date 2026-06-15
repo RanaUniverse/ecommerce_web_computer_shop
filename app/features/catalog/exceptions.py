@@ -37,3 +37,27 @@ class ProductThumbnailSaveError(Exception):
 
 class ProductGalleryImageSaveError(Exception):
     pass
+
+
+# below is for category related things
+
+
+class ParentCategoryNotFoundError(CategoryNotFoundError):
+    frontend_error_msg = (
+        "The selected parent category does not exist. "
+        "Please choose a valid parent category."
+    )
+
+
+class DuplicateCategoryNameError(Exception):
+    frontend_status_code = 422
+    frontend_error_msg = "A category with this name already exists previously."
+
+
+class CategoryCreationFailError(Exception):
+    """
+    This is for server side issue
+    """
+
+    frontend_status_code = 500
+    frontend_error_msg = "Failed to create the category due to a technical issue."
