@@ -5,6 +5,9 @@ Here i will write the code to make the adding new category
 #}
 
 
+{% from 'product/partials/_datalist.html' import generate_datalist_options %}
+
+
 {% extends "base_layout.html" %}
 
 {% block my_content %}
@@ -46,12 +49,13 @@ Here i will write the code to make the adding new category
                 {{ form.private_note() }}
             </div>
 
-            <div class="mb-3 form-floating">
-                {{ form.parent_id() }}
-                {{ form.parent_id.label() }}
+
+            <div class="col-12 col-md-3">
+                <div class="form-floating">
+                    {{ form.parent_category_name(list='id_of_datalist', autocomplete="off") }}
+                    {{ form.parent_category_name.label() }}
+                </div>
             </div>
-
-
 
 
             <div class="mb-3">
@@ -62,5 +66,9 @@ Here i will write the code to make the adding new category
 
     </div>
 </div>
+
+
+{{ generate_datalist_options(items, list_id='id_of_datalist') }}
+
 
 {% endblock %}
