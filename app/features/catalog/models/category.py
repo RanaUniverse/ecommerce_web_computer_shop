@@ -4,10 +4,6 @@ app/features/catalog/models/category.py
 Here the category related table code will be here
 """
 
-"""
-services/database/category_data/model.py
-"""
-
 from typing import TYPE_CHECKING, Any, Optional
 
 from sqlmodel import (
@@ -41,6 +37,17 @@ class CategoryModel(
     id_: str = Field(
         default_factory=generate_hex_uuid4,
         primary_key=True,
+    )
+
+    name: str | None = Field(
+        default=None,
+        index=True,
+        unique=True,
+    )
+
+    parent_id: str | None = Field(
+        default=None,
+        foreign_key="category_data.id_",
     )
 
     created_time: int = Field(
