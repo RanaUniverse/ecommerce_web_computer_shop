@@ -68,3 +68,11 @@ class ProductGalleryImageOut(ImageSourceSchema):
     """
 
     display_order: int
+
+
+class CategoryThumbnailImageOut(ImageSourceSchema):
+    """
+    Here i will get the category's thumbnail image
+    """
+
+    pass
