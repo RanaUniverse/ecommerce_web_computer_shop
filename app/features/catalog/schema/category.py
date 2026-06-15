@@ -4,10 +4,16 @@ app/features/catalog/schema/category.py
 Here i will make the category information
 """
 
+from typing import Optional
+
+
 from sqlmodel import (
     Field,
     SQLModel,
 )
+
+
+from .image import CategoryThumbnailImageOut
 
 
 class CategoryCreateRequest(SQLModel):
@@ -19,8 +25,6 @@ class CategoryCreateRequest(SQLModel):
 
     name: str | None = Field(
         default=None,
-        index=True,
-        unique=True,
     )
     description: str | None = Field(
         default=None,
@@ -35,7 +39,10 @@ class CategoryCreateRequest(SQLModel):
     )
     parent_id: str | None = Field(
         default=None,
-        foreign_key="category_data.id_",
+        description=(
+            "Actually from the parent category name the id will "
+            "generate there at beginnign"
+        ),
     )
 
 
@@ -67,3 +74,25 @@ class CategoryOutMinimal(SQLModel):
     description: str | None = Field(
         description="I will use this value to shows as popup text.",
     )
+
+
+class CategoryOutAdmin(SQLModel):
+    """
+    Full category information for admin view.
+    Admin sees everything including private fields and timestamps.
+    """
+
+    model_config = {"from_attributes": True}
+
+    id_: str
+    name: str | None
+    description: str | None
+    icon_name: str | None
+    private_note: str | None
+    parent_id: str | None
+    created_time: int
+
+    parent_obj: Optional["CategoryOutMinimal"] = None
+    child_obj: list["CategoryOutMinimal"] = []
+
+    category_thumbnail_image_obj: Optional["CategoryThumbnailImageOut"] | None = None
