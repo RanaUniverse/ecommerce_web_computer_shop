@@ -18,3 +18,10 @@ I am using `uv` here to manage the python and its packages and all things.
 `uv add library_name==0.0.1`
 `uv run main.py`
 
+"""
+Important Rule about the DDD
+Models > database models only
+Schemas > schemas only
+Router > HTTP routers, templates
+Service > connects router with schemas and database
+"""
