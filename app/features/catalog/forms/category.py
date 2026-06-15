@@ -58,8 +58,15 @@ class CategoryAddForm(
     )
 
     # i will later use to say to give category name and id to select
-    parent_id = StringField(
-        label="Parent Category ID (i will change this)",
+    # parent_id = StringField(
+    #     label="Parent Category ID (i will change this)",
+    #     validators=[
+    #         Optional(),
+    #     ],
+    #     render_kw=BOOTSTRAP_FLOATING_FORM_ATTRS,
+    # )
+    parent_category_name = StringField(
+        label="Select Parent Category",
         validators=[
             Optional(),
         ],
