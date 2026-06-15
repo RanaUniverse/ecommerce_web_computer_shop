@@ -4,7 +4,11 @@ app/features/catalog/models/category.py
 Here the category related table code will be here
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import (
+    # Any,
+    Optional,
+    TYPE_CHECKING,
+)
 
 from sqlmodel import (
     Field,
@@ -75,15 +79,17 @@ class CategoryModel(
         )
     )
 
-    def model_post_init(self, context: Any) -> None:
-        """
-        I make this so that the name of the category will be
-        good to store with some no space logic
-        """
-        # return super().model_post_init(context)
-        if not self.name:
-            # this exit just for i dont want to run this
-            return None
 
-        no_space_name = self.name.strip()
-        self.name = no_space_name
+# TODO i need to check this how i will do thsi
+# def model_post_init(self, context: Any) -> None:
+#     """
+#     I make this so that the name of the category will be
+#     good to store with some no space logic
+#     """
+#     # return super().model_post_init(context)
+#     if not self.name:
+#         # this exit just for i dont want to run this
+#         return None
+
+#     no_space_name = self.name.strip()
+#     self.name = no_space_name
