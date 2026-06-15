@@ -25,6 +25,8 @@ from flask import (
 from werkzeug.datastructures import FileStorage
 
 
+from .. import exceptions as exc
+
 from ..forms.product import ProductAddForm
 
 from ..schema.product import ProductCreate
@@ -167,9 +169,9 @@ def add_product():
         #     status_code = e.frontend_status_code
 
         except (
-            product_ser.CategoryNotFoundError,
-            product_ser.BrandNotFoundError,
-            product_ser.ProductCreationError,
+            exc.CategoryNotFoundError,
+            exc.BrandNotFoundError,
+            exc.ProductCreationError,
         ) as e:
             flash(
                 message=e.frontend_error_msg,
@@ -177,14 +179,14 @@ def add_product():
             )
             status_code = e.frontend_status_code
 
-        except product_ser.ProductThumbnailSaveError:
+        except exc.ProductThumbnailSaveError:
             flash(
                 message="Product created, but the thumbnail image could not be saved.",
                 category=BS5Alert.WARNING,
             )
             status_code = 400
 
-        except product_ser.ProductGalleryImageSaveError:
+        except exc.ProductGalleryImageSaveError:
             flash(
                 message="Product created, but one or more gallery images could not be saved.",
                 category=BS5Alert.WARNING,

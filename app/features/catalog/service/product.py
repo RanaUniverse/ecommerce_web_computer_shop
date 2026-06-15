@@ -9,6 +9,8 @@ from sqlmodel import Session
 from werkzeug.datastructures import FileStorage
 
 
+from .. import exceptions as exc
+
 from ..operations import brand as brand_ops
 from ..operations import category as category_ops
 from ..operations import image as image_ops
@@ -25,39 +27,6 @@ from .storage.product import (
     save_product_gallery_images_and_create_rows,
     save_product_thumbnail_and_create_row,
 )
-
-
-class CategoryNotFoundError(Exception):
-    # this came when user give wrong info
-    frontend_status_code = 422
-    frontend_error_msg = (
-        "The selected category does not exist. Please choose a valid category."
-    )
-
-
-class BrandNotFoundError(Exception):
-    # this came when user give wrong info
-    frontend_status_code = 422
-    frontend_error_msg = (
-        "The selected brand does not exist. Please choose a valid brand."
-    )
-
-
-class ProductCreationError(Exception):
-    # this is when server side issue like storage problem or db problem
-    frontend_status_code = 500
-    frontend_error_msg = (
-        "Faild to create the product, due to technical issue "
-        "in backend, pls try again else contact admin / developer"
-    )
-
-
-class ProductThumbnailSaveError(Exception):
-    pass
-
-
-class ProductGalleryImageSaveError(Exception):
-    pass
 
 
 def create_new_product_row_with_images(
@@ -83,7 +52,7 @@ def create_new_product_row_with_images(
                 brand_id=product_obj.brand_id,
             )
             if not brand_obj:
-                raise BrandNotFoundError(
+                raise exc.BrandNotFoundError(
                     "Brand selected is not found, maybe user  did some js change.",
                 )
 
@@ -95,7 +64,7 @@ def create_new_product_row_with_images(
                 name=category_name,
             )
             if not category_obj:
-                raise CategoryNotFoundError(
+                raise exc.CategoryNotFoundError(
                     f"Category: {category_name} not Exixts.",
                 )
             category_id = category_obj.id_
@@ -113,7 +82,7 @@ def create_new_product_row_with_images(
         )
 
         if not saved_product:
-            raise ProductCreationError(
+            raise exc.ProductCreationError(
                 "Failed To Create the Product",
             )
 
@@ -129,7 +98,7 @@ def create_new_product_row_with_images(
                 external_url=thumbnail_url,
             )
             if not thumbnail_obj:
-                raise ProductThumbnailSaveError(
+                raise exc.ProductThumbnailSaveError(
                     "Save Thumbnail files got fails",
                 )
 
@@ -144,7 +113,7 @@ def create_new_product_row_with_images(
                 ),
             )
             if not thumbnail_obj:
-                raise ProductThumbnailSaveError(
+                raise exc.ProductThumbnailSaveError(
                     "Saving thumbnail with url only fails",
                 )
 
@@ -163,7 +132,7 @@ def create_new_product_row_with_images(
                 creator_id=product_obj.creator_id,
             )
             if not saved_images:
-                raise ProductGalleryImageSaveError(
+                raise exc.ProductGalleryImageSaveError(
                     "Gallery images saving fails",
                 )
         out_obj = ProductOutAdmin.model_validate(
