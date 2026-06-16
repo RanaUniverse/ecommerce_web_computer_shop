@@ -73,7 +73,12 @@ def add():
                 message=ProductCategoryMessages.CATEGORY_CREATED,
                 category=BS5Alert.SUCCESS,
             )
-            return redirect(url_for("category_bp.add"))
+            return redirect(
+                url_for(
+                    "category_bp.category_info_admin",
+                    category_id=new_category_obj.id_,
+                )
+            )
 
         except (
             exc.ParentCategoryNotFoundError,
@@ -106,4 +111,66 @@ def add():
         "category/add.html",
         form=form,
         items=list_of_category,
+    )
+
+
+@category_bp.route(rule="/view/<string:category_id>")
+def category_info(category_id: str):
+    """
+    This will shows the details page of a category like
+    its image, info
+    all subclasses and its parent classe
+    """
+    obj = category_ser.get_category_info_for_public(
+        category_id=category_id,
+    )
+    if not obj:
+        return (
+            render_template(
+                template_name_or_list="category/not_found.html",
+            ),
+            404,
+        )
+    return render_template(
+        "category/view.html",
+        category=obj,
+    )
+
+
+# i will check the login and admin permission here
+# TODO
+@category_bp.route(rule="/admin/view/<string:category_id>")
+def category_info_admin(category_id: str):
+    """
+    This will shows the details page of a category like
+    its image, info
+    all subclasses and its parent classe
+    """
+    obj = category_ser.get_category_info_for_admin(
+        category_id=category_id,
+    )
+    if not obj:
+        return (
+            render_template(
+                template_name_or_list="category/not_found.html",
+            ),
+            404,
+        )
+    # return f"{obj}"
+    return render_template(
+        "category/view_admin.html",
+        category=obj,
+    )
+
+
+@category_bp.route(rule="/all")
+def all():
+    """
+    This will shows all the category list in the page
+    to navigater there
+    """
+    all_cat = category_ser.all_category_minimal()
+    return render_template(
+        "category/all.html",
+        categories=all_cat,
     )

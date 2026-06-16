@@ -13,7 +13,11 @@ from ..models.category import CategoryModel
 from ..operations import category as category_ops
 
 from ....shared.database import engine
-from ..schema.category import CategoryOutAdmin, CategoryCreateRequest
+from ..schema.category import (
+    CategoryOutAdmin,
+    CategoryCreateRequest,
+    CategoryOutMinimal,
+)
 
 
 def list_of_category_names() -> list[str]:
@@ -21,7 +25,7 @@ def list_of_category_names() -> list[str]:
     This fun is called like to get all category name from my db
     i will want to shows the names to user
 
-    TODO
+    # TODO
 
     Later i thinks to make this in cache so that the computation will not need
     to do each time it will shows list of all category
@@ -61,8 +65,6 @@ def add_one_category(
                 obj.parent_id = cat_obj.id_
 
         name = obj.name.strip() if obj.name else None
-        print("xxx")
-        print(name)
         if name:
             cat_obj = category_ops.get_one_category_row_by_name(
                 session=session,
@@ -72,7 +74,6 @@ def add_one_category(
                 raise exc.DuplicateCategoryNameError(
                     f"{name} is already a catagory present."
                 )
-        print("YYY")
         model_obj = CategoryModel.model_validate(
             obj=obj,
             from_attributes=True,
@@ -90,3 +91,63 @@ def add_one_category(
             from_attributes=True,
         )
         return out_obj
+
+
+def get_category_info_for_public(category_id: str) -> CategoryOutMinimal | None:
+    """
+    it will out schema of the category
+    """
+
+    with Session(engine) as session:
+        model_obj = category_ops.get_one_category_row_by_id(
+            session=session,
+            category_id=category_id,
+        )
+        if not model_obj:
+            return None
+
+        out_obj = CategoryOutMinimal.model_validate(
+            obj=model_obj,
+            from_attributes=True,
+        )
+        return out_obj
+
+
+def get_category_info_for_admin(category_id: str) -> CategoryOutAdmin | None:
+    """
+    it will out the schem for the amdin with many information
+    """
+    with Session(engine) as session:
+        model_obj = category_ops.get_one_category_row_by_id(
+            session=session,
+            category_id=category_id,
+        )
+        if not model_obj:
+            return None
+
+        out_obj = CategoryOutAdmin.model_validate(
+            obj=model_obj,
+            from_attributes=True,
+        )
+        return out_obj
+
+
+def all_category_minimal() -> list[CategoryOutMinimal]:
+    """
+    this will shows the all categoryOUtMInimal schemas for all the
+    rows of the category
+    """
+    with Session(engine) as session:
+        list_of_models = category_ops.get_all_categories(session=session)
+
+        out_objs: list[CategoryOutMinimal] = []
+
+        for x in list_of_models:
+            schema_obj = CategoryOutMinimal.model_validate(
+                obj=x,
+                from_attributes=True,
+            )
+
+            out_objs.append(schema_obj)
+
+        return out_objs

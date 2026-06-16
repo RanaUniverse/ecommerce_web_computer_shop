@@ -1,0 +1,68 @@
+{% extends "base_layout.html" %}
+
+{% block my_content %}
+
+<div class="container">
+
+
+    {% if categories|length == 0 %}
+
+    <div class="mt-2">
+        <h1 class="text-center alert alert-danger">
+            There is No Category
+        </h1>
+
+        <p class="text-center mb-0">
+            Categories will appear here once they are created.
+        </p>
+
+        <div class="d-flex justify-content-center mt-5">
+            <a href="{{ url_for('category_bp.add') }}" class="btn btn-primary">
+                Create A New Category
+            </a>
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-info mt-2">
+        <h1 class="my-4">
+            All Categories
+            Total Categories: {{ categories|length }}
+        </h1>
+    </div>
+
+
+    <ul class="list-group">
+
+        {% for category in categories %}
+
+        <li class="list-group-item">
+
+            <strong>
+                <a href="{{ url_for('category_bp.category_info', category_id=category.id_ ) }}">
+                    {{ category.name }}
+                </a>
+
+            </strong>
+
+            {% if category.description %}
+            <br>
+            <small class="text-muted">
+                {{ category.description }}
+            </small>
+            {% endif %}
+
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+{% endblock %}

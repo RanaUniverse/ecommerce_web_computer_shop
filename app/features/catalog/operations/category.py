@@ -99,3 +99,13 @@ def get_all_category_names(
         reverse=reverse,
     )
     return arrange_name  # type: ignore
+
+
+def get_all_categories(
+    session: Session,
+) -> list[CategoryModel]:
+
+    statement = select(CategoryModel).order_by(CategoryModel.name)
+    objs = list(session.exec(statement=statement))
+
+    return objs

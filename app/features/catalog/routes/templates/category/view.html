@@ -1,0 +1,142 @@
+{#
+app/features/catalog/routes/templates/category/view.html
+
+this is for showing the category info to the normal users
+#}
+
+
+
+{% extends "base_layout.html" %}
+
+{% block my_content %}
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+
+            <h2 class="fw-bold">
+                {% if category.icon_name %}
+                <i class="{{ category.icon_name }}"></i>
+                {% endif %}
+                {{ category.name }}
+            </h2>
+
+            {% if category.description %}
+            <p class="text-muted mt-2">
+                {{ category.description }}
+            </p>
+            {% else %}
+            <p class="text-muted mt-2">No description available</p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row g-4">
+
+        <!-- LEFT: Sub Categories -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    Sub Categories
+                </div>
+
+                <div class="card-body">
+
+                    {% if category.child_obj and category.child_obj|length > 0 %}
+
+                    <div class="list-group">
+                        {% for child in category.child_obj %}
+
+                        <a href="{{ url_for('category_bp.category_info', category_id=child.id_) }}"
+                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+
+                            <div>
+                                {% if child.icon_name %}
+                                <i class="{{ child.icon_name }}"></i>
+                                {% endif %}
+                                <span class="ms-1">{{ child.name }}</span>
+                            </div>
+
+                            <span class="badge bg-secondary">View</span>
+
+                        </a>
+
+                        {% endfor %}
+                    </div>
+
+                    {% else %}
+                    <p class="text-muted mb-0">No sub categories available</p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT: Parent Category -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-dark text-white">
+                    Parent Category
+                </div>
+
+                <div class="card-body">
+
+                    {% if category.parent_obj %}
+
+                    <a href="{{ url_for('category_bp.category_info', category_id=category.parent_obj.id_) }}"
+                        class="btn btn-outline-primary w-100">
+
+                        {% if category.parent_obj.icon_name %}
+                        <i class="{{ category.parent_obj.icon_name }}"></i>
+                        {% endif %}
+
+                        {{ category.parent_obj.name }}
+
+                    </a>
+
+                    {% else %}
+                    <p class="text-muted mb-0">This is a root category</p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <!-- EXTRA INFO -->
+            <div class="card shadow-sm mt-3">
+
+                <div class="card-header">
+                    Category Info
+                </div>
+
+                <div class="card-body">
+
+                    <p class="mb-1">
+                        <strong>ID:</strong> {{ category.id_ }}
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Name:</strong> {{ category.name }}
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Status:</strong>
+                        <span class="badge bg-success">Active</span>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
