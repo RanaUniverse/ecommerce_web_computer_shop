@@ -64,8 +64,10 @@ class ThumbnailImageMixin:
     i will make this so that image validation will done here
     """
 
+    # TODO i need to make something so that for cateory, product, or brand
+    # there will differnet label
     image_thumbnail = FileField(
-        label="Product's Thumbnail",
+        label="Thumbnail's Image",
         validators=[
             Optional(),
             FileAllowed(
