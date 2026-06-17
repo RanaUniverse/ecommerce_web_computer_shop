@@ -107,8 +107,8 @@ This is for admin page view
                     <h5 class="card-title">Info</h5>
 
                     <p class="mb-1">
-                        <strong>Created:</strong><br>
-                        {{ category.created_time }}
+                        <strong>Created Time:</strong><br>
+                        {{ category.created_time | read_posix_time_fun }}
                     </p>
 
                     <p class="mb-0">

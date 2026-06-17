@@ -44,6 +44,12 @@ def create_app():
     )
 
     app.config["SECRET_KEY"] = config_settings.app_secret_key
+    from app.shared.utils.general_utils import posix_to_readable_time
+
+    app.add_template_filter(
+        f=posix_to_readable_time,
+        name="read_posix_time_fun",
+    )
 
     # if i want to attach same blueprint in differnet url prefix
     # i need to use the different name there
