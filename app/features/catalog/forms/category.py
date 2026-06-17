@@ -37,7 +37,7 @@ class CategoryAddForm(
 
     # i will later use to select bs icons here
     icon_name = StringField(
-        label="Icon Name",
+        label="Icon Name (Example: 'badge-hd')",
         validators=[
             Optional(),
         ],
