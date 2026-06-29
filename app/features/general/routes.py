@@ -1,11 +1,18 @@
 """
 app/features/general/routes.py
 Here i will keep the some general routes endpoints
+
+I am using this blueprint for some app related config
 """
+
+import secrets
+
 
 from flask import (
     Blueprint,
+    g,
     render_template,
+    Response,
 )
 
 
@@ -23,6 +30,27 @@ def inject_brand():
     return {
         "BRAND_NAME": config_shop_details.brand_name,
     }
+
+
+@general_bp.before_app_request
+def generate_nonce():
+    g.nonce = secrets.token_hex(
+        nbytes=20,
+    )
+
+
+@general_bp.after_app_request
+def modify_headers(response: Response):
+    """
+    I am using nonce to allow internal css and js
+    though i should to use external css and js
+    """
+    response.headers["Content-Security-Policy"] = (
+        f"default-src 'self'; "
+        f"script-src 'self' 'nonce-{g.nonce}';"
+        f"style-src 'self' 'nonce-{g.nonce}';"
+    )
+    return response
 
 
 @general_bp.route(rule="/")
