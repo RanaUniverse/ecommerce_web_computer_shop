@@ -15,6 +15,15 @@ sys.dont_write_bytecode = True
 from flask import Flask
 
 
+from app.features.catalog.routes.brand import brand_bp
+from app.features.catalog.routes.category import category_bp
+from app.features.catalog.routes.product import product_bp
+from app.features.errors.routes import error_bp
+from app.features.general.routes import general_bp
+from app.features.identity.routes import auth_bp, user_bp
+from app.features.ordering.routes import order_bp
+
+
 from app.shared.config import (
     config_settings,
 )
@@ -24,14 +33,9 @@ from app.shared.extensions import (
     bcrypt,
 )
 
-
-from app.features.catalog.routes.brand import brand_bp
-from app.features.catalog.routes.category import category_bp
-from app.features.catalog.routes.product import product_bp
-from app.features.errors.routes import error_bp
-from app.features.general.routes import general_bp
-from app.features.identity.routes import auth_bp, user_bp
-from app.features.ordering.routes import order_bp
+from app.shared.utils.general_utils import (
+    posix_to_readable_time,
+)
 
 
 def create_app():
@@ -44,11 +48,12 @@ def create_app():
     )
 
     app.config["SECRET_KEY"] = config_settings.app_secret_key
-    from app.shared.utils.general_utils import posix_to_readable_time
 
+    # https://flask.palletsprojects.com/en/stable/templating/#registering-filters
+    # this below is from that docs this will help name the in my jinja html
     app.add_template_filter(
         f=posix_to_readable_time,
-        name="read_posix_time_fun",
+        name="custom_read_posix_time_fun",
     )
 
     # if i want to attach same blueprint in differnet url prefix
