@@ -1,36 +1,19 @@
-{# app/features/general/templates/general/index.html Here i will make this to
-shows the home page of my webpage #}
+{#
+app/features/general/templates/general/index.html
+
+Here i will make this to shows the home page of my webpage
+#}
 
 {% extends 'base_layout.html' %}
+
 {% block my_title %}
-Let's Shop With {{ BRAND_NAME }} {% endblock %} {% block my_content
-%}
+Let's Shop With {{ BRAND_NAME }}
+{% endblock %}
 
 
 
+{% block my_content %}
 
 <h1>Here Will shows The information about my website</h1>
-<h2>{{BRAND_NAME}}</h2>
-
-<button onclick="showPopup()">Show Popup</button>
-{% endblock %} {% block my_js %}
-<script nonce="abc">
-    function showPopup() {
-        const popup = document.createElement("div");
-        popup.className = "popup";
-        popup.innerHTML = `
-    <h2>Hello!</h2>
-    <p>This is a custom popup.</p>
-    <button onclick="this.parentElement.remove()">Close</button>
-  `;
-
-        document.body.appendChild(popup);
-    }
-
-    window.onload = function () {
-        setTimeout(function () {
-            alert("⚠️ Warning: Please review this page before continuing.");
-        }, 2000);
-    };
-</script>
+<h2> {{BRAND_NAME}} </h2>
 {% endblock %}
