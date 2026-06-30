@@ -50,6 +50,12 @@ def modify_headers(response: Response):
         f"script-src 'self' 'nonce-{g.nonce}';"
         f"style-src 'self' 'nonce-{g.nonce}';"
     )
+
+    # This below is for loading correct type of document
+    response.headers["X-Content-Type-Options"] = "nosniff"
+
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+
     return response
 
 
