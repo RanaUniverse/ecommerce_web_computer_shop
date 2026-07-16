@@ -22,9 +22,9 @@ Variables:
         {% endblock %}
     </title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'bootstrap/css/bootstrap.min.css' ) }}">
-
     <link rel="shortcut icon" href="{{ url_for('static', filename='icons/favicon.ico' ) }}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'bootstrap/css/bootstrap.min.css' ) }}">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='icons/bs_icons/bootstrap-icons.min.css' ) }}">
 
@@ -72,9 +72,17 @@ Variables:
     the js code which will run in the browser and for bs will below
     #}
 
-    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js' ) }}"></script>
-    <script src="{{ url_for('static' , filename='js/search_icon_change.js') }}"></script>
-    <script src="{{ url_for('static' , filename = 'js/theme_toggle.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js' ) }}">
+    </script>
+
+    <script src="{{ url_for('static', filename='htmx/htmx.min.js' ) }}">
+    </script>
+
+    <script src="{{ url_for('static' , filename='js/search_icon_change.js') }}">
+    </script>
+
+    <script src="{{ url_for('static' , filename = 'js/theme_toggle.js') }}">
+    </script>
 
     {% block my_js %}
     {#
