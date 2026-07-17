@@ -1,0 +1,26 @@
+{#
+templates/partials/_assets_js.html
+
+Here i will keep the js code to come into my html
+From below i will write down the js content
+the js code which will run in the browser and for bs will below
+#}
+
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js' ) }}">
+</script>
+
+{#
+This is htmx4 in beta later i will change this
+#TODO
+#}
+<script src="{{ url_for('static', filename='htmx/htmx.min.js' ) }}">
+</script>
+
+<script src="{{ url_for('static', filename='sweet2/sweetalert2.all.min.js' ) }}">
+</script>
+
+<script src="{{ url_for('static' , filename='js/search_icon_change.js') }}">
+</script>
+
+<script src="{{ url_for('static' , filename = 'js/theme_toggle.js') }}">
+</script>

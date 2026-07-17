@@ -1,0 +1,21 @@
+{#
+templates/partials/_assets_css.html
+
+In this file i will keep the css link to use
+#}
+
+<link rel="shortcut icon" href="{{ url_for('static', filename='icons/favicon.ico' ) }}" type="image/x-icon">
+
+<link rel="stylesheet" href="{{ url_for('static', filename= 'bootstrap/css/bootstrap.min.css' ) }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='icons/bs_icons/bootstrap-icons.min.css' ) }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='sweet2/sweetalert2.min.css' ) }}">
+
+
+{#
+This below are my own custom css i made to use here
+#}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar_toggler_icon_change.css' ) }}">
+
+<link rel="stylesheet" href="{{ url_for('static' , filename='css/theme_toggle_button.css') }}">
