@@ -1,17 +1,18 @@
 {#
 templates/partials/_flash_messages.html
+
 Here i will write the logic to shows the
 alter things based on the flash(msg,category)
 #}
+
 {#
 Below the category value will be one of the bootstrap color which
 i will use Here upon using the below in python code:
 flash(msg,category) this will below executs as it will come as list
 #}
 
-
-
-{% set icon_map = {
+{%
+set icon_map = {
 "primary": "check-circle",
 "secondary": "slash-circle",
 "success": "check-circle",
@@ -19,10 +20,8 @@ flash(msg,category) this will below executs as it will come as list
 "warning": "exclamation-triangle",
 "info": "check-circle",
 "light": "lightbulb",
-"dark": "moon"
-} %}
-
-
+"dark": "moon"}
+%}
 
 {% with messages = get_flashed_messages(with_categories = true) %}
 {% if messages %}
@@ -41,7 +40,6 @@ flash(msg,category) this will below executs as it will come as list
     </div>
 
     {% endfor %}
-
 
 </div>
 {% endif %}

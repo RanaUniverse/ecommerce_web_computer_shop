@@ -5,11 +5,6 @@ templates/base_layout.html
 Here i will make the structer of my front page
 i will use this to extends in others file.
 Variables:
-
-- my_title
-- my_content
-- my_js
-
 #}
 
 <!DOCTYPE html>
@@ -20,8 +15,6 @@ Variables:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{% block meta_description %}Shopping Website{% endblock %}">
     <meta name="author" content="Rana Universe">
-
-
 
     <title>
         {% block my_title %}
@@ -34,16 +27,14 @@ Variables:
     {% block my_internal_css %}
     {#
     Here i will write the logic for the internal css
-    of whatever i will want in custom css per page
+    of whatever i will want in custom css per page with nonce value
     #}
     {% endblock %}
-
 </head>
 
 <body>
-
     <header>
-        {% include 'partials/_navbar.html' %}
+        {%- include 'partials/_navbar.html' -%}
     </header>
 
     {%- include 'partials/_flash_messages.html' -%}
@@ -53,7 +44,6 @@ Variables:
     Here i will write the main page to shows the user what is going on as interface
     #}
     {% endblock %}
-
 
     {% include 'partials/_footer.html' %}
 
@@ -66,7 +56,6 @@ Variables:
     I will need to use the nonce for prtection my js from hackers
     #}
     {% endblock %}
-
 
 </body>
 
